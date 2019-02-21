@@ -1,15 +1,16 @@
 import javax.swing.*;
-//import java.util.*;
+import java.util.*;
 import java.awt.*;
 
 public class GUI extends JFrame {
 
-    int spacing = 5;
+    int height = 532;
+    int width = 450;
 
     //Creating a window
     public GUI(){
         this.setTitle("Minesweeper"); //sets title to window
-        this.setSize(450, 530); //sets size of the window
+        this.setSize(width, height); //sets size of the window
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //makes sure program is terminated when exited
         this.setResizable(false); // set it so no one can resize the window
 
@@ -19,13 +20,14 @@ public class GUI extends JFrame {
     }
 
     public class Board extends JPanel{
-        
+
         //sets background color
         public void paintComponent(Graphics graphics){
             graphics.setColor(Color.gray);
-            graphics.fillRect(0, 0,500,550);
+            graphics.fillRect(0, 0,width,height);
 
             //sets grid
+            int spacing = 5;
             graphics.setColor(Color.lightGray);
             int i, j;
             for(i = 0; i < 10; i++) {
