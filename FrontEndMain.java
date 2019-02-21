@@ -1,11 +1,9 @@
-import javax.swing.*;
-
-public class Main implements Runnable {
+public class FrontEndMain implements Runnable {
     GUI gui = new GUI();
 
     public static void main(String[] args){
 
-        new Thread( new Main()).start();
+        new Thread( new FrontEndMain()).start();
     }
     @Override
     public void run(){
