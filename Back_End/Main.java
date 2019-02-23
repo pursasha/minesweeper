@@ -13,10 +13,11 @@ public class Main {
         for(int countx=0;countx<=8-1;countx++){ // This for loop outputs the random mine distribution (based off every tile having a 1/n probability of being a mine).
             System.out.println("");
             for(int county=0;county<=8-1;county++){
-                if(board.get(countx*8+county).isMine()==true) {
-                    System.out.print("x");
+                if(board.get(countx*8+county).isMine()){
+                    System.out.print(" M");
                 }
-                else{System.out.print("o");}
+                else{
+                    System.out.print(" "+board.get(countx*8+county).getNumMineNeighbors()+"");}
                 }
 
             }
@@ -74,7 +75,9 @@ public class Main {
 
 
                 }
+
                     }
+            Tile1.setNumMineNeighbors();
                 }
 
 
