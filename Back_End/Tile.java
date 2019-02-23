@@ -9,6 +9,7 @@ public class Tile implements Serializable {
     private int x_component;
     private int y_component;
     public ArrayList<Tile> neighbors;
+    int numMineNeighbors;
 
 
     public Tile(boolean isMine,boolean isRevealed,int x_component,int y_component){
@@ -100,5 +101,19 @@ public class Tile implements Serializable {
             return false;}
 
         }
+
+    public int getNumMineNeighbors() {
+        return numMineNeighbors;
     }
+
+    public void setNumMineNeighbors() {
+        int numMineNeigbors=0;
+        for(Tile neighbor: this.neighbors) {
+            if(neighbor.isMine()){
+                numMineNeighbors++;
+            }
+        }
+        this.numMineNeighbors = numMineNeighbors;
+    }
+}
 
