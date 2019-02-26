@@ -6,9 +6,10 @@ import java.awt.event.*;
 
 public class GUI extends JFrame {
 
-    Tile tile = new Tile(true, true, 1, 1);
+  //  Tile tile = new Tile(true, true, 1, 1);
     int height = 532;
     int width = 450;
+    int boardX, boardY = -99;
 
     public int mx= -100;
     public int my= -100;
@@ -31,7 +32,7 @@ public class GUI extends JFrame {
         this.addMouseListener(click);
 
 
-        tile.add_neighbor(new Tile(false, true, 2, 2));
+    //    tile.add_neighbor(new Tile(false, true, 2, 2));
 
 
 
@@ -56,15 +57,18 @@ public class GUI extends JFrame {
                     if(mx>=spacing+i * 86 && mx< spacing+i * 86+86-spacing && my>=j * 86+86 + spacing+26 && my< j * 86+86  +26 +spacing +86-spacing )
                     {
                         graphics.setColor(Color.blue);
+                        //this gets the corresponding tile coordinates
+                        boardX=i;
+                        boardY=j;
                     }
                     graphics.fillRect(i * 90, j * 90 + (12 * spacing),90-spacing,90-spacing );
 
-                        if(tile.isMine() == true ){
-                            if(mx>=spacing+i * 86 && mx< spacing+i * 86+86-spacing && my>=j * 86+86 + spacing+26 && my< j * 86+86  +26 +spacing +86-spacing )
-                            {
-                                graphics.setColor(Color.red);
-                            }
-                    }
+                //      if(tile.isMine() == true ){
+                  //          if(mx>=spacing+i * 86 && mx< spacing+i * 86+86-spacing && my>=j * 86+86 + spacing+26 && my< j * 86+86  +26 +spacing +86-spacing )
+                //            {
+                //                graphics.setColor(Color.red);
+              //              }
+              //      }
                 }
             }
         }
@@ -83,6 +87,8 @@ public class GUI extends JFrame {
             mx=a.getX();
             my=a.getY();
             System.out.println("x:"+ mx +" y:"+my);
+
+            System.out.println("board X:"+boardX+" board y:"+boardY);
         }
 
     }
@@ -113,4 +119,3 @@ public class GUI extends JFrame {
     }
 
 }
-
