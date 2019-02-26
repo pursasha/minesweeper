@@ -13,7 +13,7 @@ public class Main {
 //        for(int countx=0;countx<=board_row_length-1;countx++){ // This for loop outputs the random mine distribution (based off every tile having a 1/n probability of being a mine).
 //            System.out.println("");
 //            for(int county=0;county<=board_row_length-1;county++){
-//                if(board.get(countx*board_row_length+county).isMine()){
+//                if(board.get(countx*board_row_length+county).getMine()){
 //                    System.out.print(" M");
 //                }
 //                else{

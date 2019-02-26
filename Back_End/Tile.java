@@ -24,7 +24,7 @@ public class Tile implements Serializable{
     }
 
 
-    public boolean isMine() {
+    public boolean getMine() {
         return isMine;
     }
 
@@ -113,7 +113,7 @@ public class Tile implements Serializable{
     public void setNumMineNeighbors() {
         int numMineNeighbors=0;
         for(Tile neighbor: this.neighbors) {
-            if(neighbor.isMine()){
+            if(neighbor.getMine()){
                 numMineNeighbors++;
             }
         }
