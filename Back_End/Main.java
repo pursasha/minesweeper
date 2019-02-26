@@ -6,20 +6,21 @@ public class Main {
 
         int board_row_length=10; // Sets the number of tiles in a side of the square board
         ArrayList<Tile> board = generate_square_board(board_row_length);
-        Tile tile = new Tile(true, true, 1, 1);
-        tile.add_neighbor(new Tile(false, true, 2, 2));
 
-        for(int countx=0;countx<=board_row_length-1;countx++){ // This for loop outputs the random mine distribution (based off every tile having a 1/n probability of being a mine).
-            System.out.println("");
-            for(int county=0;county<=board_row_length-1;county++){
-                if(board.get(countx*board_row_length+county).isMine()){
-                    System.out.print(" M");
-                }
-                else{
-                    System.out.print(" "+board.get(countx*board_row_length+county).getNumMineNeighbors()+"");}
-                }
-
-            }
+//        Tile tile = new Tile(true, true, 1, 1);
+//        tile.add_neighbor(new Tile(false, true, 2, 2));
+//
+//        for(int countx=0;countx<=board_row_length-1;countx++){ // This for loop outputs the random mine distribution (based off every tile having a 1/n probability of being a mine).
+//            System.out.println("");
+//            for(int county=0;county<=board_row_length-1;county++){
+//                if(board.get(countx*board_row_length+county).isMine()){
+//                    System.out.print(" M");
+//                }
+//                else{
+//                    System.out.print(" "+board.get(countx*board_row_length+county).getNumMineNeighbors()+"");}
+//                }
+//
+//            }
         }
 
 

@@ -29,11 +29,6 @@ public class Tile implements Serializable{
     }
 
 
-    public void setIsMine(boolean mine) {
-        this.isMine = mine;
-    }
-
-
     public void setMine(boolean mine) { // Sets mine to on or off based on the passed boolean value. This method can be used to overwrite the setMine method below.
         isMine = mine;
     }
