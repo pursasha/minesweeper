@@ -6,17 +6,19 @@ import java.awt.event.*;
 
 public class GUI extends JFrame {
 
+    int boardSize = 8;
+
     Board mineBoard = new Board();
-    int height = 532;
-    int width = 450;
-    int boardX, boardY = -99;
+    int height = (532/5)*boardSize;
+    int width = (450/5)*boardSize;
+    int boardX, boardY, tileID = 0;
 
     public int mx= -100;
     public int my= -100;
 
     //Creating a window
     public GUI(){
-        mineBoard.setSquareBoard(5);
+        mineBoard.setSquareBoard(boardSize);
         this.setTitle("Minesweeper"); //sets title to window
         this.setSize(width, height); //sets size of the window
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //makes sure program is terminated when exited
@@ -32,13 +34,6 @@ public class GUI extends JFrame {
         Click click= new Click();
         this.addMouseListener(click);
 
-
-
-    //    tile.add_neighbor(new Tile(false, true, 2, 2));
-
-
-
-
     }
 
     public class FBoard extends JPanel{
@@ -52,26 +47,31 @@ public class GUI extends JFrame {
             int spacing = 5;
             int i, j;
 
-            for(i = 0; i < 5; i++) {
-                for (j = 0; j < 5; j++){
+            for(i = 0; i < boardSize; i++) {
+                for (j = 0; j < boardSize; j++){
                     graphics.setColor(Color.lightGray);
 
                     //testing the mine layout
-                    if (mineBoard.getBoard().get(i+5*j).getMine())
+                    if (mineBoard.getBoard().get(i+(boardSize*j)).getMine())
                     {
                       graphics.setColor(Color.pink);
                     }
 
                     if(mx>=spacing+i * 86 && mx< spacing+i * 86+86-spacing && my>=j * 86+86 + spacing+26 && my< j * 86+86  +26 +spacing +86-spacing )
                     {
-                        graphics.setColor(Color.blue);
                         //this gets the corresponding tile coordinates
                         boardX=i;
                         boardY=j;
+                        //grabs specific tile ID for the tile
+                        tileID= boardX + (boardSize*boardY);
                         //colors tile red it it is a mine
-                        if (mineBoard.getBoard().get(boardX+5*boardY).getMine())
+                        if (mineBoard.getBoard().get(tileID).getMine())
                         {
                           graphics.setColor(Color.red);
+                        }
+                        else
+                        {
+                          graphics.setColor(Color.blue);
                         }
                     }
                     graphics.fillRect(i * 90, j * 90 + (12 * spacing),90-spacing,90-spacing );
@@ -103,20 +103,25 @@ public class GUI extends JFrame {
     public class Click implements MouseListener {
         public void mouseClicked(MouseEvent a) {
             System.out.println("the mouse was clicked");
-
-            //checks if the clicked tile is a mine
-            if (mineBoard.getBoard().get(boardX+5*boardY).getMine())
-            {
-              System.out.println("the tile was a mine!");
+            try {
+              //checks if the clicked tile is a mine
+              if (mineBoard.getBoard().get(tileID).getMine())
+              {
+                System.out.println("the tile was a mine!");
+              }
+              //checks if clicked tile has mine neighbors
+              else if (mineBoard.getBoard().get(tileID).getNumMineNeighbors()>0)
+              {
+                System.out.println("there are " + mineBoard.getBoard().get(tileID).getNumMineNeighbors() + " mine neighbors");
+              }
+              else
+              {
+                System.out.println("there are no mine neighbors!");
+              }
             }
-            //checks if clicked tile has mine neighbors
-            else if (mineBoard.getBoard().get(boardX+5*boardY).getNumMineNeighbors()>0)
+            catch(Exception e)
             {
-              System.out.println("there are " + mineBoard.getBoard().get(boardX+5*boardY).getNumMineNeighbors() + " mine neighbors");
-            }
-            else
-            {
-              System.out.println("there are no mine neighbors!");
+              System.out.println("");
             }
 
 
