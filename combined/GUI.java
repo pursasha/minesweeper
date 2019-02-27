@@ -56,6 +56,12 @@ public class GUI extends JFrame {
                 for (j = 0; j < 5; j++){
                     graphics.setColor(Color.lightGray);
 
+                    //testing the mine layout
+                    if (mineBoard.getBoard().get(i+5*j).getMine())
+                    {
+                      graphics.setColor(Color.pink);
+                    }
+
                     if(mx>=spacing+i * 86 && mx< spacing+i * 86+86-spacing && my>=j * 86+86 + spacing+26 && my< j * 86+86  +26 +spacing +86-spacing )
                     {
                         graphics.setColor(Color.blue);
@@ -63,7 +69,7 @@ public class GUI extends JFrame {
                         boardX=i;
                         boardY=j;
                         //colors tile red it it is a mine
-                        if (mineBoard.getBoard().get(boardX+boardY).getMine())
+                        if (mineBoard.getBoard().get(boardX+5*boardY).getMine())
                         {
                           graphics.setColor(Color.red);
                         }
@@ -99,14 +105,14 @@ public class GUI extends JFrame {
             System.out.println("the mouse was clicked");
 
             //checks if the clicked tile is a mine
-            if (mineBoard.getBoard().get(boardX+boardY).getMine())
+            if (mineBoard.getBoard().get(boardX+5*boardY).getMine())
             {
               System.out.println("the tile was a mine!");
             }
             //checks if clicked tile has mine neighbors
-            else if (mineBoard.getBoard().get(boardX+boardY).getNumMineNeighbors()>0)
+            else if (mineBoard.getBoard().get(boardX+5*boardY).getNumMineNeighbors()>0)
             {
-              System.out.println("there are " + mineBoard.getBoard().get(boardX+boardY).getNumMineNeighbors() + " mine neighbors");
+              System.out.println("there are " + mineBoard.getBoard().get(boardX+5*boardY).getNumMineNeighbors() + " mine neighbors");
             }
             else
             {
