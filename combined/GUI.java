@@ -2,16 +2,18 @@ import javax.swing.*;
 import java.util.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.lang.Integer;
 
 
 public class GUI extends JFrame {
 
-    int boardSize = 8;
+    int boardSize = 5;
 
     Board mineBoard = new Board();
     int height = (532/5)*boardSize;
     int width = (450/5)*boardSize;
     int boardX, boardY, tileID = 0;
+    boolean gameOver;
 
     public int mx= -100;
     public int my= -100;
@@ -40,6 +42,12 @@ public class GUI extends JFrame {
 
         //sets background color
         public void paintComponent(Graphics graphics){
+            int fontsize = 48;
+            Font mineFont = new Font("TimesRoman", Font.PLAIN, fontsize);
+            FontMetrics fontData = graphics.getFontMetrics(mineFont);
+            int fontW, fontH;
+            String mineNums;
+            graphics.setFont(mineFont);
             graphics.setColor(Color.gray);
             graphics.fillRect(0, 0,width,height);
 
@@ -50,14 +58,18 @@ public class GUI extends JFrame {
             for(i = 0; i < boardSize; i++) {
                 for (j = 0; j < boardSize; j++){
                     graphics.setColor(Color.lightGray);
+                    //sets screen black if mine is clicked
+                    if (gameOver == true) {
+                        graphics.setColor(Color.black);
+                        graphics.fillRect(0, 0, width, height);
+                    }
 
                     //testing the mine layout
                     if (mineBoard.getBoard().get(i+(boardSize*j)).getMine())
                     {
                       graphics.setColor(Color.pink);
                     }
-
-                    if(mx>=spacing+i * 86 && mx< spacing+i * 86+86-spacing && my>=j * 86+86 + spacing+26 && my< j * 86+86  +26 +spacing +86-spacing )
+                    if(mx>=(spacing+i * 90) && mx< (spacing+i * 90+90-spacing) && my>=(j * 90+90 + spacing+26) && my< (j * 90+90  +26 +spacing +90-spacing) )
                     {
                         //this gets the corresponding tile coordinates
                         boardX=i;
@@ -73,9 +85,25 @@ public class GUI extends JFrame {
                         {
                           graphics.setColor(Color.blue);
                         }
-                    }
-                    graphics.fillRect(i * 90, j * 90 + (12 * spacing),90-spacing,90-spacing );
 
+                    }
+                    if (mineBoard.getBoard().get(i+(boardSize*j)).isRevealed())
+                    {
+                      graphics.setColor(Color.white);
+                      graphics.fillRect(i * 90, j * 90 + (12 * spacing),90-spacing,90-spacing );
+                      if(mineBoard.getBoard().get(i+(boardSize*j)).getNumMineNeighbors()>0)
+                      {
+                        graphics.setColor(Color.black);
+                        mineNums=Integer.toString(mineBoard.getBoard().get(i+(boardSize*j)).getNumMineNeighbors());
+                        fontW=(int)(fontData.stringWidth(mineNums)/2);
+                        fontH=(int)(fontData.getHeight()/8);
+                        graphics.drawString(mineNums, i* 90+45-fontW, j* 90 + (12 * spacing)+45+fontH);
+                      }
+                    }
+                    else
+                    {
+                      graphics.fillRect(i * 90, j * 90 + (12 * spacing),90-spacing,90-spacing );
+                    }
                 }
             }
         }
@@ -108,15 +136,18 @@ public class GUI extends JFrame {
               if (mineBoard.getBoard().get(tileID).getMine())
               {
                 System.out.println("the tile was a mine!");
+                gameOver=false;
               }
               //checks if clicked tile has mine neighbors
               else if (mineBoard.getBoard().get(tileID).getNumMineNeighbors()>0)
               {
                 System.out.println("there are " + mineBoard.getBoard().get(tileID).getNumMineNeighbors() + " mine neighbors");
+                mineBoard.getBoard().get(tileID).setRevealed(true);
               }
               else
               {
                 System.out.println("there are no mine neighbors!");
+                mineBoard.getBoard().get(tileID).setRevealed(true);
               }
             }
             catch(Exception e)
