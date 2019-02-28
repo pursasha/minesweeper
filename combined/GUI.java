@@ -18,7 +18,7 @@ public class GUI extends JFrame {
 
     //Creating a window
     public GUI() {
-        mineBoard.setSquareBoard(5);
+        mineBoard.setSquareBoard();
         this.setTitle("Minesweeper"); //sets title to window
         this.setSize(width, height); //sets size of the window
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //makes sure program is terminated when exited
