@@ -1,7 +1,8 @@
 import java.util.ArrayList;
 
 public class Board {
-
+    private int board_row_length=5;
+    private boolean gameOver=false;
     private ArrayList<Tile> board;
 
     //basic constructor for ease of making a board
@@ -15,7 +16,7 @@ public class Board {
         return board;
     }
 
-    public void setSquareBoard(int board_row_length) {
+    public void setSquareBoard() {
 
 
         for (int x = 1; x <= board_row_length; x++) {   // This for loops adds all tiles to the list for a square board.
@@ -49,4 +50,20 @@ public class Board {
             Tile1.setNumMineNeighbors();
         }
     }
+    
+    public void reveal(int x, int y) {
+        Tile Tile1 = board.get(x * board_row_length + y);
+        if (Tile1.getMine()) {
+            gameOver = true;
+    }
+        else {
+            Tile1.setRevealed(true);
+            if (Tile1.getNumMineNeighbors() == 0) {
+                for (Tile Tile2 : Tile1.neighbors) {
+                    reveal(Tile2.getX_component(), Tile2.getY_component());
+                }
+            }
+        }
+    }    
+  
 }
