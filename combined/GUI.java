@@ -76,8 +76,6 @@ public class GUI extends JFrame {
                         //colors tile red it it is a mine
                         graphics.setColor(Color.blue);
                       }
-
-					  //sets reveal tiles to be revealed
                       if (mineBoard.getBoard().get((i*boardSize)+j).isRevealed())
                       {
                         graphics.setColor(Color.white);
@@ -86,20 +84,6 @@ public class GUI extends JFrame {
                         {
                           graphics.setColor(Color.black);
                           mineNums=Integer.toString(mineBoard.getBoard().get((i*boardSize)+j).getNumMineNeighbors());
-                          fontW=(int)(fontData.stringWidth(mineNums)/2);
-                          fontH=(int)(fontData.getHeight()/8);
-                          graphics.drawString(mineNums, i* 90+spacing+45-fontW, j* 90 + spacing+45+fontH);
-                        }
-                      }
-					  //to test the mines
-					  else if (mineBoard.getBoard().get((i*boardSize)+j).getMine())
-                      {
-                        graphics.setColor(Color.lightGray);
-                        graphics.fillRect(i * 90+spacing, j * 90 + spacing, 90-spacing,90-spacing );
-                        if(mineBoard.getBoard().get((i*boardSize)+j).getNumMineNeighbors()>0)
-                        {
-                          graphics.setColor(Color.black);
-                          mineNums="M";
                           fontW=(int)(fontData.stringWidth(mineNums)/2);
                           fontH=(int)(fontData.getHeight()/8);
                           graphics.drawString(mineNums, i* 90+spacing+45-fontW, j* 90 + spacing+45+fontH);
@@ -134,19 +118,32 @@ public class GUI extends JFrame {
     }
 
     //sets display for mouse click and coordinates
-    public class Click implements MouseListener {
-        public void mouseClicked(MouseEvent a) {
-            System.out.println("the mouse was clicked");
+        public class Click implements MouseListener {
+            public void mouseClicked(MouseEvent a) {
+                System.out.println("the mouse was clicked");
 
-            try{
-            	gameOver=mineBoard.reveal(boardX, boardY);
+                try{
+                //checks if the clicked tile is a mine
+                if (mineBoard.getBoard().get(tileID).getMine()) {
+                    System.out.println("the tile was a mine!");
+                    gameOver=true;
+                }
+                //checks if clicked tile has mine neighbors
+                else if (mineBoard.getBoard().get(tileID).getNumMineNeighbors()>0)
+                {
+                    System.out.println("there are " + mineBoard.getBoard().get(tileID).getNumMineNeighbors() + " mine neighbors");
+                    mineBoard.getBoard().get(tileID).setRevealed(true);
+                }
+                else
+                {
+                    System.out.println("there are no mine neighbors!");
+                    mineBoard.getBoard().get(tileID).setRevealed(true);
+                }
             }
             catch(Exception e)
             {
               System.out.println("error caughts:  " + e);
             }
-
-
         }
 
         public void mouseEntered(MouseEvent a) {

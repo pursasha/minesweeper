@@ -53,14 +53,17 @@ public class Board {
 
     public boolean reveal(int x, int y) {
         Tile Tile1 = board.get(x * board_row_length + y);
-        if (Tile1.getMine()) {
-            gameOver = true;
-    }
-        else {
-            Tile1.setRevealed(true);
-            if (Tile1.getNumMineNeighbors() == 0) {
-                for (Tile Tile2 : Tile1.neighbors) {
-                    reveal(Tile2.getX_component(), Tile2.getY_component());
+        if (!(Tile1.isRevealed()))
+        {
+            if (Tile1.getMine()) {
+                gameOver = true;
+            }
+            else {
+                Tile1.setRevealed(true);
+                if (Tile1.getNumMineNeighbors() == 0) {
+                    for (Tile Tile2 : Tile1.neighbors) {
+                        reveal(Tile2.getX_component(), Tile2.getY_component());
+                    }
                 }
             }
         }
