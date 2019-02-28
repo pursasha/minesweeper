@@ -3,6 +3,8 @@ import java.util.ArrayList;
 public class Board {
     private int board_row_length=5;
     private boolean gameOver=false;
+    private int numBoardMines = 0;
+    private int numCoveredTiles = board_row_length * board_row_length;
     private ArrayList<Tile> board;
 
     //basic constructor for ease of making a board
@@ -23,6 +25,7 @@ public class Board {
             for (int y = 1; y <= board_row_length; y++) {
                 Tile newTile = new Tile(true, false, x, y);
                 boolean bool = newTile.setMine(board_row_length); // Places mine on newTile or does not by setMine (with probability of a mine being 1/n)..
+                if (bool) {numBoardMines++;}
 
                 board.add(newTile);
             }
@@ -69,5 +72,11 @@ public class Board {
         }
 		return gameOver;
     }
+    
+    public int getNumBoardMines() {return numBoardMines;}
+    
+    public boolean getRemainingTiles() {return numCoveredTiles == numBoardMines;}
+    
+    public void setRemainingTiles() {numCoveredTiles--;}
 
 }

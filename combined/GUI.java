@@ -55,6 +55,14 @@ public class GUI extends JFrame {
                 fontW=(int)(fontData.stringWidth("GAME OVER")/2);
                 graphics.drawString("GAME OVER", width/2 - fontW, height/2);
               }
+            else if (mineBoard.getRemainingTiles())
+            {
+                graphics.setColor(Color.white);
+                graphics.fillRect(0, 0, width, height);
+                graphics.setColor(Color.black);
+                fontW=(int)(fontData.stringWidth("YOU WIN!")/2);
+                graphics.drawString("YOU WIN!", width/2 - fontW, height/2);
+            }
             else
             {
               graphics.setColor(Color.gray);
@@ -139,6 +147,7 @@ public class GUI extends JFrame {
                     System.out.println("there are no mine neighbors!");
                     mineBoard.getBoard().get(tileID).setRevealed(true);
                 }
+                mineBoard.setRemainingTiles();
             }
             catch(Exception e)
             {
