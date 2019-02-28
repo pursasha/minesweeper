@@ -137,20 +137,20 @@ public class GUI extends JFrame {
                     gameOver=true;
                 }
                 //checks if clicked tile has mine neighbors
-                else if (mineBoard.getBoard().get(tileID).getNumMineNeighbors()>0 && !mineBoard.getboard().get(tileID).isRevealed())
+                else if (mineBoard.getBoard().get(tileID).getNumMineNeighbors()>0 && !mineBoard.getBoard().get(tileID).isRevealed())
                 {
                     System.out.println("there are " + mineBoard.getBoard().get(tileID).getNumMineNeighbors() + " mine neighbors");
                     mineBoard.getBoard().get(tileID).setRevealed(true);
                     mineBoard.setRemainingTiles();
                 }
-                else if  (!mineBoard.getboard().get(tileID).isRevealed())
+                else if  (!mineBoard.getBoard().get(tileID).isRevealed())
                 {
                     System.out.println("there are no mine neighbors!");
                     mineBoard.getBoard().get(tileID).setRevealed(true);
                     mineBoard.setRemainingTiles();
                 }
                 else {
-                  Systtem.out.println("the tile is already revelaed!");
+                  System.out.println("the tile is already revelaed!");
                 }
             }
             catch(Exception e)
