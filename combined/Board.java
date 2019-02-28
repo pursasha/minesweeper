@@ -50,8 +50,8 @@ public class Board {
             Tile1.setNumMineNeighbors();
         }
     }
-    
-    public void reveal(int x, int y) {
+
+    public boolean reveal(int x, int y) {
         Tile Tile1 = board.get(x * board_row_length + y);
         if (Tile1.getMine()) {
             gameOver = true;
@@ -64,6 +64,7 @@ public class Board {
                 }
             }
         }
-    }    
-  
+		return gameOver;
+    }
+
 }
