@@ -63,6 +63,7 @@ public class Board {
             }
             else {
                 Tile1.setRevealed(true);
+		setRemainingTiles();
                 if (Tile1.getNumMineNeighbors() == 0) {
                     for (Tile Tile2 : Tile1.neighbors) {
                         reveal(Tile2.getX_component()*board_row_length + Tile2.getY_component());
