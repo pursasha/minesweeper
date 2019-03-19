@@ -184,9 +184,15 @@ public class GUI extends JFrame {
     //sets display for mouse click and coordinates
         public class Click implements MouseListener {
             public void mouseClicked(MouseEvent a) {
+		try{
                 System.out.println("the mouse was clicked");
-
-                try{
+		System.out.println("X: " + boardX + " Y: "+ boardY);
+		gameOver = mineBoard.reveal(tileID);
+		}
+		catch(Exception e){
+		System.out.println("Error caught " +e);
+		}               
+ /*try{
                 //checks if the clicked tile is a mine
                 if (mineBoard.getBoard().get(tileID).getMine()) {
                     System.out.println("the tile was a mine!");
@@ -212,7 +218,7 @@ public class GUI extends JFrame {
             catch(Exception e)
             {
               System.out.println("error caughts:  " + e);
-            }
+            }*/
         }
 
         public void mouseEntered(MouseEvent a) {
