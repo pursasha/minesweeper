@@ -21,8 +21,8 @@ public class Board {
     public void setSquareBoard() {
 
 
-        for (int x = 1; x <= board_row_length; x++) {   // This for loops adds all tiles to the list for a square board.
-            for (int y = 1; y <= board_row_length; y++) {
+        for (int x = 0; x <= board_row_length-1; x++) {   // This for loops adds all tiles to the list for a square board.
+            for (int y = 0; y <= board_row_length-1; y++) {
                 Tile newTile = new Tile(true, false, x, y);
                 boolean bool = newTile.setMine(board_row_length); // Places mine on newTile or does not by setMine (with probability of a mine being 1/n)..
                 if (bool) {numBoardMines++;}
@@ -54,23 +54,23 @@ public class Board {
         }
     }
 
-    public boolean reveal(int x, int y) {
-        Tile Tile1 = board.get(x * board_row_length + y);
+    public boolean reveal(int tileID) {
+        Tile Tile1 = board.get(tileID);
         if (!(Tile1.isRevealed()))
         {
             if (Tile1.getMine()) {
-                gameOver = true;
+                return true;
             }
             else {
                 Tile1.setRevealed(true);
                 if (Tile1.getNumMineNeighbors() == 0) {
                     for (Tile Tile2 : Tile1.neighbors) {
-                        reveal(Tile2.getX_component(), Tile2.getY_component());
+                        reveal(Tile2.getX_component()*board_row_length + Tile2.getY_component());
                     }
                 }
             }
         }
-		return gameOver;
+		return false;
     }
     
     public int getNumBoardMines() {return numBoardMines;}
