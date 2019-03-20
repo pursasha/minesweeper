@@ -2,123 +2,119 @@ import java.io.Serializable;
 import java.lang.Math;
 import java.util.ArrayList;
 
+public class Tile implements Serializable {
 
-public class Tile implements Serializable{
-
+    static final long serialVersionUID = 324324235L;
 
     private boolean isMine;
     private boolean isRevealed;
+    private boolean isFlag;
     private int x_component;
     private int y_component;
     public ArrayList<Tile> neighbors;
     int numMineNeighbors;
 
+    public Tile(boolean isMine, boolean isRevealed, int x_component, int y_component) {
 
-    public Tile(boolean isMine,boolean isRevealed,int x_component,int y_component){
-
-        this.isMine=isMine;
-        this.isRevealed=isRevealed;
-        this.x_component=x_component;
-        this.y_component=y_component;
-        this.neighbors= new ArrayList<>();
+        this.isMine = isMine;
+        this.isRevealed = isRevealed;
+        this.x_component = x_component;
+        this.y_component = y_component;
+        this.neighbors = new ArrayList<>();
     }
-
 
     public boolean getMine() {
         return isMine;
     }
 
-
-    public void setMine(boolean mine) { // Sets mine to on or off based on the passed boolean value. This method can be used to overwrite the setMine method below.
+    public void setMine(boolean mine) { // Sets mine to on or off based on the passed boolean value. This method can be
+                                        // used to overwrite the setMine method below.
         isMine = mine;
     }
 
+    public boolean setMine(int board_row_length) { // Sets mine to on or off with probability on of 1/n. It returns true
+                                                   // for mine or false for no mine.
 
-    public boolean setMine(int board_row_length) { // Sets mine to on or off with probability on of 1/n. It returns true for mine or false for no mine.
-
-        int RandomMine,RandomMine2;
+        int RandomMine, RandomMine2;
         boolean mine;
         RandomMine = (int) (Math.random() * ((board_row_length - 1) + 1)) + 1;
-        RandomMine2= (int) (Math.random() * ((board_row_length - 1) + 1)) + 1;
+        RandomMine2 = (int) (Math.random() * ((board_row_length - 1) + 1)) + 1;
 
-        if(RandomMine==RandomMine2){
+        if (RandomMine == RandomMine2) {
             mine = true;
         }
 
-            else {
-                mine = false;
+        else {
+            mine = false;
         }
 
         isMine = mine;
         return mine;
     }
 
-
     public boolean isRevealed() {
         return isRevealed;
     }
-
 
     public void setRevealed(boolean revealed) {
         isRevealed = revealed; // Something based off mouse clicking events
     }
 
-
     public int getX_component() {
         return x_component;
     }
-
 
     public void setX_component(int x_component) {
         this.x_component = x_component;
     }
 
-
     public int getY_component() {
         return y_component;
     }
-
 
     public void setY_component(int y_component) {
         this.y_component = y_component;
     }
 
-
     public ArrayList<Tile> getNeighbors() {
         return neighbors;
     }
 
-
-    public void add_neighbor(Tile new_neighbor_tile){
+    public void add_neighbor(Tile new_neighbor_tile) {
         this.neighbors.add(new_neighbor_tile);
     }
 
+    public boolean has_neighbor(Tile possible_neighbor) {
 
-    public boolean has_neighbor(Tile possible_neighbor){
+        if (this.neighbors.contains(possible_neighbor)) {
+            return true;
+        }
 
-        if (this.neighbors.contains(possible_neighbor)){
-            return true;}
-
-            else{
+        else {
             return false;
         }
     }
-
 
     public int getNumMineNeighbors() {
         return numMineNeighbors;
     }
 
-
     public void setNumMineNeighbors() {
-        int numMineNeighbors=0;
-        for(Tile neighbor: this.neighbors) {
-            if(neighbor.getMine()){
+        int numMineNeighbors = 0;
+        for (Tile neighbor : this.neighbors) {
+            if (neighbor.getMine()) {
                 numMineNeighbors++;
             }
         }
         this.numMineNeighbors = numMineNeighbors;
     }
 
+    public boolean isFlag() {
+        return isFlag;
+    }
+
+    public void setFlag(boolean on_off) {
+        isFlag = on_off;
+    }
 
 }
