@@ -10,7 +10,7 @@ public class Board {
     //basic constructor for ease of making a board
     public Board()
     {
-      //sets the board to an empty arraylist
+        //sets the board to an empty arraylist
         board = new ArrayList<>();
     }
 
@@ -63,7 +63,7 @@ public class Board {
             }
             else {
                 Tile1.setRevealed(true);
-		setRemainingTiles();
+                setRemainingTiles();
                 if (Tile1.getNumMineNeighbors() == 0) {
                     for (Tile Tile2 : Tile1.neighbors) {
                         reveal(Tile2.getX_component()*board_row_length + Tile2.getY_component());
@@ -71,13 +71,14 @@ public class Board {
                 }
             }
         }
-		return false;
+        return false;
     }
-    
+
     public int getNumBoardMines() {return numBoardMines;}
-    
+
     public boolean getRemainingTiles() {return numCoveredTiles == numBoardMines;}
-    
+
     public void setRemainingTiles() {numCoveredTiles--;}
 
 }
+
