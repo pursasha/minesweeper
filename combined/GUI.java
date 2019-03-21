@@ -42,6 +42,7 @@ public class GUI extends JFrame {
         int fontW, fontH;
         String mineNums;
         int fontsize = 48;
+		ImageLibrary imageSet = new ImageLibrary();
 
         // sets background color
         public void paintComponent(Graphics graphics) {
@@ -63,22 +64,28 @@ public class GUI extends JFrame {
                     blockY = j * 90 + spacing + 62;
 
                     isMouseHere(i, j, spacing, graphics);
-                    if (gameOver == true || mineBoard.getRemainingTiles() == true) {
+                    if (gameOver == true || mineBoard.getRemainingTiles() == true)
+					{
                         dispTileBox(graphics, blockX, blockY, spacing, i, j);
                         displayTileText(graphics, fontData, i, j, blockX, blockY);
-                    } else if (mineBoard.getBoard().get((i * boardSize) + j).isRevealed()) {
+                    }
+					else if (mineBoard.getBoard().get((i * boardSize) + j).isRevealed())
+					{
                         dispTileBox(graphics, blockX, blockY, spacing, i, j);
                         displayTileText(graphics, fontData, i, j, blockX, blockY);
-                    } else {
-                        if (mineBoard.getBoard().get((i * boardSize) + j).isFlag()) {
-                            graphics.setColor(Color.magenta);
-                        } else {
-                            graphics.setColor(Color.lightGray);
-                        }
-                        graphics.fillRect(blockX, blockY, 90 - spacing, 90 - spacing);
-                        if (testBoard) {
-                            displayTileText(graphics, fontData, i, j, blockX, blockY);
-                        }
+                    }
+					else if (mineBoard.getBoard().get((i * boardSize) + j).isFlag())
+					{
+						dispTileBox(graphics, blockX, blockY, spacing, i, j);
+                        displayTileText(graphics, fontData, i, j, blockX, blockY);
+                    }
+					else
+					{
+                        graphics.setColor(Color.lightGray);
+                    }
+                    graphics.fillRect(blockX, blockY, 90 - spacing, 90 - spacing);
+                    if (testBoard) {
+                    	displayTileText(graphics, fontData, i, j, blockX, blockY);
                     }
                 }
             }
@@ -133,21 +140,35 @@ public class GUI extends JFrame {
             graphics.fillRect(blockX, blockY, 90 - spacing, 90 - spacing);
         }
 
-        public void displayTileText(Graphics graphics, FontMetrics fontData, int i, int j, int blockX, int blockY)
-        // displays the text for the tile
-        {
-            graphics.setColor(Color.black);
-            if (mineBoard.getBoard().get((i * boardSize) + j).getMine()) {
-                mineNums = "M";
-            } else if (mineBoard.getBoard().get((i * boardSize) + j).getNumMineNeighbors() > 0) {
-                mineNums = Integer.toString(mineBoard.getBoard().get((i * boardSize) + j).getNumMineNeighbors());
-            } else {
-                mineNums = " ";
-            }
-            fontW = (int) (fontData.stringWidth(mineNums) / 2);
-            fontH = (int) (fontData.getHeight() / 8);
-            graphics.drawString(mineNums, blockX + 45 - fontW, blockY + 45 + fontH);
-        }
+		public void displayTileText(Graphics graphics, FontMetrics fontData, int i, int j, int blockX, int blockY)
+		// displays the text for the tile
+		{
+
+			graphics.setColor(Color.white);
+			if (mineBoard.getBoard().get((i*boardSize)+j).getMine())
+			{
+				//mineNums="M";
+				graphics.drawImage(imageSet.getImage(9), blockX, blockY, 85, 85, this);
+			}
+			else if (mineBoard.getBoard().get((i*boardSize)+j).getNumMineNeighbors() > 0)
+			{
+				int mineInt = mineBoard.getBoard().get((i*boardSize)+j).getNumMineNeighbors();
+				graphics.drawImage(imageSet.getImage(mineInt), blockX, blockY, 85, 85, this);
+			}
+			else if (mineBoard.getBoard().get((i*boardSize)+j).isFlag())
+			{
+				int mineInt = mineBoard.getBoard().get((i*boardSize)+j).getNumMineNeighbors();
+				graphics.drawImage(imageSet.getImage(10), blockX, blockY, 85, 85, this);
+			}
+			else
+			{
+				//mineNums=" ";
+
+			}
+			//fontW=(int)(fontData.stringWidth(mineNums)/2);
+			//fontH=(int)(fontData.getHeight()/8);
+			//graphics.drawString(mineNums, blockX + 45 - fontW, blockY + 45 + fontH);
+		}
     }
 
     // sets display for mouse movement and coordinates

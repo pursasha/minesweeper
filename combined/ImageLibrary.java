@@ -1,25 +1,55 @@
-package com.company;
-
 import javax.swing.*;
 import java.awt.*;
+import javax.imageio.*;
+import java.io.*;
+import java.net.URL;
+import java.net.MalformedURLException;
 
-public class ImageLibrary {
-    private ImageIcon[] images = new ImageIcon[11];
-    private String path = "C:\\Users\\richa\\Documents\\Classes\\MineSweeperProject\\images\\Number";
+public class ImageLibrary{
+    private Image[] images = new Image[11];
+	private String path = "https://web.cs.sunyit.edu/~schneieh/images/";
+	//private String path = "images/";
+	private URL dummy;
+	private URL base;
  //Constructor
     public ImageLibrary(){
-       path = path.replace("\\","/");
-        for(int i = 0; i<11;i++){
-            images[i] = new ImageIcon(path+i+".png");
+
+		try {
+			base = new URL(path);
+		}
+		catch (MalformedURLException e)
+		{
+			throw new RuntimeException(e);
+		}
+
+       //path = path.replace("\\","/");
+        for(int i = 0; i < 11; i++ ){
+
+			try {
+				dummy = new URL(path+"Number"+i+".png");
+			}
+			catch (MalformedURLException e)
+			{
+				throw new RuntimeException(e);
+			}
+
+			System.out.println("image " + i + " loading");
+			try
+    		{
+      		//images[i] = ImageIO.read(new File(path+"Number"+i+".png"));
+			images[i]= ImageIO.read(dummy);
+    		}
+    		catch (IOException e)
+    		{
+    		}
             if(images[i]==null)
                 System.out.println("Path Not Found");
         }
     }
     //Returns the Image from the ImageIcon array(Skips a step 4 u)
     public Image getImage(int numMines){
-        if(numMines ==0)
-            return images[10].getImage().getScaledInstance(86,86,Image.SCALE_FAST);
-        return images[numMines].getImage().getScaledInstance(86,86,Image.SCALE_FAST);
+		//System.out.println(numMines + " gotten");
+        return images[numMines].getScaledInstance(85, 85, Image.SCALE_FAST);
     }
 
 }
