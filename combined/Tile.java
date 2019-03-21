@@ -28,12 +28,12 @@ public class Tile implements Serializable {
     }
 
     public void setMine(boolean mine) { // Sets mine to on or off based on the passed boolean value. This method can be
-                                        // used to overwrite the setMine method below.
+        // used to overwrite the setMine method below.
         isMine = mine;
     }
 
     public boolean setMine(int board_row_length) { // Sets mine to on or off with probability on of 1/n. It returns true
-                                                   // for mine or false for no mine.
+        // for mine or false for no mine.
 
         int RandomMine, RandomMine2;
         boolean mine;
