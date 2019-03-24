@@ -82,11 +82,11 @@ public class GUI extends JFrame {
 					else
 					{
                         graphics.setColor(Color.lightGray);
+						graphics.fillRect(blockX, blockY, 90 - spacing, 90 - spacing);
                     }
-                    graphics.fillRect(blockX, blockY, 90 - spacing, 90 - spacing);
-                    if (testBoard) {
-                    	displayTileText(graphics, fontData, i, j, blockX, blockY);
-                    }
+                //    if (testBoard) {
+                //    	displayTileText(graphics, fontData, i, j, blockX, blockY);
+                //    }
                 }
             }
         }
@@ -155,15 +155,15 @@ public class GUI extends JFrame {
 				int mineInt = mineBoard.getBoard().get((i*boardSize)+j).getNumMineNeighbors();
 				graphics.drawImage(imageSet.getImage(mineInt), blockX, blockY, 85, 85, this);
 			}
-			else if (mineBoard.getBoard().get((i*boardSize)+j).isFlag())
-			{
-				int mineInt = mineBoard.getBoard().get((i*boardSize)+j).getNumMineNeighbors();
-				graphics.drawImage(imageSet.getImage(10), blockX, blockY, 85, 85, this);
-			}
 			else
 			{
 				//mineNums=" ";
 
+			}
+			if (mineBoard.getBoard().get((i*boardSize)+j).isFlag())
+			{
+				int mineInt = mineBoard.getBoard().get((i*boardSize)+j).getNumMineNeighbors();
+				graphics.drawImage(imageSet.getImage(10), blockX, blockY, 85, 85, this);
 			}
 			//fontW=(int)(fontData.stringWidth(mineNums)/2);
 			//fontH=(int)(fontData.getHeight()/8);
@@ -197,13 +197,16 @@ public class GUI extends JFrame {
                 System.out.println("X: " + boardX + " Y: " + boardY);
                 if (SwingUtilities.isRightMouseButton(a)) {
                     System.out.println("Right Click");
-                    if (mineBoard.getBoard().get(tileID).isFlag()) {
+                    if (mineBoard.getBoard().get(tileID).isFlag() && !mineBoard.getBoard().get(tileID).isRevealed()) {
                         mineBoard.getBoard().get(tileID).setFlag(false);
-                    } else {
+                    } else if (!mineBoard.getBoard().get(tileID).isRevealed()) {
                         mineBoard.getBoard().get(tileID).setFlag(true);
                     }
                 } else {
-                    gameOver = mineBoard.reveal(tileID);
+					if (!mineBoard.getBoard().get(tileID).isflag())
+					{
+                    	gameOver = mineBoard.reveal(tileID);
+					}
                 }
             } catch (Exception e) {
                 System.out.println("Error caught " + e);
