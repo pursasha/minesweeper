@@ -1,5 +1,6 @@
 public class Minesweeper implements Runnable {
-    GUI gui = new GUI();
+    public int boardSize;
+    GUI gui;
 
     public static void main(String[] args){
 
@@ -7,11 +8,18 @@ public class Minesweeper implements Runnable {
         Menu menu = new Menu();
         menu.showFrame();
     }
+
+   public Minesweeper(int boardSize) {
+       this.boardSize = boardSize;
+       gui = new GUI(boardSize);
+    }
+
     @Override
     public void run(){
         while(true){
             gui.repaint();
         }
     }
+
 
 }

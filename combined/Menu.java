@@ -9,7 +9,7 @@ import java.io.File;
 public class Menu extends JFrame implements ActionListener, MouseListener, MouseMotionListener  {
 
     private JFrame frame;
-
+    private int easy = 10,medium = 20,hard = 40;
 
     public JPanel splash() {
 
@@ -99,13 +99,17 @@ public class Menu extends JFrame implements ActionListener, MouseListener, Mouse
         else if (cmd.equals("Easy")) {
             System.out.println("Button 1 pressed");
             frame.setVisible(false);
-            new Thread( new Minesweeper()).start();
+            new Thread( new Minesweeper(easy)).start();
         }
         else if (cmd.equals("Medium")) {
             System.out.println("Button 2 pressed");
+            frame.setVisible(false);
+            new Thread( new Minesweeper(medium)).start();
         }
         else if (cmd.equals("Hard")){
             System.out.println("Button 3 pressed");
+            frame.setVisible(false);
+            new Thread( new Minesweeper(hard)).start();
         }
 
         else {
