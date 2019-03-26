@@ -2,11 +2,10 @@ public class Minesweeper implements Runnable {
     GUI gui = new GUI();
 
     public static void main(String[] args){
-        TitleScreen screen = new TitleScreen(10000);
-        screen.showScreen();
 
+        //loads splash and menu
         Menu menu = new Menu();
-        menu.showMenu();
+        menu.showFrame();
     }
     @Override
     public void run(){
