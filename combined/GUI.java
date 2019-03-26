@@ -12,8 +12,8 @@ public class GUI extends JFrame {
     int width = (90) * boardSize + 20;
     int boardX, boardY, tileID = 0;
     int mx, my;
-	int gameMode = 0;
-	//0 for normal, 1 for color colorsweeper
+    int gameMode = 0;
+    //0 for normal, 1 for color colorsweeper
 
     boolean gameOver = false;
 
@@ -44,7 +44,7 @@ public class GUI extends JFrame {
         int fontW, fontH;
         String mineNums;
         int fontsize = 48;
-		ImageLibrary imageSet = new ImageLibrary();
+        ImageLibrary imageSet = new ImageLibrary();
 
         // sets background color
         public void paintComponent(Graphics graphics) {
@@ -67,28 +67,28 @@ public class GUI extends JFrame {
 
                     isMouseHere(i, j, spacing, graphics);
                     if (gameOver == true || mineBoard.getRemainingTiles() == true)
-					{
+                    {
                         dispTileBox(graphics, blockX, blockY, spacing, i, j);
                         displayTileText(graphics, fontData, i, j, blockX, blockY, spacing);
                     }
-					else if (mineBoard.getBoard().get((i * boardSize) + j).isRevealed())
-					{
+                    else if (mineBoard.getBoard().get((i * boardSize) + j).isRevealed())
+                    {
                         dispTileBox(graphics, blockX, blockY, spacing, i, j);
                         displayTileText(graphics, fontData, i, j, blockX, blockY, spacing);
                     }
-					else if (mineBoard.getBoard().get((i * boardSize) + j).isFlag())
-					{
-						dispTileBox(graphics, blockX, blockY, spacing, i, j);
+                    else if (mineBoard.getBoard().get((i * boardSize) + j).isFlag())
+                    {
+                        dispTileBox(graphics, blockX, blockY, spacing, i, j);
                         displayTileText(graphics, fontData, i, j, blockX, blockY, spacing);
                     }
-					else
-					{
+                    else
+                    {
                         graphics.setColor(Color.lightGray);
-						graphics.fillRect(blockX, blockY, 90 - spacing, 90 - spacing);
+                        graphics.fillRect(blockX, blockY, 90 - spacing, 90 - spacing);
                     }
-                //    if (testBoard) {
-                //    	displayTileText(graphics, fontData, i, j, blockX, blockY);
-                //    }
+                    //    if (testBoard) {
+                    //    	displayTileText(graphics, fontData, i, j, blockX, blockY);
+                    //    }
                 }
             }
         }
@@ -142,60 +142,60 @@ public class GUI extends JFrame {
             graphics.fillRect(blockX, blockY, 90 - spacing, 90 - spacing);
         }
 
-		private void displayTileText(Graphics graphics, FontMetrics fontData, int i, int j, int blockX, int blockY, int spacing)
-		// displays the text for the tile
-		{
+        private void displayTileText(Graphics graphics, FontMetrics fontData, int i, int j, int blockX, int blockY, int spacing)
+        // displays the text for the tile
+        {
 
-			graphics.setColor(Color.white);
-			// if tile is mine, displays the mine image
-			if (mineBoard.getBoard().get((i*boardSize)+j).getMine())
-			{
-				graphics.drawImage(imageSet.getImage(9), blockX, blockY, 85, 85, this);
-			}
-			// else if tile is not mine, displays number or color if on color mode
-			else if (mineBoard.getBoard().get((i*boardSize)+j).getNumMineNeighbors() > 0)
-			{
-				if(gameMode == 1)
-				{
-					graphics.setColor(getTileColor(i, j, graphics));
-					graphics.fillRect(blockX, blockY, 90 - spacing, 90 - spacing);
-				}
-				else if (gameMode == 0)
-				{
-					int mineInt = mineBoard.getBoard().get((i*boardSize)+j).getNumMineNeighbors();
-					graphics.drawImage(imageSet.getImage(mineInt), blockX, blockY, 85, 85, this);
-				}
-			}
-			// if the tile is a flag and the game is not over, the flag is displayed
-			if (mineBoard.getBoard().get((i*boardSize)+j).isFlag() && !(gameOver == true || mineBoard.getRemainingTiles() == true))
-			{
-				int mineInt = mineBoard.getBoard().get((i*boardSize)+j).getNumMineNeighbors();
-				graphics.drawImage(imageSet.getImage(10), blockX, blockY, 85, 85, this);
-			}
-		}
-		private Color getTileColor(int x, int y, Graphics graphics)
-		// gets the color of a non-mine tile
-		{
-			Tile tileContext =mineBoard.getBoard().get((x*boardSize)+y);
-			//store for the created colors
-			int num = 0;
-			int r = 0;
-			int g = 0;
-			int b = 0;
-			// get the colors of the nearby mines
-			for(Tile neighbor : tileContext.neighbors)
-			{
-				if( neighbor.getMine() )
-				{
-					r += neighbor.getColor().getRed()*neighbor.getColor().getRed();
-					g += neighbor.getColor().getGreen()*neighbor.getColor().getGreen();
-					b += neighbor.getColor().getBlue()*neighbor.getColor().getBlue();
-					num++;
-				}
-			}
+            graphics.setColor(Color.white);
+            // if tile is mine, displays the mine image
+            if (mineBoard.getBoard().get((i*boardSize)+j).getMine())
+            {
+                graphics.drawImage(imageSet.getImage(9), blockX, blockY, 85, 85, this);
+            }
+            // else if tile is not mine, displays number or color if on color mode
+            else if (mineBoard.getBoard().get((i*boardSize)+j).getNumMineNeighbors() > 0)
+            {
+                if(gameMode == 1)
+                {
+                    graphics.setColor(getTileColor(i, j, graphics));
+                    graphics.fillRect(blockX, blockY, 90 - spacing, 90 - spacing);
+                }
+                else if (gameMode == 0)
+                {
+                    int mineInt = mineBoard.getBoard().get((i*boardSize)+j).getNumMineNeighbors();
+                    graphics.drawImage(imageSet.getImage(mineInt), blockX, blockY, 85, 85, this);
+                }
+            }
+            // if the tile is a flag and the game is not over, the flag is displayed
+            if (mineBoard.getBoard().get((i*boardSize)+j).isFlag() && !(gameOver == true || mineBoard.getRemainingTiles() == true))
+            {
+                int mineInt = mineBoard.getBoard().get((i*boardSize)+j).getNumMineNeighbors();
+                graphics.drawImage(imageSet.getImage(10), blockX, blockY, 85, 85, this);
+            }
+        }
+        private Color getTileColor(int x, int y, Graphics graphics)
+        // gets the color of a non-mine tile
+        {
+            Tile tileContext =mineBoard.getBoard().get((x*boardSize)+y);
+            //store for the created colors
+            int num = 0;
+            int r = 0;
+            int g = 0;
+            int b = 0;
+            // get the colors of the nearby mines
+            for(Tile neighbor : tileContext.neighbors)
+            {
+                if( neighbor.getMine() )
+                {
+                    r += neighbor.getColor().getRed()*neighbor.getColor().getRed();
+                    g += neighbor.getColor().getGreen()*neighbor.getColor().getGreen();
+                    b += neighbor.getColor().getBlue()*neighbor.getColor().getBlue();
+                    num++;
+                }
+            }
 
-			return new Color((int)(Math.sqrt(r/num)), (int)(Math.sqrt(g/num)), (int)(Math.sqrt(b/num)));
-		}
+            return new Color((int)(Math.sqrt(r/num)), (int)(Math.sqrt(g/num)), (int)(Math.sqrt(b/num)));
+        }
     }
 
     // sets display for mouse movement and coordinates
@@ -230,10 +230,10 @@ public class GUI extends JFrame {
                         mineBoard.getBoard().get(tileID).setFlag(true);
                     }
                 } else {
-					if (!(mineBoard.getBoard().get(tileID).isFlag() || mineBoard.getBoard().get(tileID).isRevealed()))
-					{
-                    	gameOver = mineBoard.reveal(tileID);
-					}
+                    if (!(mineBoard.getBoard().get(tileID).isFlag() || mineBoard.getBoard().get(tileID).isRevealed()))
+                    {
+                        gameOver = mineBoard.reveal(tileID);
+                    }
                 }
             } catch (Exception e) {
                 System.out.println("Error caught " + e);
@@ -274,6 +274,18 @@ public class GUI extends JFrame {
 
         }
 
+    }
+
+    // for buttons and menus
+    public void actionPerformed(ActionEvent e) {
+        Object cmd = e.getActionCommand();
+        if (cmd.equals("Exit")) {
+            System.out.println("File -> Exit");
+            System.exit(0);
+        }
+        else {
+            System.out.println("Unknown action");
+        }
     }
 
 }
