@@ -19,12 +19,9 @@ public class Menu extends JFrame implements ActionListener, MouseListener, Mouse
         //content.setLayout(new BorderLayout());
         content.setLayout(new GridLayout(3,1));
 
+
         //sets background
         content.setBackground(Color.decode("#F6F6F6"));
-
-        //sets border
-        //Color Border = new Color(18, 33, 237, 130);
-        //content.setBorder(BorderFactory.createLineBorder(Border, 10));
 
         //adds elements to the panel
         JLabel title = new JLabel("Minesweeper", JLabel.CENTER);
@@ -149,6 +146,7 @@ public class Menu extends JFrame implements ActionListener, MouseListener, Mouse
 
         //sets properties of the frame
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLocationRelativeTo(null);
         frame.setResizable(false);
         frame.setVisible(true);
 
