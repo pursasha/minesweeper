@@ -13,6 +13,12 @@ public class Board {
         //sets the board to an empty arraylist
         board = new ArrayList<>();
     }
+	public Board(int newBoardLength)
+    {
+        //sets the board to an empty arraylist
+        board = new ArrayList<>();
+		board_row_length = newBoardLength;
+    }
 
     public ArrayList<Tile> getBoard() {
         return board;
@@ -81,5 +87,3 @@ public class Board {
     public void setRemainingTiles() {numCoveredTiles--;}
 
 }
-
-

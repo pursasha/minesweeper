@@ -5,20 +5,55 @@ import java.lang.Math;
 
 public class GUI extends JFrame {
 
-    int boardSize = 5;
+    int boardSize = 10;
 
-    Board mineBoard = new Board();
-    int height = (90) * boardSize + 30 + 12 + 62;
-    int width = (90) * boardSize + 20;
+    Board mineBoard;
+    int height;
+    int width;
     int boardX, boardY, tileID = 0;
     int mx, my;
     int gameMode = 0;
+	int tileSize = 40;
     //0 for normal, 1 for color colorsweeper
 
     boolean gameOver = false;
 
     // Creating a window
-    public GUI() {
+	public GUI(int newSize) {
+
+		boardSize = newSize;
+
+		tileSize = 30;
+	    mineBoard = new Board(boardSize);
+	    height = (tileSize) * boardSize + 30 + 12 + 62;
+	    width = (tileSize) * boardSize + 20;
+
+
+        mineBoard.setSquareBoard();
+        this.setTitle("Minesweeper"); // sets title to window
+        this.setSize(width, height); // sets size of the window
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // makes sure program is terminated when exited
+        this.setResizable(false); // set it so no one can resize the window
+
+        FBoard GUIboard = new FBoard();
+        this.setContentPane(GUIboard);// sets content panel
+        this.setVisible(true); // makes window visible
+
+        Move move = new Move();
+        this.addMouseMotionListener(move);
+
+        Click click = new Click();
+        this.addMouseListener(click);
+
+    }
+	public GUI() {
+
+		boardSize = 10;
+
+		mineBoard = new Board(boardSize);
+	    height = (tileSize) * boardSize + 30 + 12 + 62;
+	    width = (tileSize) * boardSize + 20;
+
         mineBoard.setSquareBoard();
         this.setTitle("Minesweeper"); // sets title to window
         this.setSize(width, height); // sets size of the window
@@ -56,15 +91,16 @@ public class GUI extends JFrame {
             topDisp(graphics, fontData);
 
             // sets grid
-            int spacing = boardSize;
+            int spacing = 3;
             int i, j;
             int blockX, blockY;
             for (i = 0; i < boardSize; i++) {
                 for (j = 0; j < boardSize; j++) {
 
-                    blockX = i * 90 + spacing;
-                    blockY = j * 90 + spacing + 62;
+                    blockX = i * tileSize + spacing;
+                    blockY = j * tileSize + spacing + 62;
 
+					graphics.setColor(Color.lightGray);
                     isMouseHere(i, j, spacing, graphics);
                     if (gameOver == true || mineBoard.getRemainingTiles() == true)
                     {
@@ -83,8 +119,8 @@ public class GUI extends JFrame {
                     }
                     else
                     {
-                        graphics.setColor(Color.lightGray);
-                        graphics.fillRect(blockX, blockY, 90 - spacing, 90 - spacing);
+
+                        graphics.fillRect(blockX, blockY, tileSize - spacing, tileSize - spacing);
                     }
                     //    if (testBoard) {
                     //    	displayTileText(graphics, fontData, i, j, blockX, blockY);
@@ -120,8 +156,8 @@ public class GUI extends JFrame {
         private void isMouseHere(int i, int j, int spacing, Graphics graphics)
         // functionized version of the mouse location test
         {
-            if (mx >= (i * 90) + spacing + 8 && mx < ((i + 1) * 90) + spacing + 8
-                    && my >= ((j * 90) + spacing + 31 + 62) && my < ((j + 1) * 90) + spacing + 31 + 62) {
+            if (mx >= (i * tileSize) + spacing + 3 && mx < ((i + 1) * tileSize) + spacing + 3
+                    && my >= ((j * tileSize) + spacing + 30 + 62) && my < ((j + 1) * tileSize) + spacing + 30 + 62) {
                 // this gets the corresponding tile coordinates
                 boardX = i;
                 boardY = j;
@@ -139,7 +175,7 @@ public class GUI extends JFrame {
             } else {
                 graphics.setColor(Color.white);
             }
-            graphics.fillRect(blockX, blockY, 90 - spacing, 90 - spacing);
+            graphics.fillRect(blockX, blockY, tileSize - spacing, tileSize - spacing);
         }
 
         private void displayTileText(Graphics graphics, FontMetrics fontData, int i, int j, int blockX, int blockY, int spacing)
@@ -150,7 +186,7 @@ public class GUI extends JFrame {
             // if tile is mine, displays the mine image
             if (mineBoard.getBoard().get((i*boardSize)+j).getMine())
             {
-                graphics.drawImage(imageSet.getImage(9), blockX, blockY, 85, 85, this);
+                graphics.drawImage(imageSet.getImage(9), blockX, blockY, tileSize-spacing, tileSize-spacing, this);
             }
             // else if tile is not mine, displays number or color if on color mode
             else if (mineBoard.getBoard().get((i*boardSize)+j).getNumMineNeighbors() > 0)
@@ -158,19 +194,19 @@ public class GUI extends JFrame {
                 if(gameMode == 1)
                 {
                     graphics.setColor(getTileColor(i, j, graphics));
-                    graphics.fillRect(blockX, blockY, 90 - spacing, 90 - spacing);
+                    graphics.fillRect(blockX, blockY, tileSize - spacing, tileSize - spacing);
                 }
                 else if (gameMode == 0)
                 {
                     int mineInt = mineBoard.getBoard().get((i*boardSize)+j).getNumMineNeighbors();
-                    graphics.drawImage(imageSet.getImage(mineInt), blockX, blockY, 85, 85, this);
+                    graphics.drawImage(imageSet.getImage(mineInt), blockX, blockY, tileSize-spacing, tileSize-spacing, this);
                 }
             }
             // if the tile is a flag and the game is not over, the flag is displayed
             if (mineBoard.getBoard().get((i*boardSize)+j).isFlag() && !(gameOver == true || mineBoard.getRemainingTiles() == true))
             {
                 int mineInt = mineBoard.getBoard().get((i*boardSize)+j).getNumMineNeighbors();
-                graphics.drawImage(imageSet.getImage(10), blockX, blockY, 85, 85, this);
+                graphics.drawImage(imageSet.getImage(10), blockX, blockY, tileSize-spacing, tileSize-spacing, this);
             }
         }
         private Color getTileColor(int x, int y, Graphics graphics)
@@ -187,14 +223,14 @@ public class GUI extends JFrame {
             {
                 if( neighbor.getMine() )
                 {
-                    r += neighbor.getColor().getRed()*neighbor.getColor().getRed();
-                    g += neighbor.getColor().getGreen()*neighbor.getColor().getGreen();
-                    b += neighbor.getColor().getBlue()*neighbor.getColor().getBlue();
+                    r += neighbor.getColor().getRed();
+                    g += neighbor.getColor().getGreen();
+                    b += neighbor.getColor().getBlue();
                     num++;
                 }
             }
 
-            return new Color((int)(Math.sqrt(r/num)), (int)(Math.sqrt(g/num)), (int)(Math.sqrt(b/num)));
+            return new Color((int)(r/num), (int)(g/num), (int)(b/num));
         }
     }
 
@@ -209,9 +245,9 @@ public class GUI extends JFrame {
             // System.out.println("the mouse was moved");
             mx = a.getX();
             my = a.getY();
-            // System.out.println("x:" + mx + " y:" + my);
+            //System.out.println("x:" + mx + " y:" + my);
 
-            // System.out.println("board X:" + boardX + " board y:" + boardY);
+            //System.out.println("board X:" + boardX + " board y:" + boardY);
         }
 
     }

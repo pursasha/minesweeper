@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.net.URL;
+import java.net.MalformedURLException;
 
 public class TitleScreen extends JWindow {
     private int duration;
@@ -19,9 +21,18 @@ public class TitleScreen extends JWindow {
         // Set the window size
         this.setSize(470, 554);
 
-        // JLabel label = new JLabel(new ImageIcon("mine.jpeg"));
-        //Icon icon = new ImageIcon("mine.jpeg");
-        //content.add(label, BorderLayout.CENTER);
+		try {
+            URL url = new URL("https://web.cs.sunyit.edu/~schneieh/images/mine.jpeg");
+
+
+        JLabel label = new JLabel(new ImageIcon(url));
+        Icon icon = new ImageIcon(url);
+        content.add(label, BorderLayout.CENTER);
+		}
+		catch (MalformedURLException e)
+		{
+			throw new RuntimeException(e);
+		}
 
         JLabel Title = new JLabel("Minesweeper", JLabel.CENTER);
         Title.setFont(new Font("Courier", Font.BOLD, 55));
@@ -44,5 +55,3 @@ public class TitleScreen extends JWindow {
         }
     }
 }
-
-
