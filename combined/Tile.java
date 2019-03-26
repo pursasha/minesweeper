@@ -14,8 +14,8 @@ public class Tile implements Serializable {
     private int y_component;
     public ArrayList<Tile> neighbors;
     int numMineNeighbors;
-	// color of the tile, defaults to white, only set if the tile is a mine
-	private Color tileColor = Color.white;
+    // color of the tile, defaults to white, only set if the tile is a mine
+    private Color tileColor = Color.white;
 
     public Tile(boolean isMine, boolean isRevealed, int x_component, int y_component) {
 
@@ -33,19 +33,19 @@ public class Tile implements Serializable {
     public void setMine(boolean mine) { // Sets mine to on or off based on the passed boolean value. This method can be
         // used to overwrite the setMine method below.
         isMine = mine;
-		//gives the mine a ramdom color of reg green or blue
-		switch ((int)(Math.random() * 3))
-		{
-			case 0:
-				tileColor = new Color (0, 0, 255);
-				break;
-			case 1:
-				tileColor = new Color (0, 255, 0);
-				break;
-			case 2:
-				tileColor = new Color (255, 0, 0);
-				break;
-		}
+        //gives the mine a ramdom color of reg green or blue
+        switch ((int)(Math.random() * 3))
+        {
+            case 0:
+                tileColor = new Color (0, 0, 255);
+                break;
+            case 1:
+                tileColor = new Color (0, 255, 0);
+                break;
+            case 2:
+                tileColor = new Color (255, 0, 0);
+                break;
+        }
     }
 
     public boolean setMine(int board_row_length) { // Sets mine to on or off with probability on of 1/n. It returns true
@@ -58,19 +58,19 @@ public class Tile implements Serializable {
 
         if (RandomMine == RandomMine2) {
             mine = true;
-			//gives the mine a ramdom color of reg green or blue
-			switch ((int)(Math.random() * 3))
-			{
-				case 0:
-					tileColor = new Color (0, 0, 255);
-					break;
-				case 1:
-					tileColor = new Color (0, 255, 0);
-					break;
-				case 2:
-					tileColor = new Color (255, 0, 0);
-					break;
-			}
+            //gives the mine a ramdom color of reg green or blue
+            switch ((int)(Math.random() * 3))
+            {
+                case 0:
+                    tileColor = new Color (0, 0, 255);
+                    break;
+                case 1:
+                    tileColor = new Color (0, 255, 0);
+                    break;
+                case 2:
+                    tileColor = new Color (255, 0, 0);
+                    break;
+            }
         }
 
         else {
@@ -146,15 +146,15 @@ public class Tile implements Serializable {
         isFlag = on_off;
     }
 
-	public Color getColor()
-	//get the color of the tile
-	{
-		return tileColor;
-	}
-	public void setColor(Color newColor)
-	// set the color of the tile
-	{
-		tileColor = newColor;
-	}
+    public Color getColor()
+    //get the color of the tile
+    {
+        return tileColor;
+    }
+    public void setColor(Color newColor)
+    // set the color of the tile
+    {
+        tileColor = newColor;
+    }
 
 }
