@@ -24,6 +24,7 @@ public class GUI extends JFrame {
         this.setSize(width, height); // sets size of the window
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // makes sure program is terminated when exited
         this.setResizable(false); // set it so no one can resize the window
+        setLocationRelativeTo(null);
 
         FBoard GUIboard = new FBoard();
         this.setContentPane(GUIboard);// sets content panel
