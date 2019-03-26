@@ -1,42 +1,77 @@
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import javax.swing.JPanel;
-import javax.swing.JWindow;
 import java.awt.BorderLayout;
-import javax.swing.BorderFactory;
+import java.awt.image.BufferedImage;
+import javax.imageio.*;
+import java.io.File;
 
-
-public class Menu extends JWindow implements ActionListener, MouseListener, MouseMotionListener  {
+public class Menu extends JFrame implements ActionListener, MouseListener, MouseMotionListener  {
 
     private JFrame frame;
 
-    public void showMenu() {
 
-        //panel of buttons
-        JPanel buttons = (JPanel) getContentPane();
-        buttons.setPreferredSize(new Dimension(470, 554));
-       //this.setSize(560, 600);
+    public JPanel splash() {
 
-        //set background color
-        buttons.setLayout(new BoxLayout(buttons, BoxLayout.PAGE_AXIS));
-        buttons.setBackground(Color.lightGray);
+        JPanel content = new JPanel();
+
+        //sets panel layout
+        //content.setLayout(new BorderLayout());
+        content.setLayout(new GridLayout(3,1));
+
+        //sets background
+        content.setBackground(Color.decode("#F6F6F6"));
 
         //sets border
-        Color Border = new Color(18, 33, 237, 130);
-        buttons.setBorder(BorderFactory.createLineBorder(Border, 10));
+        //Color Border = new Color(18, 33, 237, 130);
+        //content.setBorder(BorderFactory.createLineBorder(Border, 10));
 
-        GridLayout layout = new GridLayout(8, 1, 5, 5);
-        getContentPane().setLayout(layout);
-
-        JLabel title = new JLabel(" Minesweeper!", JLabel.CENTER);
+        //adds elements to the panel
+        JLabel title = new JLabel("Minesweeper", JLabel.CENTER);
         title.setFont(new Font("Courier", Font.BOLD, 55));
-        buttons.add(title, SwingConstants.CENTER);
+        content.add(title, BorderLayout.CENTER);
 
-        JLabel subTitle = new JLabel("Select a mode:", JLabel.CENTER);
-        subTitle.setFont(new Font("Courier", Font.BOLD, 25));
+        try {
+            BufferedImage image = ImageIO.read(new File("./mine.jpeg"));
+            Image mine = image.getScaledInstance(150, 180, Image.SCALE_SMOOTH);
+            JLabel label = new JLabel(new ImageIcon(mine));
+            content.add(label, BorderLayout.CENTER);
+        } catch (Exception e) {
+            System.out.println("No image");
+        }
+
+        JLabel names = new JLabel("By Alex, Ethan, Chris, Dylan, Richard, Thais", JLabel.CENTER);
+        names.setFont(new Font("Sans-Serif", Font.BOLD, 18));
+        content.add(names, BorderLayout.SOUTH);
+
+        return content;
+    }
+
+
+
+    public JPanel menu() {
+
+        JPanel buttons = new JPanel();
+
+        //sets panel layout
+        buttons.setLayout(new GridLayout(7,1));
+
+        //sets background
+        buttons.setBackground(Color.gray);
+
+        //sets border
+        //Color Border = new Color(18, 33, 237, 130);
+        //buttons.setBorder(BorderFactory.createLineBorder(Border, 10));
+        buttons.setBorder(BorderFactory.createLineBorder(Color.gray, 30));
+
+        //adds elements to the panel
+        JLabel title = new JLabel("Minesweeper", JLabel.CENTER);
+        title.setFont(new Font("Courier", Font.BOLD, 55));
+        buttons.add(title, BorderLayout.CENTER);
+
+        JLabel subTitle = new JLabel("Select a mode", JLabel.CENTER);
+        subTitle.setFont(new Font("Courier", Font.BOLD, 20));
         buttons.add(subTitle, BorderLayout.CENTER);
-
 
         JButton button1 = new JButton("Easy");
         JButton button2 = new JButton("Medium");
@@ -52,41 +87,15 @@ public class Menu extends JWindow implements ActionListener, MouseListener, Mous
         buttons.add(button3);
         buttons.add(button4);
 
-
-        buttons.setVisible(true);
-
-        // menuBar
-        JMenuBar menuBar = new JMenuBar();
-        JMenu menu = new JMenu("File");
-        menuBar.add(menu);
-        JMenuItem menuExit = new JMenuItem("Exit");
-        menuExit.addActionListener(this);
-        menu.add(menuExit);
-
-        // setup the frame and add components
-        frame = new JFrame();
-
-        frame.setJMenuBar(menuBar);
-        frame.add(buttons,BorderLayout.LINE_END);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setResizable(false);
-
-        frame.pack();
-
-        frame.setVisible(true);
+        return buttons;
     }
 
-
-    public void show() {
-
-        frame.repaint();
-    }
 
 
     // for buttons and menus
     public void actionPerformed(ActionEvent e) {
         Object cmd = e.getActionCommand();
-        if      (cmd.equals("Exit")) {
+        if (cmd.equals("Exit")) {
             System.out.println("File -> Exit");
             System.exit(0);
         }
@@ -112,8 +121,6 @@ public class Menu extends JWindow implements ActionListener, MouseListener, Mous
         int x = e.getX();
         int y = e.getY();
         System.out.println("Mouse pressed at " + x + ", " + y);
-
-        show();
     }
 
     public void mouseClicked (MouseEvent e) { }
@@ -124,22 +131,47 @@ public class Menu extends JWindow implements ActionListener, MouseListener, Mous
     public void mouseMoved   (MouseEvent e) { }
 
 
-   // public static void main(String[] args) {
-      //  Menu menu = new Menu();
 
-   // }
+    public void showFrame() {
 
-}
+        frame = new JFrame();
 
-/*
-    // for the keyboard
+        //loads panels
+        JPanel mySplash = splash();
+        JPanel myMenu = menu();
 
-    implement KeyListener
-    public void keyPressed (KeyEvent e) { }
-    public void keyReleased(KeyEvent e) { }
+        //sets frame size and title
+        frame.setBounds(200, 200, 470, 554);
+        frame.setTitle("Minesweeper");
 
-    public void keyTyped(KeyEvent e) {
-        System.out.println("Key = '" + e.getKeyChar() + "'");
+        //adds splash to the frame
+        frame.getContentPane().add(mySplash, BorderLayout.CENTER);
+
+        //sets properties of the frame
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setResizable(false);
+        frame.setVisible(true);
+
+
+        //waits then makes the title screen disappear
+        try {
+            Thread.sleep(7000);
+        } catch (Exception e) {
+        }
+        frame.remove(mySplash);
+
+        //add the menuBar
+        JMenuBar menuBar = new JMenuBar();
+        JMenu menu = new JMenu("File");
+        menuBar.add(menu);
+        JMenuItem menuExit = new JMenuItem("Exit");
+        menuExit.addActionListener(this);
+        menu.add(menuExit);
+
+        frame.setJMenuBar(menuBar);
+
+        //add the menu to the frame
+        frame.add(myMenu);
+        frame.revalidate();
     }
-
-    center.addKeyListener(this);*/
+}
