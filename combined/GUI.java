@@ -139,7 +139,7 @@ public class GUI extends JFrame {
                 graphics.setColor(Color.white);
                 fontW = (int) (fontData.stringWidth("GAME OVER") / 2);
                 graphics.drawString("GAME OVER", width / 2 - fontW, 54);
-            } else if (mineBoard.getRemainingTiles()) {
+            } else if (mineBoard.winner()) {
                 graphics.setColor(Color.lightGray);
                 graphics.fillRect(0, 0, width, height);
                 graphics.setColor(Color.black);
@@ -263,6 +263,7 @@ public class GUI extends JFrame {
                     System.out.println("Right Click");
                     if (mineBoard.getBoard().get(tileID).isFlag() && !mineBoard.getBoard().get(tileID).isRevealed()) {
                         mineBoard.getBoard().get(tileID).setFlag(false);
+
                     } else if (!mineBoard.getBoard().get(tileID).isRevealed()) {
                         mineBoard.getBoard().get(tileID).setFlag(true);
                     }
@@ -272,6 +273,7 @@ public class GUI extends JFrame {
                         gameOver = mineBoard.reveal(tileID);
                     }
                 }
+
             } catch (Exception e) {
                 System.out.println("Error caught " + e);
             }
