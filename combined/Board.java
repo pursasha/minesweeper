@@ -6,6 +6,7 @@ public class Board {
     private int numBoardMines = 0;
     private int numCoveredTiles = board_row_length * board_row_length;
     private ArrayList<Tile> board;
+    private boolean first_click=true;
 
     //basic constructor for ease of making a board
     public Board()
@@ -60,8 +61,25 @@ public class Board {
         }
     }
 
-    public boolean reveal(int tileID) {
+
+
+ public boolean reveal(int tileID) {
         Tile Tile1 = board.get(tileID);
+	if(first_click==true){
+	if(Tile1.getMine()==true)
+	{
+	for(Tile Tile1Neighbor : Tile1.neighbors)
+	{
+			if(Tile1Neighbor.getX_component()*board_row_length+Tile1Neighbor.getY_component()!=tileID){
+			Tile1Neighbor.decrementNumMineNeighbors();
+		}
+	}
+		Tile1.setMine(false);
+	}
+	first_click=false;
+	}
+
+
         if (!(Tile1.isRevealed()))
         {
             if (Tile1.getMine()) {
