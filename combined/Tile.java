@@ -138,6 +138,11 @@ public class Tile implements Serializable {
         this.numMineNeighbors = numMineNeighbors;
     }
 
+
+    public void decrementNumMineNeighbors() {
+        numMineNeighbors=numMineNeighbors-1;
+    }
+
     public boolean isFlag() {
         return isFlag;
     }
