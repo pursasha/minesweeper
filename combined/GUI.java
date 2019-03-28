@@ -26,7 +26,7 @@ public class GUI extends JFrame {
 
         boardSize = newSize;
 
-        tileSize = 30;
+        tileSize = 20;
         mineBoard = new Board(boardSize);
         height = (tileSize) * boardSize + 30 + 12 + 62;
         width = (tileSize) * boardSize + 20;
