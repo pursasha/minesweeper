@@ -9,9 +9,9 @@ public class Minesweeper implements Runnable {
         menu.showFrame();
     }
 
-   public Minesweeper(int boardSize) {
-       this.boardSize = boardSize;
-       gui = new GUI(boardSize);
+    public Minesweeper(int boardSize, int gameMode) {
+        this.boardSize = boardSize;
+        gui = new GUI(boardSize, gameMode);
     }
 
     @Override
@@ -20,6 +20,4 @@ public class Minesweeper implements Runnable {
             gui.repaint();
         }
     }
-
-
 }
