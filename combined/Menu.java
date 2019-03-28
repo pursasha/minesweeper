@@ -30,7 +30,7 @@ public class Menu extends JFrame implements ActionListener, MouseListener, Mouse
         content.add(title, BorderLayout.CENTER);
 
         try {
-            BufferedImage image = ImageIO.read(new File("https://web.cs.sunyit.edu/~schneieh/images//mine.jpeg"));
+            BufferedImage image = ImageIO.read(new URL("https://web.cs.sunyit.edu/~schneieh/images//mine.jpeg"));
             Image mine = image.getScaledInstance(150, 180, Image.SCALE_SMOOTH);
             JLabel label = new JLabel(new ImageIcon(mine));
             content.add(label, BorderLayout.CENTER);

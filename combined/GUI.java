@@ -54,7 +54,7 @@ public class GUI extends JFrame {
         boardSize = 10;
 
         mineBoard = new Board(boardSize);
-        height = (tileSize) * boardSize + 30 + 12 + 62;
+        height = (tileSize) * boardSize + 30 + 12 + 55;
         width = (tileSize) * boardSize + 20;
 
         mineBoard.setSquareBoard();
@@ -82,7 +82,7 @@ public class GUI extends JFrame {
 
         int fontW, fontH;
         String mineNums;
-        int fontsize = 48;
+        int fontsize = 48*boardSize/25;
         ImageLibrary imageSet = new ImageLibrary();
 
         // sets background color
@@ -102,7 +102,7 @@ public class GUI extends JFrame {
                 for (j = 0; j < boardSize; j++) {
 
                     blockX = i * tileSize + spacing;
-                    blockY = j * tileSize + spacing + 62;
+                    blockY = j * tileSize + spacing + 55;
 
                     graphics.setColor(Color.lightGray);
                     isMouseHere(i, j, spacing, graphics);
@@ -141,19 +141,19 @@ public class GUI extends JFrame {
                 graphics.fillRect(0, 0, width, height);
                 graphics.setColor(Color.white);
                 fontW = (int) (fontData.stringWidth("GAME OVER") / 2);
-                graphics.drawString("GAME OVER", width / 2 - fontW, 54);
+                graphics.drawString("GAME OVER", width / 2 - fontW, 42);
             } else if (mineBoard.winner()) {
                 graphics.setColor(Color.lightGray);
                 graphics.fillRect(0, 0, width, height);
                 graphics.setColor(Color.black);
                 fontW = (int) (fontData.stringWidth("YOU WIN!") / 2);
-                graphics.drawString("YOU WIN!", width / 2 - fontW, 54);
+                graphics.drawString("YOU WIN!", width / 2 - fontW, 42);
             } else {
                 graphics.setColor(Color.gray);
                 graphics.fillRect(0, 0, width, height);
                 graphics.setColor(Color.black);
                 fontW = (int) (fontData.stringWidth("Minesweeper") / 2);
-                graphics.drawString("Minesweeper!", width / 2 - fontW, 54);
+                graphics.drawString("Minesweeper!", width / 2 - fontW, 42);
             }
         }
 
@@ -161,7 +161,7 @@ public class GUI extends JFrame {
         // functionized version of the mouse location test
         {
             if (mx >= (i * tileSize) + spacing + 3 && mx < ((i + 1) * tileSize) + spacing + 3
-                    && my >= ((j * tileSize) + spacing + 30 + 62) && my < ((j + 1) * tileSize) + spacing + 30 + 62) {
+                    && my >= ((j * tileSize) + spacing + 30 + 55) && my < ((j + 1) * tileSize) + spacing + 30 + 55) {
                 // this gets the corresponding tile coordinates
                 boardX = i;
                 boardY = j;

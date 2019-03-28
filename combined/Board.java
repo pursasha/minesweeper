@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class Board {
     private int board_row_length;
-    private int mine_probability=4; // Reciprocal of actual probability
+    private int mine_probability=5; // Reciprocal of actual probability
     private boolean gameOver=false;
     private int numBoardMines = 0;
     private int numCoveredTiles = board_row_length * board_row_length;
