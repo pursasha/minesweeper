@@ -1,7 +1,8 @@
 import java.util.ArrayList;
 
 public class Board {
-    private int board_row_length=5;
+    private int board_row_length;
+    private int mine_probability=4; // Reciprocal of actual probability
     private boolean gameOver=false;
     private int numBoardMines = 0;
     private int numCoveredTiles = board_row_length * board_row_length;
@@ -33,7 +34,7 @@ public class Board {
         for (int x = 0; x <= board_row_length-1; x++) {   // This for loops adds all tiles to the list for a square board.
             for (int y = 0; y <= board_row_length-1; y++) {
                 Tile newTile = new Tile(true, false, x, y);
-                boolean bool = newTile.setMine(board_row_length); // Places mine on newTile or does not by setMine (with probability of a mine being 1/n)..
+                boolean bool = newTile.setMine(mine_probability); // Places mine on newTile or does not by setMine (with probability of a mine being 1/n)..
                 if (bool) {numBoardMines++;}
 
                 board.add(newTile);
