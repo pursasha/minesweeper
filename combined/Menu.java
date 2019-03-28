@@ -9,7 +9,7 @@ import java.io.File;
 public class Menu extends JFrame implements ActionListener, MouseListener, MouseMotionListener  {
 
     private JFrame frame;
-    private int easy = 10,medium = 20,hard = 40;
+    private int easy = 10,medium = 20,hard = 30;
 
     public JPanel splash() {
 
@@ -41,6 +41,13 @@ public class Menu extends JFrame implements ActionListener, MouseListener, Mouse
         names.setFont(new Font("Sans-Serif", Font.BOLD, 18));
         content.add(names, BorderLayout.SOUTH);
 
+      //  JButton button = new JButton("Click to continue");
+        //button.addActionListener(this);
+        //content.add(button);
+        //button.setVisible(false);
+       // button.setEnabled(true);
+        //button.setPreferredSize(new Dimension(470, 554));
+
         return content;
     }
 
@@ -57,9 +64,7 @@ public class Menu extends JFrame implements ActionListener, MouseListener, Mouse
         buttons.setBackground(Color.gray);
 
         //sets border
-        //Color Border = new Color(18, 33, 237, 130);
-        //buttons.setBorder(BorderFactory.createLineBorder(Border, 10));
-        buttons.setBorder(BorderFactory.createLineBorder(Color.gray, 30));
+        //buttons.setBorder(BorderFactory.createLineBorder(Color.gray, 30));
 
         //adds elements to the panel
         JLabel title = new JLabel("Minesweeper", JLabel.CENTER);
@@ -73,7 +78,7 @@ public class Menu extends JFrame implements ActionListener, MouseListener, Mouse
         JButton button1 = new JButton("Easy");
         JButton button2 = new JButton("Medium");
         JButton button3 = new JButton("Hard");
-        JButton button4 = new JButton("Custom");
+        JButton button4 = new JButton("Color Mode");
         button1.addActionListener(this);
         button2.addActionListener(this);
         button3.addActionListener(this);
@@ -99,19 +104,30 @@ public class Menu extends JFrame implements ActionListener, MouseListener, Mouse
         else if (cmd.equals("Easy")) {
             System.out.println("Button 1 pressed");
             frame.setVisible(false);
-            new Thread( new Minesweeper(easy)).start();
+            new Thread( new Minesweeper(easy, 0)).start();
         }
         else if (cmd.equals("Medium")) {
             System.out.println("Button 2 pressed");
             frame.setVisible(false);
-            new Thread( new Minesweeper(medium)).start();
+            new Thread( new Minesweeper(medium, 0)).start();
         }
         else if (cmd.equals("Hard")){
             System.out.println("Button 3 pressed");
             frame.setVisible(false);
-            new Thread( new Minesweeper(hard)).start();
+            new Thread( new Minesweeper(hard, 0)).start();
         }
+        else if (cmd.equals("Click to continue")){
+            System.out.println("Button pressed");
+            frame.setVisible(false);
+            Menu menu = new Menu();
+            menu.showFrame();
+        }
+        else if (cmd.equals("Color Mode")){
+            System.out.println("Button 4 pressed");
+            frame.setVisible(false);
+            new Thread( new Minesweeper(medium, 1)).start();
 
+        }
         else {
             System.out.println("Unknown action");
         }
@@ -133,7 +149,7 @@ public class Menu extends JFrame implements ActionListener, MouseListener, Mouse
 
 
 
-    public void showFrame() {
+    public void showFrame(){
 
         frame = new JFrame();
 
@@ -153,7 +169,6 @@ public class Menu extends JFrame implements ActionListener, MouseListener, Mouse
         frame.setLocationRelativeTo(null);
         frame.setResizable(false);
         frame.setVisible(true);
-
 
         //waits then makes the title screen disappear
         try {
