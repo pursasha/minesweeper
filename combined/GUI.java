@@ -1,3 +1,4 @@
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -12,21 +13,23 @@ public class GUI extends JFrame {
     int width;
     int boardX, boardY, tileID = 0;
     int mx, my;
-    int gameMode = 0;
-	int tileSize = 40;
     //0 for normal, 1 for color colorsweeper
+    int gameMode = 0;
+    int tileSize = 40;
 
     boolean gameOver = false;
 
     // Creating a window
-	public GUI(int newSize) {
+    public GUI(int newSize, int gameMode) {
 
-		boardSize = newSize;
+        this.gameMode = gameMode;
 
-		tileSize = 30;
-	    mineBoard = new Board(boardSize);
-	    height = (tileSize) * boardSize + 30 + 12 + 62;
-	    width = (tileSize) * boardSize + 20;
+        boardSize = newSize;
+
+        tileSize = 30;
+        mineBoard = new Board(boardSize);
+        height = (tileSize) * boardSize + 30 + 12 + 62;
+        width = (tileSize) * boardSize + 20;
 
 
         mineBoard.setSquareBoard();
@@ -46,13 +49,13 @@ public class GUI extends JFrame {
         this.addMouseListener(click);
 
     }
-	public GUI() {
+    public GUI() {
 
-		boardSize = 10;
+        boardSize = 10;
 
-		mineBoard = new Board(boardSize);
-	    height = (tileSize) * boardSize + 30 + 12 + 62;
-	    width = (tileSize) * boardSize + 20;
+        mineBoard = new Board(boardSize);
+        height = (tileSize) * boardSize + 30 + 12 + 62;
+        width = (tileSize) * boardSize + 20;
 
         mineBoard.setSquareBoard();
         this.setTitle("Minesweeper"); // sets title to window
@@ -101,7 +104,7 @@ public class GUI extends JFrame {
                     blockX = i * tileSize + spacing;
                     blockY = j * tileSize + spacing + 62;
 
-					graphics.setColor(Color.lightGray);
+                    graphics.setColor(Color.lightGray);
                     isMouseHere(i, j, spacing, graphics);
                     if (gameOver == true || mineBoard.getRemainingTiles() == true)
                     {
