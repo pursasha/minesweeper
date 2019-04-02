@@ -20,7 +20,7 @@ public class GUI extends JFrame {
     boolean gameOver = false;
 
     // Creating a window
-    public GUI(int newSize, int gameMode) {
+    public GUI(int newSize,int mine_probability,int mineRadius, int gameMode) {
 
         this.gameMode = gameMode;
 
@@ -32,7 +32,7 @@ public class GUI extends JFrame {
         width = (tileSize) * boardSize + 20;
 
 
-        mineBoard.setSquareBoard();
+        mineBoard.setSquareBoard(boardSize,mine_probability,mineRadius);
         this.setTitle("Minesweeper"); // sets title to window
         this.setSize(width, height); // sets size of the window
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // makes sure program is terminated when exited
@@ -59,7 +59,7 @@ public class GUI extends JFrame {
         height = (tileSize) * boardSize + 30 + 12 + 55;
         width = (tileSize) * boardSize + 20;
 
-        mineBoard.setSquareBoard();
+        //mineBoard.setSquareBoard();
         this.setTitle("Minesweeper"); // sets title to window
         this.setSize(width, height); // sets size of the window
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // makes sure program is terminated when exited
