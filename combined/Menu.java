@@ -10,7 +10,7 @@ import java.net.URL;
 public class Menu extends JFrame implements ActionListener, MouseListener, MouseMotionListener  {
 
     private JFrame frame;
-    private int easy = 10,medium = 20,hard = 30;
+    private int easySize = 10,mediumSize = 20,hardSize = 30, customSize=40, easyProbability=5,mediumProbability=4,hardProbability=3;
 
     public JPanel splash() {
 
@@ -111,19 +111,25 @@ public class Menu extends JFrame implements ActionListener, MouseListener, Mouse
         else if (cmd.equals("Easy")) {
             System.out.println("Button 1 pressed");
             frame.setVisible(false);
-            new Thread( new Minesweeper(easy, 0)).start();
+            new Thread( new Minesweeper(easySize,easyProbability,2, 0)).start();
         }
         else if (cmd.equals("Medium")) {
             System.out.println("Button 2 pressed");
             frame.setVisible(false);
-            new Thread( new Minesweeper(medium, 0)).start();
+            new Thread( new Minesweeper(mediumSize,mediumProbability,1, 0)).start();
         }
         else if (cmd.equals("Hard")){
             System.out.println("Button 3 pressed");
             frame.setVisible(false);
-            new Thread( new Minesweeper(hard, 0)).start();
+            new Thread( new Minesweeper(hardSize,hardProbability,1, 0)).start();
         }
-        else if (cmd.equals("Click to continue")){
+	 /*else if (cmd.equals("Custom")){
+            System.out.println("Button 5 pressed");
+            frame.setVisible(false);
+            new Thread( new Minesweeper(custom, 0)).start();
+        }*/
+
+	else if (cmd.equals("Click to continue")){
             System.out.println("Button pressed");
             frame.setVisible(false);
             Menu menu = new Menu();
@@ -132,9 +138,11 @@ public class Menu extends JFrame implements ActionListener, MouseListener, Mouse
         else if (cmd.equals("Color Mode")){
             System.out.println("Button 4 pressed");
             frame.setVisible(false);
-            new Thread( new Minesweeper(medium, 1)).start();
+            new Thread( new Minesweeper(mediumSize,mediumProbability,1, 1)).start();
 
         }
+
+
         else {
             System.out.println("Unknown action");
         }
