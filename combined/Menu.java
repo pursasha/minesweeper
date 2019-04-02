@@ -42,11 +42,11 @@ public class Menu extends JFrame implements ActionListener, MouseListener, Mouse
         names.setFont(new Font("Sans-Serif", Font.BOLD, 18));
         content.add(names, BorderLayout.SOUTH);
 
-      //  JButton button = new JButton("Click to continue");
+        //JButton button = new JButton("Click to continue");
         //button.addActionListener(this);
         //content.add(button);
         //button.setVisible(false);
-       // button.setEnabled(true);
+        // button.setEnabled(true);
         //button.setPreferredSize(new Dimension(470, 554));
 
         return content;
@@ -101,6 +101,12 @@ public class Menu extends JFrame implements ActionListener, MouseListener, Mouse
         if (cmd.equals("Exit")) {
             System.out.println("File -> Exit");
             System.exit(0);
+        }
+        else if (cmd.equals("Return to Menu")) {
+            System.out.println("File -> Menu");
+            Menu menu = new Menu();
+            menu.showFrame();
+
         }
         else if (cmd.equals("Easy")) {
             System.out.println("Button 1 pressed");
@@ -185,6 +191,9 @@ public class Menu extends JFrame implements ActionListener, MouseListener, Mouse
         JMenuItem menuExit = new JMenuItem("Exit");
         menuExit.addActionListener(this);
         menu.add(menuExit);
+        JMenuItem menuReturn = new JMenuItem("Return to Menu");
+        menuReturn.addActionListener(this);
+        menu.add(menuReturn);
 
         frame.setJMenuBar(menuBar);
 
