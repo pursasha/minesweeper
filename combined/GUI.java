@@ -1,10 +1,10 @@
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.lang.Math;
 
 public class GUI extends JFrame {
+
 
     int boardSize = 10;
 
@@ -37,6 +37,7 @@ public class GUI extends JFrame {
         this.setSize(width, height); // sets size of the window
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // makes sure program is terminated when exited
         this.setResizable(false); // set it so no one can resize the window
+        this.setLocationRelativeTo(null);
 
         FBoard GUIboard = new FBoard();
         this.setContentPane(GUIboard);// sets content panel
@@ -49,6 +50,7 @@ public class GUI extends JFrame {
         this.addMouseListener(click);
 
     }
+
     public GUI() {
 
         boardSize = 10;
@@ -82,7 +84,7 @@ public class GUI extends JFrame {
 
         int fontW, fontH;
         String mineNums;
-        int fontsize = 48*boardSize/25;
+        int fontsize = 48 * boardSize / 25;
         ImageLibrary imageSet = new ImageLibrary();
 
         // sets background color
@@ -106,23 +108,16 @@ public class GUI extends JFrame {
 
                     graphics.setColor(Color.lightGray);
                     isMouseHere(i, j, spacing, graphics);
-                    if (gameOver == true || mineBoard.getRemainingTiles() == true)
-                    {
+                    if (gameOver == true || mineBoard.getRemainingTiles() == true) {
                         dispTileBox(graphics, blockX, blockY, spacing, i, j);
                         displayTileText(graphics, fontData, i, j, blockX, blockY, spacing);
-                    }
-                    else if (mineBoard.getBoard().get((i * boardSize) + j).isRevealed())
-                    {
+                    } else if (mineBoard.getBoard().get((i * boardSize) + j).isRevealed()) {
                         dispTileBox(graphics, blockX, blockY, spacing, i, j);
                         displayTileText(graphics, fontData, i, j, blockX, blockY, spacing);
-                    }
-                    else if (mineBoard.getBoard().get((i * boardSize) + j).isFlag())
-                    {
+                    } else if (mineBoard.getBoard().get((i * boardSize) + j).isFlag()) {
                         dispTileBox(graphics, blockX, blockY, spacing, i, j);
                         displayTileText(graphics, fontData, i, j, blockX, blockY, spacing);
-                    }
-                    else
-                    {
+                    } else {
 
                         graphics.fillRect(blockX, blockY, tileSize - spacing, tileSize - spacing);
                     }
@@ -188,45 +183,38 @@ public class GUI extends JFrame {
 
             graphics.setColor(Color.white);
             // if tile is mine, displays the mine image
-            if (mineBoard.getBoard().get((i*boardSize)+j).getMine())
-            {
-                graphics.drawImage(imageSet.getImage(9), blockX, blockY, tileSize-spacing, tileSize-spacing, this);
+            if (mineBoard.getBoard().get((i * boardSize) + j).getMine()) {
+                graphics.drawImage(imageSet.getImage(9), blockX, blockY, tileSize - spacing, tileSize - spacing, this);
             }
             // else if tile is not mine, displays number or color if on color mode
-            else if (mineBoard.getBoard().get((i*boardSize)+j).getNumMineNeighbors() > 0)
-            {
-                if(gameMode == 1)
-                {
+            else if (mineBoard.getBoard().get((i * boardSize) + j).getNumMineNeighbors() > 0) {
+                if (gameMode == 1) {
                     graphics.setColor(getTileColor(i, j, graphics));
                     graphics.fillRect(blockX, blockY, tileSize - spacing, tileSize - spacing);
-                }
-                else if (gameMode == 0)
-                {
-                    int mineInt = mineBoard.getBoard().get((i*boardSize)+j).getNumMineNeighbors();
-                    graphics.drawImage(imageSet.getImage(mineInt), blockX, blockY, tileSize-spacing, tileSize-spacing, this);
+                } else if (gameMode == 0) {
+                    int mineInt = mineBoard.getBoard().get((i * boardSize) + j).getNumMineNeighbors();
+                    graphics.drawImage(imageSet.getImage(mineInt), blockX, blockY, tileSize - spacing, tileSize - spacing, this);
                 }
             }
             // if the tile is a flag and the game is not over, the flag is displayed
-            if (mineBoard.getBoard().get((i*boardSize)+j).isFlag() && !(gameOver == true || mineBoard.getRemainingTiles() == true))
-            {
-                int mineInt = mineBoard.getBoard().get((i*boardSize)+j).getNumMineNeighbors();
-                graphics.drawImage(imageSet.getImage(10), blockX, blockY, tileSize-spacing, tileSize-spacing, this);
+            if (mineBoard.getBoard().get((i * boardSize) + j).isFlag() && !(gameOver == true || mineBoard.getRemainingTiles() == true)) {
+                int mineInt = mineBoard.getBoard().get((i * boardSize) + j).getNumMineNeighbors();
+                graphics.drawImage(imageSet.getImage(10), blockX, blockY, tileSize - spacing, tileSize - spacing, this);
             }
         }
+
         private Color getTileColor(int x, int y, Graphics graphics)
         // gets the color of a non-mine tile
         {
-            Tile tileContext =mineBoard.getBoard().get((x*boardSize)+y);
+            Tile tileContext = mineBoard.getBoard().get((x * boardSize) + y);
             //store for the created colors
             int num = 0;
             int r = 0;
             int g = 0;
             int b = 0;
             // get the colors of the nearby mines
-            for(Tile neighbor : tileContext.neighbors)
-            {
-                if( neighbor.getMine() )
-                {
+            for (Tile neighbor : tileContext.neighbors) {
+                if (neighbor.getMine()) {
                     r += neighbor.getColor().getRed();
                     g += neighbor.getColor().getGreen();
                     b += neighbor.getColor().getBlue();
@@ -234,7 +222,7 @@ public class GUI extends JFrame {
                 }
             }
 
-            return new Color((int)(r/num), (int)(g/num), (int)(b/num));
+            return new Color((int) (r / num), (int) (g / num), (int) (b / num));
         }
     }
 
@@ -271,8 +259,7 @@ public class GUI extends JFrame {
                         mineBoard.getBoard().get(tileID).setFlag(true);
                     }
                 } else {
-                    if (!(mineBoard.getBoard().get(tileID).isFlag() || mineBoard.getBoard().get(tileID).isRevealed()))
-                    {
+                    if (!(mineBoard.getBoard().get(tileID).isFlag() || mineBoard.getBoard().get(tileID).isRevealed())) {
                         gameOver = mineBoard.reveal(tileID);
                     }
                 }
@@ -325,9 +312,14 @@ public class GUI extends JFrame {
             System.out.println("File -> Exit");
             System.exit(0);
         }
+        else if (cmd.equals("Return to Menu")) {
+            System.out.println("File -> Menu");
+            Menu menu = new Menu();
+            menu.showFrame();
+
+        }
         else {
             System.out.println("Unknown action");
         }
     }
-
 }
