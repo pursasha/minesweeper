@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class Board {
     private int board_row_length;
-    private int mine_probability=5; // Reciprocal of actual probability
+    //private int mine_probability=5; // Reciprocal of actual probability
     private boolean gameOver=false;
     private int numBoardMines = 0;
     private int numCoveredTiles = board_row_length * board_row_length;
@@ -28,7 +28,7 @@ public class Board {
         return board;
     }
 
-    public void setSquareBoard() {
+    public void setSquareBoard(int board_row_length,int mine_probability,int mineRadius) {
 
 
         for (int x = 0; x <= board_row_length-1; x++) {   // This for loops adds all tiles to the list for a square board.
@@ -50,10 +50,10 @@ public class Board {
                 x2 = Tile2.getX_component();
                 y2 = Tile2.getY_component();
 
-                if (((y1 - y2 >= -1) && (y1 - y2 <= 1) && (x1 - x2 >= -1) && (x1 - x2 <= 1)) && (x1 != x2 || y1 != y2)) {
+                if (((y1 - y2 >= -mineRadius) && (y1 - y2 <= mineRadius) && (x1 - x2 >= -mineRadius) && (x1 - x2 <= mineRadius)) && (x1 != x2 || y1 != y2)) {
                     if (!(Tile1.has_neighbor(Tile2))) {
                         Tile1.add_neighbor(Tile2);
-                        if (!(Tile2.has_neighbor(Tile1))) {
+                        if (!(Tile2.has_neighbor(Tile1))){
                             Tile2.add_neighbor(Tile1);
                         }
                     }
@@ -129,3 +129,5 @@ public class Board {
     public void setRemainingTiles() {numCoveredTiles--;}
 
 }
+
+
