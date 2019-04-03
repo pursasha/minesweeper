@@ -9,9 +9,9 @@ public class Minesweeper implements Runnable {
         menu.showFrame();
     }
 
-    public Minesweeper(int boardSize, int gameMode) {
+    public Minesweeper(int boardSize, int mine_probability, int mineRadius,int gameMode) {
         this.boardSize = boardSize;
-        gui = new GUI(boardSize, gameMode);
+        gui = new GUI(boardSize, mine_probability,mineRadius,gameMode);
     }
 
     @Override
