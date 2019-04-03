@@ -15,8 +15,8 @@ public class GUI extends JFrame {
     int mx, my;
     //0 for normal, 1 for color colorsweeper
     int gameMode = 0;
-    int tileSize = 40;
-
+    int tileSize;
+	int spacer = 3;
     boolean gameOver = false;
 
     // Creating a window
@@ -26,10 +26,14 @@ public class GUI extends JFrame {
 
         boardSize = newSize;
 
-        tileSize = 20;
+        tileSize = (int)((40.0/boardSize * 20.0));
+		spacer = (int)(2*(20/boardSize));
+		if (spacer < 1) {spacer = 1;}
+		System.out.println("tileSize: " + tileSize + " - spacer: " + spacer);
         mineBoard = new Board(boardSize);
-        height = (tileSize) * boardSize + 30 + 12 + 62;
-        width = (tileSize) * boardSize + 20;
+        height = (tileSize) * boardSize+ 2*spacer + 90;
+        width = (tileSize) * boardSize + 2*spacer + 3;
+		System.out.println("height: " + height + " - Width: " + width);
 
 
         mineBoard.setSquareBoard();
@@ -56,8 +60,8 @@ public class GUI extends JFrame {
         boardSize = 10;
 
         mineBoard = new Board(boardSize);
-        height = (tileSize) * boardSize + 30 + 12 + 55;
-        width = (tileSize) * boardSize + 20;
+        height = (tileSize + 3) * boardSize + 30 + 55;
+        width = (tileSize + 3) * boardSize;
 
         mineBoard.setSquareBoard();
         this.setTitle("Minesweeper"); // sets title to window
@@ -71,10 +75,10 @@ public class GUI extends JFrame {
         this.setVisible(true); // makes window visible
 
         Move move = new Move();
-        this.addMouseMotionListener(move);
+        GUIboard.addMouseMotionListener(move);
 
         Click click = new Click();
-        this.addMouseListener(click);
+        GUIboard.addMouseListener(click);
 
     }
 
@@ -84,7 +88,7 @@ public class GUI extends JFrame {
 
         int fontW, fontH;
         String mineNums;
-        int fontsize = 48 * boardSize / 25;
+        int fontsize = 48;
         ImageLibrary imageSet = new ImageLibrary();
 
         // sets background color
@@ -97,7 +101,7 @@ public class GUI extends JFrame {
             topDisp(graphics, fontData);
 
             // sets grid
-            int spacing = 3;
+            int spacing = spacer;
             int i, j;
             int blockX, blockY;
             for (i = 0; i < boardSize; i++) {
@@ -155,8 +159,10 @@ public class GUI extends JFrame {
         private void isMouseHere(int i, int j, int spacing, Graphics graphics)
         // functionized version of the mouse location test
         {
-            if (mx >= (i * tileSize) + spacing + 3 && mx < ((i + 1) * tileSize) + spacing + 3
-                    && my >= ((j * tileSize) + spacing + 30 + 55) && my < ((j + 1) * tileSize) + spacing + 30 + 55) {
+            if (mx >= (i * tileSize) + 2*spacing &&
+			    mx <  ((i + 1) * tileSize) + 2*spacing &&
+				my >= ((j * tileSize) + 2*spacing + 65) &&
+				my <  ((j + 1) * tileSize) + 2*spacing + 65) {
                 // this gets the corresponding tile coordinates
                 boardX = i;
                 boardY = j;
@@ -189,7 +195,7 @@ public class GUI extends JFrame {
             // else if tile is not mine, displays number or color if on color mode
             else if (mineBoard.getBoard().get((i * boardSize) + j).getNumMineNeighbors() > 0) {
                 if (gameMode == 1) {
-                    graphics.setColor(getTileColor(i, j, graphics));
+                    graphics.setColor(getTileColor(i, j));
                     graphics.fillRect(blockX, blockY, tileSize - spacing, tileSize - spacing);
                 } else if (gameMode == 0) {
                     int mineInt = mineBoard.getBoard().get((i * boardSize) + j).getNumMineNeighbors();
@@ -203,7 +209,7 @@ public class GUI extends JFrame {
             }
         }
 
-        private Color getTileColor(int x, int y, Graphics graphics)
+        private Color getTileColor(int x, int y)
         // gets the color of a non-mine tile
         {
             Tile tileContext = mineBoard.getBoard().get((x * boardSize) + y);
@@ -234,7 +240,7 @@ public class GUI extends JFrame {
         }
 
         public void mouseMoved(MouseEvent a) {
-            // System.out.println("the mouse was moved");
+             //System.out.println("the mouse was moved");
             mx = a.getX();
             my = a.getY();
             //System.out.println("x:" + mx + " y:" + my);
@@ -250,6 +256,7 @@ public class GUI extends JFrame {
             try {
                 System.out.println("the mouse was clicked");
                 System.out.println("X: " + boardX + " Y: " + boardY);
+				System.out.println("x:" + mx + " y:" + my);
                 if (SwingUtilities.isRightMouseButton(a)) {
                     System.out.println("Right Click");
                     if (mineBoard.getBoard().get(tileID).isFlag() && !mineBoard.getBoard().get(tileID).isRevealed()) {
@@ -288,11 +295,11 @@ public class GUI extends JFrame {
         }
 
         public void mouseEntered(MouseEvent a) {
-
+			//System.out.println("Entered x:" + mx + " y:" + my);
         }
 
         public void mouseExited(MouseEvent a) {
-
+			//System.out.println("Exited x:" + mx + " y:" + my);
         }
 
         public void mousePressed(MouseEvent a) {
