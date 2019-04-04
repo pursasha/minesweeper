@@ -186,6 +186,9 @@ public class GUI extends JFrame {
         private void displayTileText(Graphics graphics, FontMetrics fontData, int i, int j, int blockX, int blockY, int spacing)
         // displays the text for the tile
         {
+			String mineNums;
+			int fontW, fontH;
+
 
             graphics.setColor(Color.white);
             // if tile is mine, displays the mine image
@@ -199,7 +202,16 @@ public class GUI extends JFrame {
                     graphics.fillRect(blockX, blockY, tileSize - spacing, tileSize - spacing);
                 } else if (gameMode == 0) {
                     int mineInt = mineBoard.getBoard().get((i * boardSize) + j).getNumMineNeighbors();
-                    graphics.drawImage(imageSet.getImage(mineInt), blockX, blockY, tileSize - spacing, tileSize - spacing, this);
+					if (mineInt > imageSet.maxMineNum()) {
+						mineNums=Integer.toString(mineBoard.getBoard().get((i*boardSize)+j).getNumMineNeighbors());
+	                    fontW=(int)(fontData.stringWidth(mineNums)/2);
+	                    fontH=(int)(fontData.getHeight()/8);
+						graphics.setColor(Color.BLACK);
+						graphics.drawString(mineNums, i* tileSize+spacing+((int)(tileSize/2))-fontW, (j+1)* tileSize + spacing+((int)(tileSize/2))+fontH);
+					}
+					else {
+                    	graphics.drawImage(imageSet.getImage(mineInt), blockX, blockY, tileSize - spacing, tileSize - spacing, this);
+					}
                 }
             }
             // if the tile is a flag and the game is not over, the flag is displayed
@@ -214,21 +226,38 @@ public class GUI extends JFrame {
         {
             Tile tileContext = mineBoard.getBoard().get((x * boardSize) + y);
             //store for the created colors
-            int num = 0;
+            int rnum = 0, bnum = 0, gnum = 0, num = 0;
+			//rnum is num of red mines, bnum is num of blue mines, gnum is num of green mines, num is num of mines
             int r = 0;
             int g = 0;
             int b = 0;
             // get the colors of the nearby mines
             for (Tile neighbor : tileContext.neighbors) {
+				//if there is a mine in neighbors the red green blue value gets added
                 if (neighbor.getMine()) {
                     r += neighbor.getColor().getRed();
+					if (neighbor.getColor().getRed() > 0) {rnum++;}
                     g += neighbor.getColor().getGreen();
+					if (neighbor.getColor().getGreen() > 0) {gnum++;}
                     b += neighbor.getColor().getBlue();
-                    num++;
+					if (neighbor.getColor().getBlue() > 0) {bnum++;}
+					num++;
                 }
             }
 
-            return new Color((int) (r / num), (int) (g / num), (int) (b / num));
+			//fixes issue of possibly dividing by zero
+			if (rnum == 0) {rnum = 1;}
+			if (gnum == 0) {gnum = 1;}
+			if (bnum == 0) {bnum = 1;}
+
+			if ((r == 255) && (g == 255) && (b == 255))
+			{
+				r = (int)(r/((int)(num/3)));
+				g = (int)(g/((int)(num/3)));
+				b = (int)(b/((int)(num/3)));
+			}
+
+            return new Color( 255 - ((int) (r / rnum)), 255 - ((int) (g / gnum)), 255 - ((int) (b / bnum)));
         }
     }
 

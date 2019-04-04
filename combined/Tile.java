@@ -133,6 +133,22 @@ public class Tile implements Serializable {
         for (Tile neighbor : this.neighbors) {
             if (neighbor.getMine()) {
                 numMineNeighbors++;
+				if (neighbor.getColor().equals(tileColor))
+				// if the mine neighbor has same color, swap to a new color
+				{
+					if (tileColor.equals(new Color (255, 0, 0)))
+					{
+						neighbor.setColor(new Color (0, 255, 0));
+					}
+					else if (tileColor.equals(new Color (0, 255, 0)))
+					{
+						neighbor.setColor(new Color (0, 0, 255));
+					}
+					else if( tileColor.equals(new Color (0, 0, 255)))
+					{
+						neighbor.setColor(new Color (255, 0, 0));
+					}
+				}
             }
         }
         this.numMineNeighbors = numMineNeighbors;

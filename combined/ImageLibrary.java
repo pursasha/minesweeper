@@ -11,6 +11,7 @@ public class ImageLibrary{
     //private String path = "images/";
     private URL dummy;
     private URL base;
+	private int maxMineNum = 8;
     //Constructor
     public ImageLibrary(){
 
@@ -51,5 +52,9 @@ public class ImageLibrary{
         //System.out.println(numMines + " gotten");
         return images[numMines].getScaledInstance(85, 85, Image.SCALE_FAST);
     }
+	public int maxMineNum()
+	{
+		return maxMineNum;
+	}
 
 }
