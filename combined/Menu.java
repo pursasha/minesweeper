@@ -4,13 +4,15 @@ import javax.swing.*;
 import java.awt.BorderLayout;
 import java.awt.image.BufferedImage;
 import javax.imageio.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.io.File;
 import java.net.URL;
 
-public class Menu extends JFrame implements ActionListener, MouseListener, MouseMotionListener  {
+public class Menu extends JFrame implements ActionListener, MouseListener, MouseMotionListener{
 
     private JFrame frame;
-    private int easySize = 10,mediumSize = 20,hardSize = 30, customSize=40, easyProbability=5,mediumProbability=4,hardProbability=3;
+    private int easySize = 10,mediumSize = 20,hardSize = 30, easyProbability=5,mediumProbability=4,hardProbability=3;
 
     public JPanel splash() {
 
@@ -80,20 +82,21 @@ public class Menu extends JFrame implements ActionListener, MouseListener, Mouse
         JButton button2 = new JButton("Medium");
         JButton button3 = new JButton("Hard");
         JButton button4 = new JButton("Color Mode");
+        JButton button5 = new JButton("Custom Game");
         button1.addActionListener(this);
         button2.addActionListener(this);
         button3.addActionListener(this);
         button4.addActionListener(this);
+        button5.addActionListener(this);
 
         buttons.add(button1);
         buttons.add(button2);
         buttons.add(button3);
         buttons.add(button4);
+        buttons.add(button5);
 
         return buttons;
     }
-
-
 
     // for buttons and menus
     public void actionPerformed(ActionEvent e) {
@@ -111,7 +114,7 @@ public class Menu extends JFrame implements ActionListener, MouseListener, Mouse
         else if (cmd.equals("Easy")) {
             System.out.println("Button 1 pressed");
             frame.setVisible(false);
-            new Thread( new Minesweeper(easySize,easyProbability,4, 0)).start();
+            new Thread( new Minesweeper(easySize,easyProbability,2, 0)).start();
         }
         else if (cmd.equals("Medium")) {
             System.out.println("Button 2 pressed");
@@ -123,11 +126,6 @@ public class Menu extends JFrame implements ActionListener, MouseListener, Mouse
             frame.setVisible(false);
             new Thread( new Minesweeper(hardSize,hardProbability,1, 0)).start();
         }
-	 /*else if (cmd.equals("Custom")){
-            System.out.println("Button 5 pressed");
-            frame.setVisible(false);
-            new Thread( new Minesweeper(custom, 0)).start();
-        }*/
 
 	else if (cmd.equals("Click to continue")){
             System.out.println("Button pressed");
@@ -141,8 +139,11 @@ public class Menu extends JFrame implements ActionListener, MouseListener, Mouse
             new Thread( new Minesweeper(mediumSize,mediumProbability,1, 1)).start();
 
         }
-
-
+        else if(cmd.equals("Custom Game")){
+            frame.setVisible(false);
+           CustomScreen cs = new CustomScreen();
+           cs.showFrame();
+        }
         else {
             System.out.println("Unknown action");
         }
@@ -209,4 +210,5 @@ public class Menu extends JFrame implements ActionListener, MouseListener, Mouse
         frame.add(myMenu);
         frame.revalidate();
     }
+
 }
