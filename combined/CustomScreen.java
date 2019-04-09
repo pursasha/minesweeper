@@ -6,14 +6,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class CustomScreen implements ActionListener, ChangeListener {
-    private int customSize, customProb, customRad, gameMode = 0;
+    private int customSize=20, customProb=4, customRad=1, gameMode = 0;
     private JFrame frame;
 
     public JPanel CustomScreen() {
         JPanel buttons = new JPanel();
 
         //sets panel layout
-        buttons.setLayout(new GridLayout(9, 2));
+        buttons.setLayout(new GridLayout(6, 2));
 
         //sets background
         buttons.setBackground(Color.gray);
@@ -26,7 +26,6 @@ public class CustomScreen implements ActionListener, ChangeListener {
         JLabel subTitle = new JLabel("Select a mode:", JLabel.CENTER);
         subTitle.setFont(new Font("Courier", Font.BOLD, 20));
         buttons.add(subTitle, BorderLayout.CENTER);
-
         //Radio Buttons for game modes
         JRadioButton mineMode = new JRadioButton("Classic");
         JRadioButton colorMode = new JRadioButton("Color");
@@ -46,66 +45,79 @@ public class CustomScreen implements ActionListener, ChangeListener {
         //adds them to the panel
         buttons.add(mineMode);
         buttons.add(colorMode);
-
+        //Labels for sliders
+        JLabel Plabel = new JLabel("1 over "+customProb,JLabel.CENTER);
+        Plabel.setBackground(Color.LIGHT_GRAY);
+        Plabel.setOpaque(true);
+        JLabel Slabel = new JLabel(customSize+" x "+customSize,JLabel.CENTER);
+        JLabel Rlabel = new JLabel("Radius: "+customRad,JLabel.CENTER);
         //Sliders for options
         JSlider sizeSlider = new JSlider(JSlider.HORIZONTAL, 2, 100, 20);
-        customSize = 20;
         sizeSlider.setBorder(BorderFactory.createTitledBorder("Board Size"));
         sizeSlider.setMajorTickSpacing(20);
-        sizeSlider.setMinorTickSpacing(5);
+        sizeSlider.setMinorTickSpacing(10);
         sizeSlider.setPaintLabels(true);
         sizeSlider.setPaintTicks(true);
+        sizeSlider.setBackground(Color.GRAY);
+        sizeSlider.setOpaque(true);
         sizeSlider.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
                 JSlider source = (JSlider) e.getSource();
                 if (!source.getValueIsAdjusting()) {
                     customSize = source.getValue();
+                    Slabel.setText(customSize+" x "+customSize);
                 }
-                System.out.println(customSize + "Size");
             }
         });
 
-        JSlider probSlider = new JSlider(JSlider.HORIZONTAL, 0, 10, 4);
-        customProb = 4;
-        probSlider.setBorder(BorderFactory.createTitledBorder("Probability"));
-        probSlider.setMajorTickSpacing(5);
-        probSlider.setMinorTickSpacing(2);
+        JSlider probSlider = new JSlider(JSlider.HORIZONTAL, 2, 10, 4);
+        probSlider.setBorder(BorderFactory.createTitledBorder("Probability 1/n"));
+        probSlider.setMajorTickSpacing(2);
+        probSlider.setMinorTickSpacing(1);
         probSlider.setPaintTicks(true);
         probSlider.setPaintLabels(true);
+        probSlider.setInverted(true);
+        probSlider.setOpaque(true);
+        probSlider.setBackground(Color.LIGHT_GRAY);
         probSlider.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
                 JSlider source = (JSlider) e.getSource();
                 if (!source.getValueIsAdjusting()) {
                     customProb = source.getValue();
+                    Plabel.setText("1 Over "+String.valueOf(customProb));
                 }
-                System.out.println(customProb + "Prob");
             }
         });
 
-        JSlider radiusSlider = new JSlider(JSlider.HORIZONTAL, 1, 10, 1);
-        customRad = 1;
+        JSlider radiusSlider = new JSlider(JSlider.HORIZONTAL, 0, 10, 1);
         radiusSlider.setBorder(BorderFactory.createTitledBorder("Radius"));
-        radiusSlider.setMajorTickSpacing(5);
-        radiusSlider.setMinorTickSpacing(2);
+        radiusSlider.setMajorTickSpacing(2);
+        radiusSlider.setMinorTickSpacing(0);
         radiusSlider.setPaintTicks(true);
         radiusSlider.setPaintLabels(true);
-        probSlider.addChangeListener(new ChangeListener() {
+        radiusSlider.setOpaque(true);
+        radiusSlider.setBackground(Color.GRAY);
+        radiusSlider.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
                 JSlider source = (JSlider) e.getSource();
                 if (!source.getValueIsAdjusting()) {
                     customRad = source.getValue();
+                    Rlabel.setText("Radius: "+String.valueOf(customRad));
                 }
-                System.out.println(customRad + "radius");
             }
         });
         //add them to the panel
         buttons.add(sizeSlider);
+        buttons.add(Slabel);
         buttons.add(probSlider);
+        buttons.add(Plabel);
         buttons.add(radiusSlider);
+        buttons.add(Rlabel);
         JButton startButton = new JButton("Start Game");
+
         startButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -114,6 +126,12 @@ public class CustomScreen implements ActionListener, ChangeListener {
             }
         });
         buttons.add(startButton);
+        ImageIcon filler = new ImageIcon(new ImageLibrary().getImage(10));
+        JLabel fillImage = new JLabel(filler);
+        fillImage.setBackground(Color.LIGHT_GRAY);
+        fillImage.setOpaque(true);
+        buttons.add(fillImage);
+
         return buttons;
     }
 
