@@ -13,17 +13,17 @@ public class CustomScreen implements ActionListener, ChangeListener {
         JPanel buttons = new JPanel();
 
         //sets panel layout
-        buttons.setLayout(new GridLayout(6, 2));
-
+      //  buttons.setLayout(new GridBagLayout());
+        buttons.setLayout(new GridLayout(12, 1));
         //sets background
-        buttons.setBackground(Color.gray);
+        buttons.setBackground(new Color(114, 159, 180));
 
         //adds elements to the panel
         JLabel title = new JLabel("Minesweeper", JLabel.CENTER);
         title.setFont(new Font("Courier", Font.BOLD, 55));
         buttons.add(title, BorderLayout.CENTER);
 
-        JLabel subTitle = new JLabel("Select a mode:", JLabel.CENTER);
+        JLabel subTitle = new JLabel("Custom your Game:", JLabel.CENTER);
         subTitle.setFont(new Font("Courier", Font.BOLD, 20));
         buttons.add(subTitle, BorderLayout.CENTER);
         //Radio Buttons for game modes
@@ -47,7 +47,7 @@ public class CustomScreen implements ActionListener, ChangeListener {
         buttons.add(colorMode);
         //Labels for sliders
         JLabel Plabel = new JLabel("1 over "+customProb,JLabel.CENTER);
-        Plabel.setBackground(Color.LIGHT_GRAY);
+        Plabel.setBackground(new Color(114, 159, 180));
         Plabel.setOpaque(true);
         JLabel Slabel = new JLabel(customSize+" x "+customSize,JLabel.CENTER);
         JLabel Rlabel = new JLabel("Radius: "+customRad,JLabel.CENTER);
@@ -58,7 +58,7 @@ public class CustomScreen implements ActionListener, ChangeListener {
         sizeSlider.setMinorTickSpacing(10);
         sizeSlider.setPaintLabels(true);
         sizeSlider.setPaintTicks(true);
-        sizeSlider.setBackground(Color.GRAY);
+        sizeSlider.setBackground(new Color(79, 137, 170));
         sizeSlider.setOpaque(true);
         sizeSlider.addChangeListener(new ChangeListener() {
             @Override
@@ -79,7 +79,7 @@ public class CustomScreen implements ActionListener, ChangeListener {
         probSlider.setPaintLabels(true);
         probSlider.setInverted(true);
         probSlider.setOpaque(true);
-        probSlider.setBackground(Color.LIGHT_GRAY);
+        probSlider.setBackground(new Color(79, 137, 170));
         probSlider.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
@@ -98,7 +98,7 @@ public class CustomScreen implements ActionListener, ChangeListener {
         radiusSlider.setPaintTicks(true);
         radiusSlider.setPaintLabels(true);
         radiusSlider.setOpaque(true);
-        radiusSlider.setBackground(Color.GRAY);
+        radiusSlider.setBackground(new Color(79, 137, 170));
         radiusSlider.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
@@ -126,17 +126,26 @@ public class CustomScreen implements ActionListener, ChangeListener {
             }
         });
         buttons.add(startButton);
-        ImageIcon filler = new ImageIcon(new ImageLibrary().getImage(10));
-        JLabel fillImage = new JLabel(filler);
-        fillImage.setBackground(Color.LIGHT_GRAY);
-        fillImage.setOpaque(true);
-        buttons.add(fillImage);
+        //ImageIcon filler = new ImageIcon(new ImageLibrary().getImage(10));
+        //JLabel fillImage = new JLabel(filler);
+        //fillImage.setBackground(Color.LIGHT_GRAY);
+        //fillImage.setOpaque(true);
+        //buttons.add(fillImage);
+
+        JButton returnButton = new JButton("Return to Menu");
+        returnButton.addActionListener(this);
+        buttons.add(returnButton);
 
         return buttons;
     }
 
     public void actionPerformed(ActionEvent e) {
-
+        Object cmd = e.getActionCommand();
+        if (cmd.equals("Return to Menu")) {
+            System.out.println("Return to Menu");
+            Menu menu = new Menu();
+            menu.showFrame();
+        }
     }
 
     public void stateChanged(ChangeEvent e) {
