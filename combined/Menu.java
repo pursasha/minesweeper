@@ -106,7 +106,7 @@ public class Menu extends JFrame implements ActionListener, MouseListener, Mouse
         }else if (cmd.equals("Easy")) {
             System.out.println("Button 1 pressed");
             frame.setVisible(false);
-            new Thread(new Minesweeper(easySize, easyProbability, 2, 0)).start();
+            new Thread(new Minesweeper(easySize, easyProbability, 1, 0)).start();
         } else if (cmd.equals("Medium")) {
             System.out.println("Button 2 pressed");
             frame.setVisible(false);
