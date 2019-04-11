@@ -18,6 +18,9 @@ public class GUI extends JFrame {
     int tileSize;
 	int spacer = 3;
     boolean gameOver = false;
+	int topInset;
+	int leftInset;
+
 
     // Creating a window
     public GUI(int newSize,int mine_probability,int mineRadius, int gameMode) {
@@ -52,6 +55,9 @@ public class GUI extends JFrame {
 
         Click click = new Click();
         this.addMouseListener(click);
+
+		leftInset = this.getInsets().left;
+		topInset = this.getInsets().top;
 
     }
 
@@ -159,10 +165,10 @@ public class GUI extends JFrame {
         private void isMouseHere(int i, int j, int spacing, Graphics graphics)
         // functionized version of the mouse location test
         {
-            if (mx >= (i * tileSize) + 2*spacing &&
-			    mx <  ((i + 1) * tileSize) + 2*spacing &&
-				my >= ((j * tileSize) + 2*spacing + 65) &&
-				my <  ((j + 1) * tileSize) + 2*spacing + 65) {
+            if (mx >= (i * tileSize) + 2*spacing + leftInset &&
+			    mx <  ((i + 1) * tileSize) + 2*spacing + leftInset &&
+				my >= ((j * tileSize) + 2*spacing + 52 + topInset ) &&
+				my <  ((j + 1) * tileSize) + 2*spacing + 52 + topInset ) {
                 // this gets the corresponding tile coordinates
                 boardX = i;
                 boardY = j;
@@ -250,14 +256,34 @@ public class GUI extends JFrame {
 			if (gnum == 0) {gnum = 1;}
 			if (bnum == 0) {bnum = 1;}
 
+			r = ((int) (r / rnum));
+			g = ((int) (g / gnum));
+			b = ((int) (b / bnum));
+
 			if ((r == 255) && (g == 255) && (b == 255))
 			{
-				r = (int)(r/((int)(num/3)));
-				g = (int)(g/((int)(num/3)));
-				b = (int)(b/((int)(num/3)));
+				r = (int)(r/(8*num));
+				g = (int)(g/(8*num));
+				b = (int)(b/(8*num));
+			}
+			//Color thisColor = new Color(r, g, b);
+			if (r == 255 && b == 0 && g == 0 && tileContext.getNumMineNeighbors() > 1)
+			{
+				b = 32*(tileContext.getNumMineNeighbors() - 1);
+				g = 32*(tileContext.getNumMineNeighbors() - 1);
+			}
+			if (g == 255 && b == 0 && r == 0 && tileContext.getNumMineNeighbors() > 1)
+			{
+				b = 32*(tileContext.getNumMineNeighbors() - 1);
+				r = 32*(tileContext.getNumMineNeighbors() - 1);
+			}
+			if (b == 255 && r == 0 && g == 0 && tileContext.getNumMineNeighbors() > 1)
+			{
+				r = 32*(tileContext.getNumMineNeighbors() - 1);
+				g = 32*(tileContext.getNumMineNeighbors() - 1);
 			}
 
-            return new Color( 255 - ((int) (r / rnum)), 255 - ((int) (g / gnum)), 255 - ((int) (b / bnum)));
+            return new Color( 255 - r, 255 - g, 255 - b);
         }
     }
 
