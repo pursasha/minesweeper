@@ -2,43 +2,43 @@ import javax.swing.*;
 import java.awt.*;
 import javax.imageio.*;
 import java.io.*;
-import java.net.URL;
-import java.net.MalformedURLException;
+//import java.net.URL;
+//import java.net.MalformedURLException;
 
 public class ImageLibrary{
     private Image[] images = new Image[11];
-    private String path = "https://web.cs.sunyit.edu/~schneieh/images/";
-    //private String path = "images/";
-    private URL dummy;
-    private URL base;
+    //private String path = "https://web.cs.sunyit.edu/~schneieh/images/";
+    private String path = "images/";
+    //private URL dummy;
+    //private URL base;
 	private int maxMineNum = 8;
     //Constructor
     public ImageLibrary(){
 
-        try {
+        /*try {
             base = new URL(path);
         }
         catch (MalformedURLException e)
         {
             throw new RuntimeException(e);
-        }
+        }*/
 
         //path = path.replace("\\","/");
         for(int i = 0; i < 11; i++ ){
 
-            try {
+            /*try {
                 dummy = new URL(path+"Number"+i+".png");
             }
             catch (MalformedURLException e)
             {
                 throw new RuntimeException(e);
-            }
+            }*/
 
             System.out.println("image " + i + " loading");
             try
             {
-                //images[i] = ImageIO.read(new File(path+"Number"+i+".png"));
-                images[i]= ImageIO.read(dummy);
+                images[i] = ImageIO.read(new File(path+"Number"+i+".png"));
+                //images[i]= ImageIO.read(dummy);
             }
             catch (IOException e)
             {
