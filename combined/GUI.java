@@ -19,6 +19,7 @@ public class GUI extends JFrame implements ActionListener {
     boolean gameOver = false;
 	int topInset;
 	int leftInset;
+	int mineprob, mineRad;
 
 
     // Creating a window
@@ -27,6 +28,10 @@ public class GUI extends JFrame implements ActionListener {
         this.gameMode = gameMode;
 
         boardSize = newSize;
+
+		mineprob = mine_probability;
+
+		mineRad = mineRadius;
 
         tileSize = (int) ((30.0 / boardSize * 20.0));
         spacer = (int) (2 * (20 / boardSize));
@@ -40,7 +45,7 @@ public class GUI extends JFrame implements ActionListener {
         System.out.println("height: " + height + " - Width: " + width);
 
 
-        mineBoard.setSquareBoard(boardSize, mine_probability, mineRadius);
+        mineBoard.setSquareBoard(boardSize, mineprob, mineRad);
         this.setTitle("Minesweeper"); // sets title to window
         this.setSize(width, height); // sets size of the window
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // makes sure program is terminated when exited
@@ -90,9 +95,80 @@ public class GUI extends JFrame implements ActionListener {
 		topInset +=menuBar.getHeight();
 		topInset +=23;
 
-		System.out.println("L: " + leftInset + " T: " + topInset + "MB: " + this.getJMenuBar().getSize().getHeight());
-
     }
+
+	public GUI( GUI copyGUI) {
+		this.gameMode = copyGUI.gameMode;
+
+        this.boardSize = copyGUI.boardSize;
+
+		this.mineprob = copyGUI.mineprob;
+
+		this.mineRad = copyGUI.mineRad;
+
+        tileSize = (int) ((30.0 / boardSize * 20.0));
+        spacer = (int) (2 * (20 / boardSize));
+        if (spacer < 1) {
+            spacer = 1;
+        }
+        System.out.println("tileSize: " + tileSize + " - spacer: " + spacer);
+        mineBoard = new Board(boardSize);
+        height = (tileSize) * boardSize + 2 * spacer + 120;
+        width = (tileSize) * boardSize + 2 * spacer + 3;
+        System.out.println("height: " + height + " - Width: " + width);
+
+
+        mineBoard.setSquareBoard(boardSize, mineprob mineRad);
+        this.setTitle("Minesweeper"); // sets title to window
+        this.setSize(width, height); // sets size of the window
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // makes sure program is terminated when exited
+        this.setResizable(false); // set it so no one can resize the window
+        this.setLocationRelativeTo(null);
+
+        FBoard GUIboard = new FBoard();
+        this.setContentPane(GUIboard);// sets content panel
+        this.setVisible(true); // makes window visible
+
+        Move move = new Move();
+        this.addMouseMotionListener(move);
+
+        Click click = new Click();
+        this.addMouseListener(click);
+
+        //add the menuBar
+        JMenuBar menuBar = new JMenuBar();
+        JMenu menu = new JMenu("Game");
+        menuBar.add(menu);
+        JMenuItem restart = new JMenuItem("Restart");
+        restart.addActionListener(this);
+        menu.add(restart);
+        JMenuItem menuReturn = new JMenuItem("Return");
+        menuReturn.addActionListener(this);
+        menu.add(menuReturn);
+        JMenuItem menuExit = new JMenuItem("Exit");
+        menuExit.addActionListener(this);
+        menu.add(menuExit);
+
+        JMenu help = new JMenu("Help");
+        menuBar.add(help);
+        JMenuItem instructions = new JMenuItem("Instructions");
+        instructions.addActionListener(this);
+        help.add(instructions);
+
+        JMenu about = new JMenu("About");
+        menuBar.add(about);
+        JMenuItem credits = new JMenuItem("Credits");
+        credits.addActionListener(this);
+        about.add(credits);
+
+        this.setJMenuBar(menuBar);
+
+		leftInset = this.getInsets().left;
+		topInset = this.getInsets().top;
+		topInset +=menuBar.getHeight();
+		topInset +=23;
+
+	}
 
     public GUI() {
 
