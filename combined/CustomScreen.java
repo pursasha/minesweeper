@@ -13,8 +13,7 @@ public class CustomScreen implements ActionListener, ChangeListener {
         JPanel buttons = new JPanel();
 
         //sets panel layout
-      //  buttons.setLayout(new GridBagLayout());
-        buttons.setLayout(new GridLayout(6, 2));
+        buttons.setLayout(new GridLayout(12, 1,0,-13));
         //sets background
         buttons.setBackground(new Color(114, 159, 180));
 
@@ -126,23 +125,26 @@ public class CustomScreen implements ActionListener, ChangeListener {
             }
         });
         buttons.add(startButton);
+        //ImageIcon filler = new ImageIcon(new ImageLibrary().getImage(10));
+        //JLabel fillImage = new JLabel(filler);
+        //fillImage.setBackground(Color.LIGHT_GRAY);
+        //fillImage.setOpaque(true);
+        //buttons.add(fillImage);
 
         JButton returnButton = new JButton("Return to Menu");
-        returnButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("Return to Menu");
-                Menu menu = new Menu();
-                menu.showFrame();
-            }
-        });
+        returnButton.addActionListener(this);
         buttons.add(returnButton);
 
         return buttons;
     }
 
     public void actionPerformed(ActionEvent e) {
-
+        Object cmd = e.getActionCommand();
+        if (cmd.equals("Return to Menu")) {
+            System.out.println("Return to Menu");
+            Menu menu = new Menu();
+            menu.showFrame();
+        }
     }
 
     public void stateChanged(ChangeEvent e) {
