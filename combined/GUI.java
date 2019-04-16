@@ -1,9 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.lang.Math;
 
-public class GUI extends JFrame {
+public class GUI extends JFrame implements ActionListener {
 
 
     int boardSize = 10;
@@ -16,27 +15,32 @@ public class GUI extends JFrame {
     //0 for normal, 1 for color colorsweeper
     int gameMode = 0;
     int tileSize;
-	int spacer = 3;
+    int spacer = 3;
     boolean gameOver = false;
+	int topInset;
+	int leftInset;
+
 
     // Creating a window
-    public GUI(int newSize,int mine_probability,int mineRadius, int gameMode) {
+    public GUI(int newSize, int mine_probability, int mineRadius, int gameMode) {
 
         this.gameMode = gameMode;
 
         boardSize = newSize;
 
-        tileSize = (int)((40.0/boardSize * 20.0));
-		spacer = (int)(2*(20/boardSize));
-		if (spacer < 1) {spacer = 1;}
-		System.out.println("tileSize: " + tileSize + " - spacer: " + spacer);
+        tileSize = (int) ((30.0 / boardSize * 20.0));
+        spacer = (int) (2 * (20 / boardSize));
+        if (spacer < 1) {
+            spacer = 1;
+        }
+        System.out.println("tileSize: " + tileSize + " - spacer: " + spacer);
         mineBoard = new Board(boardSize);
-        height = (tileSize) * boardSize+ 2*spacer + 90;
-        width = (tileSize) * boardSize + 2*spacer + 3;
-		System.out.println("height: " + height + " - Width: " + width);
+        height = (tileSize) * boardSize + 2 * spacer + 120;
+        width = (tileSize) * boardSize + 2 * spacer + 3;
+        System.out.println("height: " + height + " - Width: " + width);
 
 
-        mineBoard.setSquareBoard(boardSize,mine_probability,mineRadius);
+        mineBoard.setSquareBoard(boardSize, mine_probability, mineRadius);
         this.setTitle("Minesweeper"); // sets title to window
         this.setSize(width, height); // sets size of the window
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // makes sure program is terminated when exited
@@ -52,6 +56,41 @@ public class GUI extends JFrame {
 
         Click click = new Click();
         this.addMouseListener(click);
+
+        //add the menuBar
+        JMenuBar menuBar = new JMenuBar();
+        JMenu menu = new JMenu("Game");
+        menuBar.add(menu);
+        JMenuItem restart = new JMenuItem("Restart");
+        restart.addActionListener(this);
+        menu.add(restart);
+        JMenuItem menuReturn = new JMenuItem("Return");
+        menuReturn.addActionListener(this);
+        menu.add(menuReturn);
+        JMenuItem menuExit = new JMenuItem("Exit");
+        menuExit.addActionListener(this);
+        menu.add(menuExit);
+
+        JMenu help = new JMenu("Help");
+        menuBar.add(help);
+        JMenuItem instructions = new JMenuItem("Instructions");
+        instructions.addActionListener(this);
+        help.add(instructions);
+
+        JMenu about = new JMenu("About");
+        menuBar.add(about);
+        JMenuItem credits = new JMenuItem("Credits");
+        credits.addActionListener(this);
+        about.add(credits);
+
+        this.setJMenuBar(menuBar);
+
+		leftInset = this.getInsets().left;
+		topInset = this.getInsets().top;
+		topInset +=menuBar.getHeight();
+		topInset +=23;
+
+		System.out.println("L: " + leftInset + " T: " + topInset + "MB: " + this.getJMenuBar().getSize().getHeight());
 
     }
 
@@ -82,7 +121,34 @@ public class GUI extends JFrame {
 
     }
 
-    public class FBoard extends JPanel {
+    // for buttons and menus
+    public void actionPerformed(ActionEvent e) {
+        Object cmd = e.getActionCommand();
+        if (cmd.equals("Exit")) {
+            System.out.println("Game -> Exit");
+            System.exit(0);
+        } else if (cmd.equals("Return")) {
+            System.out.println("Game -> Menu");
+            this.setVisible(false);
+            Menu menu = new Menu();
+            menu.showFrame();
+        } else if (cmd.equals("Restart")) {
+            System.out.println("Game -> Restart");
+            //restart function here
+        } else if (cmd.equals("Instructions")) {
+            System.out.println("Help -> Instructions");
+            //instructions here
+
+        } else if (cmd.equals("Credits")) {
+            System.out.println("About -> Credits");
+            this.setVisible(false);
+            Credits credit = new Credits();
+            credit.showCredits();
+
+        }
+    }
+
+        public class FBoard extends JPanel {
 
         boolean testBoard = true;
 
@@ -94,7 +160,7 @@ public class GUI extends JFrame {
         // sets background color
         public void paintComponent(Graphics graphics) {
             // sets up the font
-            Font mineFont = new Font("TimesRoman", Font.PLAIN, fontsize);
+            Font mineFont = new Font("Courier", Font.PLAIN, fontsize);
             FontMetrics fontData = graphics.getFontMetrics(mineFont);
             graphics.setFont(mineFont);
 
@@ -141,6 +207,7 @@ public class GUI extends JFrame {
                 graphics.setColor(Color.white);
                 fontW = (int) (fontData.stringWidth("GAME OVER") / 2);
                 graphics.drawString("GAME OVER", width / 2 - fontW, 42);
+
             } else if (mineBoard.winner()) {
                 graphics.setColor(Color.lightGray);
                 graphics.fillRect(0, 0, width, height);
@@ -148,21 +215,21 @@ public class GUI extends JFrame {
                 fontW = (int) (fontData.stringWidth("YOU WIN!") / 2);
                 graphics.drawString("YOU WIN!", width / 2 - fontW, 42);
             } else {
-                graphics.setColor(Color.gray);
+                graphics.setColor(new Color(114, 159, 180));
                 graphics.fillRect(0, 0, width, height);
                 graphics.setColor(Color.black);
                 fontW = (int) (fontData.stringWidth("Minesweeper") / 2);
-                graphics.drawString("Minesweeper!", width / 2 - fontW, 42);
+                graphics.drawString("Minesweeper", width / 2 - fontW, 42);
             }
         }
 
         private void isMouseHere(int i, int j, int spacing, Graphics graphics)
         // functionized version of the mouse location test
         {
-            if (mx >= (i * tileSize) + 2*spacing &&
-			    mx <  ((i + 1) * tileSize) + 2*spacing &&
-				my >= ((j * tileSize) + 2*spacing + 65) &&
-				my <  ((j + 1) * tileSize) + 2*spacing + 65) {
+            if (mx >= (i * tileSize) + 2*spacing + leftInset &&
+			    mx <  ((i + 1) * tileSize) + 2*spacing + leftInset &&
+				my >= ((j * tileSize) + 2*spacing + 52 + topInset ) &&
+				my <  ((j + 1) * tileSize) + 2*spacing + 52 + topInset ) {
                 // this gets the corresponding tile coordinates
                 boardX = i;
                 boardY = j;
@@ -186,9 +253,6 @@ public class GUI extends JFrame {
         private void displayTileText(Graphics graphics, FontMetrics fontData, int i, int j, int blockX, int blockY, int spacing)
         // displays the text for the tile
         {
-			String mineNums;
-			int fontW, fontH;
-
 
             graphics.setColor(Color.white);
             // if tile is mine, displays the mine image
@@ -202,16 +266,7 @@ public class GUI extends JFrame {
                     graphics.fillRect(blockX, blockY, tileSize - spacing, tileSize - spacing);
                 } else if (gameMode == 0) {
                     int mineInt = mineBoard.getBoard().get((i * boardSize) + j).getNumMineNeighbors();
-					if (mineInt > imageSet.maxMineNum()) {
-						mineNums=Integer.toString(mineBoard.getBoard().get((i*boardSize)+j).getNumMineNeighbors());
-	                    fontW=(int)(fontData.stringWidth(mineNums)/2);
-	                    fontH=(int)(fontData.getHeight()/8);
-						graphics.setColor(Color.BLACK);
-						graphics.drawString(mineNums, i* tileSize+spacing+((int)(tileSize/2))-fontW, (j+1)* tileSize + spacing+((int)(tileSize/2))+fontH);
-					}
-					else {
-                    	graphics.drawImage(imageSet.getImage(mineInt), blockX, blockY, tileSize - spacing, tileSize - spacing, this);
-					}
+                    graphics.drawImage(imageSet.getImage(mineInt), blockX, blockY, tileSize - spacing, tileSize - spacing, this);
                 }
             }
             // if the tile is a flag and the game is not over, the flag is displayed
@@ -226,22 +281,29 @@ public class GUI extends JFrame {
         {
             Tile tileContext = mineBoard.getBoard().get((x * boardSize) + y);
             //store for the created colors
-            int rnum = 0, bnum = 0, gnum = 0, num = 0;
-			//rnum is num of red mines, bnum is num of blue mines, gnum is num of green mines, num is num of mines
+            int num = 0, bnum = 0, gnum = 0, rnum = 0;
             int r = 0;
             int g = 0;
             int b = 0;
             // get the colors of the nearby mines
             for (Tile neighbor : tileContext.neighbors) {
-				//if there is a mine in neighbors the red green blue value gets added
                 if (neighbor.getMine()) {
-                    r += neighbor.getColor().getRed();
-					if (neighbor.getColor().getRed() > 0) {rnum++;}
-                    g += neighbor.getColor().getGreen();
-					if (neighbor.getColor().getGreen() > 0) {gnum++;}
-                    b += neighbor.getColor().getBlue();
-					if (neighbor.getColor().getBlue() > 0) {bnum++;}
-					num++;
+					if (neighbor.getColor().getRed() > 0)
+					{
+						r += neighbor.getColor().getRed();
+						rnum++;
+					}
+					if (neighbor.getColor().getGreen() > 0)
+					{
+                    	g += neighbor.getColor().getGreen();
+						gnum++;
+					}
+					if (neighbor.getColor().getBlue() > 0)
+					{
+                    	b += neighbor.getColor().getBlue();
+						bnum++;
+					}
+                    num++;
                 }
             }
 
@@ -250,14 +312,34 @@ public class GUI extends JFrame {
 			if (gnum == 0) {gnum = 1;}
 			if (bnum == 0) {bnum = 1;}
 
+			r = ((int) (r / rnum));
+			g = ((int) (g / gnum));
+			b = ((int) (b / bnum));
+
 			if ((r == 255) && (g == 255) && (b == 255))
 			{
-				r = (int)(r/((int)(num/3)));
-				g = (int)(g/((int)(num/3)));
-				b = (int)(b/((int)(num/3)));
+				r = (int)(r/(8*num));
+				g = (int)(g/(8*num));
+				b = (int)(b/(8*num));
+			}
+			//Color thisColor = new Color(r, g, b);
+			if (r == 255 && b == 0 && g == 0 && tileContext.getNumMineNeighbors() > 1)
+			{
+				b = 32*(tileContext.getNumMineNeighbors() - 1);
+				g = 32*(tileContext.getNumMineNeighbors() - 1);
+			}
+			if (g == 255 && b == 0 && r == 0 && tileContext.getNumMineNeighbors() > 1)
+			{
+				b = 32*(tileContext.getNumMineNeighbors() - 1);
+				r = 32*(tileContext.getNumMineNeighbors() - 1);
+			}
+			if (b == 255 && r == 0 && g == 0 && tileContext.getNumMineNeighbors() > 1)
+			{
+				r = 32*(tileContext.getNumMineNeighbors() - 1);
+				g = 32*(tileContext.getNumMineNeighbors() - 1);
 			}
 
-            return new Color( 255 - ((int) (r / rnum)), 255 - ((int) (g / gnum)), 255 - ((int) (b / bnum)));
+            return new Color( 255 - r, 255 - g, 255 - b);
         }
     }
 
@@ -269,7 +351,7 @@ public class GUI extends JFrame {
         }
 
         public void mouseMoved(MouseEvent a) {
-             //System.out.println("the mouse was moved");
+            //System.out.println("the mouse was moved");
             mx = a.getX();
             my = a.getY();
             //System.out.println("x:" + mx + " y:" + my);
@@ -285,7 +367,7 @@ public class GUI extends JFrame {
             try {
                 System.out.println("the mouse was clicked");
                 System.out.println("X: " + boardX + " Y: " + boardY);
-				System.out.println("x:" + mx + " y:" + my);
+                System.out.println("x:" + mx + " y:" + my);
                 if (SwingUtilities.isRightMouseButton(a)) {
                     System.out.println("Right Click");
                     if (mineBoard.getBoard().get(tileID).isFlag() && !mineBoard.getBoard().get(tileID).isRevealed()) {
@@ -303,32 +385,14 @@ public class GUI extends JFrame {
             } catch (Exception e) {
                 System.out.println("Error caught " + e);
             }
-            /*
-             * try{ //checks if the clicked tile is a mine if
-             * (mineBoard.getBoard().get(tileID).getMine()) {
-             * System.out.println("the tile was a mine!"); gameOver=true; } //checks if
-             * clicked tile has mine neighbors else if
-             * (mineBoard.getBoard().get(tileID).getNumMineNeighbors()>0 &&
-             * !mineBoard.getBoard().get(tileID).isRevealed()) {
-             * System.out.println("there are " +
-             * mineBoard.getBoard().get(tileID).getNumMineNeighbors() + " mine neighbors");
-             * mineBoard.getBoard().get(tileID).setRevealed(true);
-             * mineBoard.setRemainingTiles(); } else if
-             * (!mineBoard.getBoard().get(tileID).isRevealed()) {
-             * System.out.println("there are no mine neighbors!");
-             * mineBoard.getBoard().get(tileID).setRevealed(true);
-             * mineBoard.setRemainingTiles(); } else {
-             * System.out.println("the tile is already revelaed!"); } } catch(Exception e) {
-             * System.out.println("error caughts:  " + e); }
-             */
         }
 
         public void mouseEntered(MouseEvent a) {
-			//System.out.println("Entered x:" + mx + " y:" + my);
+            //System.out.println("Entered x:" + mx + " y:" + my);
         }
 
         public void mouseExited(MouseEvent a) {
-			//System.out.println("Exited x:" + mx + " y:" + my);
+            //System.out.println("Exited x:" + mx + " y:" + my);
         }
 
         public void mousePressed(MouseEvent a) {
@@ -339,23 +403,5 @@ public class GUI extends JFrame {
 
         }
 
-    }
-
-    // for buttons and menus
-    public void actionPerformed(ActionEvent e) {
-        Object cmd = e.getActionCommand();
-        if (cmd.equals("Exit")) {
-            System.out.println("File -> Exit");
-            System.exit(0);
-        }
-        else if (cmd.equals("Return to Menu")) {
-            System.out.println("File -> Menu");
-            Menu menu = new Menu();
-            menu.showFrame();
-
-        }
-        else {
-            System.out.println("Unknown action");
-        }
     }
 }
