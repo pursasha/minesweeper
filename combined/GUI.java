@@ -26,6 +26,7 @@ public class GUI extends JFrame implements ActionListener {
 
     // Creating a window
     public GUI(int newSize, int mine_probability, int mineRadius, int gameMode) {
+	// constructor when passing in probablility and size
 
         this.gameMode = gameMode;
 
@@ -100,6 +101,7 @@ public class GUI extends JFrame implements ActionListener {
     }
 
 	public GUI(int difficulty, int gameMode, int mineRadius) {
+	// constructor for passing in just difficulty, gamemode, and radius
 
 		//private int easySize = 10, mediumSize = 20, hardSize = 30, easyProbability = 5, mediumProbability = 4, hardProbability = 3;
 		switch (difficulty)
@@ -191,6 +193,7 @@ public class GUI extends JFrame implements ActionListener {
     }
 
 	public GUI( GUI copyGUI) {
+	//copy cunstructor, note, does not copy over same board structure
 		this.gameMode = copyGUI.gameMode;
 
         this.boardSize = copyGUI.boardSize;
@@ -211,7 +214,7 @@ public class GUI extends JFrame implements ActionListener {
         System.out.println("height: " + height + " - Width: " + width);
 
 
-        mineBoard.setSquareBoard(boardSize, mineprob mineRad);
+        mineBoard.setSquareBoard(boardSize, mineprob, mineRad);
         this.setTitle("Minesweeper"); // sets title to window
         this.setSize(width, height); // sets size of the window
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // makes sure program is terminated when exited

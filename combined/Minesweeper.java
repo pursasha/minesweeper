@@ -13,6 +13,24 @@ public class Minesweeper implements Runnable {
         this.boardSize = boardSize;
         gui = new GUI(boardSize, mine_probability,mineRadius,gameMode);
     }
+	public Minesweeper(int difficulty, int mineRadius,int gameMode) {
+		switch (difficulty)
+		{
+			case 0:
+				boardSize = 10;
+			break;
+			case 1:
+				boardSize = 20;
+			break;
+			case 2:
+				boardSize = 30;
+			break;
+			default:
+				boardSize = 20;
+			break;
+		}
+        gui = new GUI(boardSize, mine_probability,mineRadius,gameMode);
+    }
 
     @Override
     public void run(){
