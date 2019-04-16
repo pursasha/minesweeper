@@ -9,7 +9,7 @@ import java.io.File;
 public class Menu extends JFrame implements ActionListener, MouseListener, MouseMotionListener {
 
     private JFrame frame;
-    private int easySize = 10, mediumSize = 20, hardSize = 30, easyProbability = 5, mediumProbability = 4, hardProbability = 3;
+    //private int easySize = 10, mediumSize = 20, hardSize = 30, easyProbability = 5, mediumProbability = 4, hardProbability = 3;
 
     public JPanel splash() {
 
@@ -110,22 +110,27 @@ public class Menu extends JFrame implements ActionListener, MouseListener, Mouse
         }else if (cmd.equals("Easy")) {
             System.out.println("Button 1 pressed");
             frame.setVisible(false);
-            new Thread(new Minesweeper(easySize, easyProbability, 1, 0)).start();
+            new Thread(new Minesweeper(0, 1, 0)).start();
         } else if (cmd.equals("Medium")) {
             System.out.println("Button 2 pressed");
             frame.setVisible(false);
-            new Thread(new Minesweeper(mediumSize, mediumProbability, 1, 0)).start();
+			this.dispose();
+			this.dispose();
+            new Thread(new Minesweeper(1, 1, 0)).start();
         } else if (cmd.equals("Hard")) {
             System.out.println("Button 3 pressed");
             frame.setVisible(false);
-            new Thread(new Minesweeper(hardSize, hardProbability, 1, 0)).start();
+			this.dispose();
+            new Thread(new Minesweeper(2, 1, 0)).start();
         } else if (cmd.equals("Color Mode")) {
             System.out.println("Button 4 pressed");
             frame.setVisible(false);
-            new Thread(new Minesweeper(mediumSize, mediumProbability, 1, 1)).start();
+			this.dispose();
+            new Thread(new Minesweeper(1, 1, 1)).start();
 
         } else if (cmd.equals("Custom Game")) {
             frame.setVisible(false);
+			this.dispose();
             CustomScreen cs = new CustomScreen();
             cs.showFrame();
         } else {
