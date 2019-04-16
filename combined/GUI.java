@@ -311,7 +311,7 @@ public class GUI extends JFrame implements ActionListener {
                 boardY = j;
                 tileID = boardSize * boardX + boardY;
                 // colors tile red it it is a mine
-                graphics.setColor(Color.blue);
+                graphics.setColor(new Color(118, 147, 193));
             }
         }
 
