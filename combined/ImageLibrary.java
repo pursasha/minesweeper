@@ -15,24 +15,7 @@ public class ImageLibrary{
     //Constructor
     public ImageLibrary(){
 
-        /*try {
-            base = new URL(path);
-        }
-        catch (MalformedURLException e)
-        {
-            throw new RuntimeException(e);
-        }*/
-
-        //path = path.replace("\\","/");
         for(int i = 0; i < 11; i++ ){
-
-            /*try {
-                dummy = new URL(path+"Number"+i+".png");
-            }
-            catch (MalformedURLException e)
-            {
-                throw new RuntimeException(e);
-            }*/
 
             System.out.println("image " + i + " loading");
             try

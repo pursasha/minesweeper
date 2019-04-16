@@ -55,8 +55,8 @@ public class CustomScreen implements ActionListener, ChangeListener {
         //Sliders for options
         JSlider sizeSlider = new JSlider(JSlider.HORIZONTAL, 2, 100, 20);
         sizeSlider.setBorder(BorderFactory.createTitledBorder("Board Size"));
-        sizeSlider.setMajorTickSpacing(20);
-        sizeSlider.setMinorTickSpacing(10);
+        sizeSlider.setMajorTickSpacing(98);
+        sizeSlider.setMinorTickSpacing(18);
         sizeSlider.setPaintLabels(true);
         sizeSlider.setPaintTicks(true);
         sizeSlider.setBackground(new Color(79, 137, 170));
