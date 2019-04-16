@@ -36,8 +36,8 @@ public class Menu extends JFrame implements ActionListener, MouseListener, Mouse
             System.out.println("No image");
         }
 
-        JLabel names = new JLabel("By Alex, Ethan, Chris, Dylan, Richard, Thais", JLabel.CENTER);
-        names.setFont(new Font("Courier", Font.BOLD, 16));
+        JLabel names = new JLabel("By Alex, Chris, Dylan, Ethan, Richard, and Thais", JLabel.CENTER);
+        names.setFont(new Font("Courier", Font.BOLD, 15));
         content.add(names, BorderLayout.SOUTH);
 
         return content;
@@ -52,7 +52,7 @@ public class Menu extends JFrame implements ActionListener, MouseListener, Mouse
         buttons.setLayout(new GridLayout(8, 1));
 
         //sets background
-        buttons.setBackground(Color.gray);
+        buttons.setBackground(new Color(114, 159, 180));
 
         //adds elements to the panel
         JLabel title = new JLabel("Minesweeper", JLabel.CENTER);
@@ -91,6 +91,7 @@ public class Menu extends JFrame implements ActionListener, MouseListener, Mouse
             System.exit(0);
         } else if (cmd.equals("Return")) {
             System.out.println("Game -> Menu");
+            frame.setVisible(false);
             Menu menu = new Menu();
             menu.showFrame();
         } else if (cmd.equals("Restart")) {
@@ -102,6 +103,7 @@ public class Menu extends JFrame implements ActionListener, MouseListener, Mouse
 
         }else if (cmd.equals("Credits")) {
             System.out.println("About -> Credits");
+            frame.setVisible(false);
             Credits credit = new Credits();
             credit.showCredits();
 
@@ -175,10 +177,12 @@ public class Menu extends JFrame implements ActionListener, MouseListener, Mouse
 
 
         try {
-            Thread.sleep(5000);
+            Thread.sleep(3500);
         } catch (Exception e) {
         }
+
         frame.remove(mySplash);
+        frame.setVisible(false);
 
         Menu menu = new Menu();
         menu.showFrame();

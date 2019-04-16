@@ -12,24 +12,29 @@ public class Credits extends JFrame implements ActionListener {
 
         JPanel credit = new JPanel();
 
-        //sets panel layout
-        // credit.setLayout(new GridLayout(19, 5));
-
         //sets background
-        credit.setBackground(new Color(114, 159, 180));
+        credit.setBackground(new Color(255, 255, 255));
 
         //adds elements to the panel
         JLabel title = new JLabel("Minesweeper\n", JLabel.CENTER);
         title.setFont(new Font("Courier", Font.BOLD, 35));
         credit.add(title, BorderLayout.CENTER);
 
-        String info = "Minesweeper is a game created by yhasi therh thrlj ejwh," +
-                "\n the game was created with a bese of the original " +
-                "\n1990 Moienevffkjnjnfsdnflnf;nfs;dfn;fsldanfdl";
-        JLabel text = new JLabel(info);
-        text.setFont(new Font("Courier", Font.BOLD, 12));
-        credit.add(text, BorderLayout.CENTER);
+        String info = "'Minesweeper' was created by Alexandra" +
+                "\n Gostev, Christopher Bouchard, Dylan Wright, " +
+                "\n Ethan Schneider, Richard Makarchuk, and " +
+                "\n Thais Vacaflores it was created as a project " +
+                "\n for our CS 370 'Software Engeering' class " +
+                "\n it was coded using Java Swing and it is based " +
+                "\n the original Windows Minesweeper game released " +
+                "\n in 1990. It was however adapted and expanded " +
+                "\n by us. We added new versions to the game such " +
+                "\n as 'Color Mode' and 'Memory Mode.'";
+        JTextArea text = new JTextArea(info);
 
+        text.setFont(new Font("Courier", Font.BOLD, 16));
+        text.setEditable(false);
+        credit.add(text, BorderLayout.CENTER);
 
         return credit;
     }
@@ -80,12 +85,17 @@ public class Credits extends JFrame implements ActionListener {
 
         frame.setJMenuBar(menuBar);
 
+        JButton returnButton = new JButton("Return to Menu");
+        returnButton.addActionListener(this);
+        frame.add(returnButton);
+
         //add the menu to the frame
         frame.add(myCredits);
         frame.revalidate();
+
     }
 
-    public void actionPerformed(ActionEvent e) {
+        public void actionPerformed(ActionEvent e) {
         Object cmd = e.getActionCommand();
         if (cmd.equals("Exit")) {
             System.out.println("Game -> Exit");
@@ -106,7 +116,11 @@ public class Credits extends JFrame implements ActionListener {
             Credits credit = new Credits();
             credit.showCredits();
 
+        } else if (cmd.equals("Return to Menu")) {
+            System.out.println("Game -> Menu");
+            this.setVisible(false);
+            Menu menu = new Menu();
+            menu.showFrame();
         }
-
     }
 }
