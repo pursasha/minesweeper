@@ -13,7 +13,7 @@ public class CustomScreen implements ActionListener, ChangeListener {
         JPanel buttons = new JPanel();
 
         //sets panel layout
-        buttons.setLayout(new GridLayout(12, 1,0,-13));
+        buttons.setLayout(new GridLayout(6,2));
         //sets background
         buttons.setBackground(new Color(114, 159, 180));
 
