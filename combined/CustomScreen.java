@@ -19,12 +19,12 @@ public class CustomScreen implements ActionListener, ChangeListener {
         buttons.setBackground(new Color(114, 159, 180));
 
         //adds elements to the panel
-        JLabel title = new JLabel("Minesweeper", JLabel.CENTER);
-        title.setFont(new Font("Courier", Font.BOLD, 55));
+        JLabel title = new JLabel("Mine", JLabel.CENTER);
+        title.setFont(new Font("Courier", Font.BOLD, 30));
         buttons.add(title, BorderLayout.CENTER);
 
-        JLabel subTitle = new JLabel("Custom your Game:", JLabel.CENTER);
-        subTitle.setFont(new Font("Courier", Font.BOLD, 20));
+        JLabel subTitle = new JLabel("Sweeper", JLabel.CENTER);
+        subTitle.setFont(new Font("Courier", Font.BOLD, 30));
         buttons.add(subTitle, BorderLayout.CENTER);
         //Radio Buttons for game modes
         JRadioButton mineMode = new JRadioButton("Classic");
@@ -33,6 +33,7 @@ public class CustomScreen implements ActionListener, ChangeListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 gameMode = 0;
+                colorMode.setSelected(false);
             }
         });
 
@@ -40,6 +41,7 @@ public class CustomScreen implements ActionListener, ChangeListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 gameMode = 1;
+                mineMode.setSelected(false);
             }
         });
         //adds them to the panel
