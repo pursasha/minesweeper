@@ -276,16 +276,28 @@ public class GUI extends JFrame implements ActionListener {
         {
             Tile tileContext = mineBoard.getBoard().get((x * boardSize) + y);
             //store for the created colors
-            int num = 0;
+            int num = 0, bnum = 0, gnum = 0, rnum = 0;
             int r = 0;
             int g = 0;
             int b = 0;
             // get the colors of the nearby mines
             for (Tile neighbor : tileContext.neighbors) {
                 if (neighbor.getMine()) {
-                    r += neighbor.getColor().getRed();
-                    g += neighbor.getColor().getGreen();
-                    b += neighbor.getColor().getBlue();
+					if (neighbor.getColor().getRed() > 0)
+					{
+						r += neighbor.getColor().getRed();
+						rnum++;
+					}
+					if (neighbor.getColor().getGreen() > 0)
+					{
+                    	g += neighbor.getColor().getGreen();
+						gnum++;
+					}
+					if (neighbor.getColor().getBlue() > 0)
+					{
+                    	b += neighbor.getColor().getBlue();
+						bnum++;
+					}
                     num++;
                 }
             }
