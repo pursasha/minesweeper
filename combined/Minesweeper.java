@@ -29,13 +29,21 @@ public class Minesweeper implements Runnable {
 				boardSize = 20;
 			break;
 		}
-        gui = new GUI(difficulty, mineRadius, gameMode);
+        gui = new GUI(difficulty, gameMode, mineRadius);
     }
 
     @Override
     public void run(){
-        while(true){
+        while(!gui.restart){
             gui.repaint();
         }
+		try
+		{
+			Thread.sleep(2000);
+		}
+		catch (InterruptedException e)
+		{
+		}
+		gui.restart();
     }
 }

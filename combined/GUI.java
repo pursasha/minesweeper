@@ -22,6 +22,8 @@ public class GUI extends JFrame implements ActionListener {
     int leftInset;
     int mineprob, mineRad;
 
+	boolean restart = false;
+
     private int easySize = 10, mediumSize = 20, hardSize = 30, easyProbability = 5, mediumProbability = 4, hardProbability = 3;
 
 
@@ -110,20 +112,20 @@ public class GUI extends JFrame implements ActionListener {
         switch (difficulty)
         {
             case 0:
-                boardSize = 10;
-                mineprob = 5;
+                boardSize = easySize;
+                mineprob = easyProbability;
                 break;
             case 1:
-                boardSize = 20;
-                mineprob = 4;
+                boardSize = mediumSize;
+                mineprob = mediumProbability;
                 break;
             case 2:
-                boardSize = 30;
-                mineprob = 3;
+                boardSize = hardSize;
+                mineprob = hardProbability;
                 break;
             default:
-                boardSize = 20;
-                mineprob = 4;
+                boardSize = mediumSize;
+                mineprob = mediumProbability;
                 break;
         }
 
@@ -195,106 +197,11 @@ public class GUI extends JFrame implements ActionListener {
 
     }
 
-    public GUI( GUI copyGUI) {
-        //copy cunstructor, note, does not copy over same board structure
-        this.gameMode = copyGUI.gameMode;
+	public GUI( GUI copyGUI) {
+		//copy cunstructor, note, does not copy over same board structure
+		this(copyGUI.boardSize, copyGUI.mineprob, copyGUI.gameMode, copyGUI.mineRad);
 
-        this.boardSize = copyGUI.boardSize;
-
-        this.mineprob = copyGUI.mineprob;
-
-        this.mineRad = copyGUI.mineRad;
-
-        tileSize = (int) ((30.0 / boardSize * 20.0));
-        spacer = (int) (2 * (20 / boardSize));
-        if (spacer < 1) {
-            spacer = 1;
-        }
-        System.out.println("tileSize: " + tileSize + " - spacer: " + spacer);
-        mineBoard = new Board(boardSize);
-        height = (tileSize) * boardSize + 2 * spacer + 120;
-        width = (tileSize) * boardSize + 2 * spacer + 3;
-        System.out.println("height: " + height + " - Width: " + width);
-
-
-        mineBoard.setSquareBoard(boardSize, mineprob, mineRad);
-        this.setTitle("Minesweeper"); // sets title to window
-        this.setSize(width, height); // sets size of the window
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // makes sure program is terminated when exited
-        this.setResizable(false); // set it so no one can resize the window
-        this.setLocationRelativeTo(null);
-
-        FBoard GUIboard = new FBoard();
-        this.setContentPane(GUIboard);// sets content panel
-        this.setVisible(true); // makes window visible
-
-        Move move = new Move();
-        this.addMouseMotionListener(move);
-
-        Click click = new Click();
-        this.addMouseListener(click);
-
-        //add the menuBar
-        JMenuBar menuBar = new JMenuBar();
-        JMenu menu = new JMenu("Game");
-        menuBar.add(menu);
-        JMenuItem restart = new JMenuItem("Restart");
-        restart.addActionListener(this);
-        menu.add(restart);
-        JMenuItem menuReturn = new JMenuItem("Return");
-        menuReturn.addActionListener(this);
-        menu.add(menuReturn);
-        JMenuItem menuExit = new JMenuItem("Exit");
-        menuExit.addActionListener(this);
-        menu.add(menuExit);
-
-        JMenu help = new JMenu("Help");
-        menuBar.add(help);
-        JMenuItem instructions = new JMenuItem("Instructions");
-        instructions.addActionListener(this);
-        help.add(instructions);
-
-        JMenu about = new JMenu("About");
-        menuBar.add(about);
-        JMenuItem credits = new JMenuItem("Credits");
-        credits.addActionListener(this);
-        about.add(credits);
-
-        this.setJMenuBar(menuBar);
-
-        leftInset = this.getInsets().left;
-        topInset = this.getInsets().top;
-        topInset +=menuBar.getHeight();
-        topInset +=23;
-
-    }
-
-    public GUI() {
-
-        boardSize = 10;
-
-        mineBoard = new Board(boardSize);
-        height = (tileSize + 3) * boardSize + 30 + 55;
-        width = (tileSize + 3) * boardSize;
-
-        //mineBoard.setSquareBoard();
-        this.setTitle("Minesweeper"); // sets title to window
-        this.setSize(width, height); // sets size of the window
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // makes sure program is terminated when exited
-        this.setResizable(false); // set it so no one can resize the window
-        setLocationRelativeTo(null);
-
-        FBoard GUIboard = new FBoard();
-        this.setContentPane(GUIboard);// sets content panel
-        this.setVisible(true); // makes window visible
-
-        Move move = new Move();
-        GUIboard.addMouseMotionListener(move);
-
-        Click click = new Click();
-        GUIboard.addMouseListener(click);
-
-    }
+	}
 
     // for buttons and menus
     public void actionPerformed(ActionEvent e) {
@@ -332,6 +239,46 @@ public class GUI extends JFrame implements ActionListener {
 
         }
     }
+
+	public void restart() {
+
+		//private JFrame frame;
+		JFrame frame = new JFrame();
+
+		//loads panels
+		//JPanel myCredits = cred();
+
+		//sets frame size and title
+		frame.setBounds(200, 200, 470, 554);
+		frame.setTitle("Minesweeper");
+
+		//sets properties of the frame
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setLocationRelativeTo(null);
+		frame.setResizable(false);
+		frame.setVisible(true);
+		JPanel credit = new JPanel();
+
+		//sets background
+		credit.setBackground(new Color(255, 255, 255));
+
+		//adds elements to the panel
+		JLabel title = new JLabel("Minesweeper\n", JLabel.CENTER);
+		title.setFont(new Font("Courier", Font.BOLD, 35));
+		credit.add(title, BorderLayout.CENTER);
+
+		JTextArea text = new JTextArea("Button");
+
+		text.setFont(new Font("Courier", Font.BOLD, 16));
+		text.setEditable(false);
+		credit.add(text, BorderLayout.CENTER);
+
+		JButton returnButton = new JButton("Return to Menu");
+		//returnButton.addActionListener(this);
+		credit.add(returnButton);
+
+		frame.add(credit);
+	}
 
     public class FBoard extends JPanel {
 
@@ -393,43 +340,7 @@ public class GUI extends JFrame implements ActionListener {
                 fontW = (int) (fontData.stringWidth("GAME OVER") / 2);
                 graphics.drawString("GAME OVER", width / 2 - fontW, 42);
 
-               /* //private JFrame frame;
-                JFrame frame = new JFrame();
-
-                //loads panels
-                //JPanel myCredits = cred();
-
-                //sets frame size and title
-                frame.setBounds(200, 200, 470, 554);
-                frame.setTitle("Minesweeper");
-
-                //sets properties of the frame
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                frame.setLocationRelativeTo(null);
-                frame.setResizable(false);
-                frame.setVisible(true);
-                JPanel credit = new JPanel();
-
-                //sets background
-                credit.setBackground(new Color(255, 255, 255));
-
-                //adds elements to the panel
-                JLabel title = new JLabel("Minesweeper\n", JLabel.CENTER);
-                title.setFont(new Font("Courier", Font.BOLD, 35));
-                credit.add(title, BorderLayout.CENTER);
-
-                JTextArea text = new JTextArea("Button");
-
-                text.setFont(new Font("Courier", Font.BOLD, 16));
-                text.setEditable(false);
-                credit.add(text, BorderLayout.CENTER);
-
-                JButton returnButton = new JButton("Return to Menu");
-                //returnButton.addActionListener(this);
-                credit.add(returnButton);
-
-                frame.add(credit);*/
-
+				restart = true;
 
 
             } else if (mineBoard.winner()) {
@@ -438,6 +349,8 @@ public class GUI extends JFrame implements ActionListener {
                 graphics.setColor(Color.black);
                 fontW = (int) (fontData.stringWidth("YOU WIN!") / 2);
                 graphics.drawString("YOU WIN!", width / 2 - fontW, 42);
+
+				restart = true;
             } else {
                 graphics.setColor(new Color(114, 159, 180));
                 graphics.fillRect(0, 0, width, height);
