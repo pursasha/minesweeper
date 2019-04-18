@@ -21,6 +21,7 @@ public class GUI extends JFrame implements ActionListener {
     int topInset;
     int leftInset;
     int mineprob, mineRad;
+	FBoard guiBoard;
 
 	boolean restart = false;
 
@@ -60,7 +61,7 @@ public class GUI extends JFrame implements ActionListener {
         this.setResizable(false); // set it so no one can resize the window
         this.setLocationRelativeTo(null);
 
-        FBoard GUIboard = new FBoard();
+        guiBoard = new FBoard();
         this.setContentPane(GUIboard);// sets content panel
         this.setVisible(true); // makes window visible
 
@@ -152,7 +153,7 @@ public class GUI extends JFrame implements ActionListener {
         this.setResizable(false); // set it so no one can resize the window
         this.setLocationRelativeTo(null);
 
-        FBoard GUIboard = new FBoard();
+        guiBoard = new FBoard();
         this.setContentPane(GUIboard);// sets content panel
         this.setVisible(true); // makes window visible
 
@@ -239,46 +240,6 @@ public class GUI extends JFrame implements ActionListener {
 
         }
     }
-
-	public void restart() {
-
-		//private JFrame frame;
-		JFrame frame = new JFrame();
-
-		//loads panels
-		//JPanel myCredits = cred();
-
-		//sets frame size and title
-		frame.setBounds(200, 200, 470, 554);
-		frame.setTitle("Minesweeper");
-
-		//sets properties of the frame
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setLocationRelativeTo(null);
-		frame.setResizable(false);
-		frame.setVisible(true);
-		JPanel credit = new JPanel();
-
-		//sets background
-		credit.setBackground(new Color(255, 255, 255));
-
-		//adds elements to the panel
-		JLabel title = new JLabel("Minesweeper\n", JLabel.CENTER);
-		title.setFont(new Font("Courier", Font.BOLD, 35));
-		credit.add(title, BorderLayout.CENTER);
-
-		JTextArea text = new JTextArea("Button");
-
-		text.setFont(new Font("Courier", Font.BOLD, 16));
-		text.setEditable(false);
-		credit.add(text, BorderLayout.CENTER);
-
-		JButton returnButton = new JButton("Return to Menu");
-		//returnButton.addActionListener(this);
-		credit.add(returnButton);
-
-		frame.add(credit);
-	}
 
     public class FBoard extends JPanel {
 
@@ -478,6 +439,45 @@ public class GUI extends JFrame implements ActionListener {
 
             return new Color( 255 - r, 255 - g, 255 - b);
         }
+		public void restart() {
+
+			//private JFrame frame;
+			JFrame frame = new JFrame();
+
+			//loads panels
+			//JPanel myCredits = cred();
+
+			//sets frame size and title
+			frame.setBounds(200, 200, 470, 554);
+			frame.setTitle("Minesweeper");
+
+			//sets properties of the frame
+			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			frame.setLocationRelativeTo(null);
+			frame.setResizable(false);
+			frame.setVisible(true);
+			JPanel credit = new JPanel();
+
+			//sets background
+			credit.setBackground(new Color(255, 255, 255));
+
+			//adds elements to the panel
+			JLabel title = new JLabel("Minesweeper\n", JLabel.CENTER);
+			title.setFont(new Font("Courier", Font.BOLD, 35));
+			credit.add(title, BorderLayout.CENTER);
+
+			JTextArea text = new JTextArea("Button");
+
+			text.setFont(new Font("Courier", Font.BOLD, 16));
+			text.setEditable(false);
+			credit.add(text, BorderLayout.CENTER);
+
+			JButton returnButton = new JButton("Return to Menu");
+			//returnButton.addActionListener(this);
+			credit.add(returnButton);
+
+			frame.add(credit);
+		}
     }
 
     // sets display for mouse movement and coordinates
