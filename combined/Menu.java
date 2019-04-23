@@ -4,12 +4,11 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.net.URL;
-import java.io.File;
 
 public class Menu extends JFrame implements ActionListener, MouseListener, MouseMotionListener {
 
     private JFrame frame;
-    //private int easySize = 10, mediumSize = 20, hardSize = 30, easyProbability = 5, mediumProbability = 4, hardProbability = 3;
+    private int easySize = 10, mediumSize = 20, hardSize = 30, easyProbability = 5, mediumProbability = 4, hardProbability = 3;
 
     public JPanel splash() {
 
@@ -27,8 +26,7 @@ public class Menu extends JFrame implements ActionListener, MouseListener, Mouse
         content.add(title, BorderLayout.CENTER);
 
         try {
-            //BufferedImage image = ImageIO.read(new URL("https://web.cs.sunyit.edu/~schneieh/images//mine.jpeg"));
-			BufferedImage image = ImageIO.read(new File("images/mine.jpeg"));
+            BufferedImage image = ImageIO.read(new URL("https://web.cs.sunyit.edu/~schneieh/images//mine.jpeg"));
             Image mine = image.getScaledInstance(150, 180, Image.SCALE_SMOOTH);
             JLabel label = new JLabel(new ImageIcon(mine));
             content.add(label, BorderLayout.CENTER);
@@ -89,14 +87,6 @@ public class Menu extends JFrame implements ActionListener, MouseListener, Mouse
         if (cmd.equals("Exit")) {
             System.out.println("Game -> Exit");
             System.exit(0);
-        } else if (cmd.equals("Return")) {
-            System.out.println("Game -> Menu");
-            frame.setVisible(false);
-            Menu menu = new Menu();
-            menu.showFrame();
-        } else if (cmd.equals("Restart")) {
-            System.out.println("Game -> Restart");
-            //restart function here
         }else if (cmd.equals("Instructions")) {
             System.out.println("Help -> Instructions");
             //instructions here
@@ -110,27 +100,22 @@ public class Menu extends JFrame implements ActionListener, MouseListener, Mouse
         }else if (cmd.equals("Easy")) {
             System.out.println("Button 1 pressed");
             frame.setVisible(false);
-            new Thread(new Minesweeper(0, 1, 0)).start();
+            new Thread(new Minesweeper(easySize, easyProbability, 1, 0)).start();
         } else if (cmd.equals("Medium")) {
             System.out.println("Button 2 pressed");
             frame.setVisible(false);
-			this.dispose();
-			this.dispose();
-            new Thread(new Minesweeper(1, 1, 0)).start();
+            new Thread(new Minesweeper(mediumSize, mediumProbability, 1, 0)).start();
         } else if (cmd.equals("Hard")) {
             System.out.println("Button 3 pressed");
             frame.setVisible(false);
-			this.dispose();
-            new Thread(new Minesweeper(2, 1, 0)).start();
+            new Thread(new Minesweeper(hardSize, hardProbability, 1, 0)).start();
         } else if (cmd.equals("Color Mode")) {
             System.out.println("Button 4 pressed");
             frame.setVisible(false);
-			this.dispose();
-            new Thread(new Minesweeper(1, 1, 1)).start();
+            new Thread(new Minesweeper(mediumSize, mediumProbability, 1, 1)).start();
 
         } else if (cmd.equals("Custom Game")) {
             frame.setVisible(false);
-			this.dispose();
             CustomScreen cs = new CustomScreen();
             cs.showFrame();
         } else {
@@ -214,12 +199,6 @@ public class Menu extends JFrame implements ActionListener, MouseListener, Mouse
         JMenuBar menuBar = new JMenuBar();
         JMenu menu = new JMenu("Game");
         menuBar.add(menu);
-        JMenuItem restart = new JMenuItem("Restart");
-        restart.addActionListener(this);
-        menu.add(restart);
-        JMenuItem menuReturn = new JMenuItem("Return");
-        menuReturn.addActionListener(this);
-        menu.add(menuReturn);
         JMenuItem menuExit = new JMenuItem("Exit");
         menuExit.addActionListener(this);
         menu.add(menuExit);

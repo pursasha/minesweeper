@@ -13,26 +13,29 @@ public class CustomScreen implements ActionListener, ChangeListener {
         JPanel buttons = new JPanel();
 
         //sets panel layout
-        buttons.setLayout(new GridLayout(6,2));
+        buttons.setLayout(new GridLayout(7,2));
         //sets background
         buttons.setBackground(new Color(114, 159, 180));
 
         //adds elements to the panel
+
         JLabel title = new JLabel("Mine", JLabel.CENTER);
         title.setFont(new Font("Courier", Font.BOLD, 30));
         buttons.add(title, BorderLayout.CENTER);
 
         JLabel subTitle = new JLabel("Sweeper", JLabel.CENTER);
         subTitle.setFont(new Font("Courier", Font.BOLD, 30));
-        buttons.add(subTitle, BorderLayout.CENTER);
+        buttons.add(subTitle, BorderLayout.LINE_END);
         //Radio Buttons for game modes
         JRadioButton mineMode = new JRadioButton("Classic");
         JRadioButton colorMode = new JRadioButton("Color");
+        JRadioButton memMode = new JRadioButton("Memory");
         mineMode.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 gameMode = 0;
                 colorMode.setSelected(false);
+                memMode.setSelected(false);
             }
         });
 
@@ -41,11 +44,27 @@ public class CustomScreen implements ActionListener, ChangeListener {
             public void actionPerformed(ActionEvent e) {
                 gameMode = 1;
                 mineMode.setSelected(false);
+                memMode.setSelected(false);
+            }
+        });
+        memMode.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                gameMode = 2;
+                mineMode.setSelected(false);
+                colorMode.setSelected(false);
             }
         });
         //adds them to the panel
-        buttons.add(mineMode);
-        buttons.add(colorMode);
+        buttons.add(mineMode,BorderLayout.LINE_START);
+        buttons.add(colorMode,BorderLayout.CENTER);
+        buttons.add(memMode,BorderLayout.LINE_END);
+        //ImageIcon filler = new ImageIcon(new ImageLibrary().getImage(10));
+        JLabel fillImage = new JLabel();
+        fillImage.setBackground(new Color(238, 238, 238));
+        fillImage.setOpaque(true);
+        buttons.add(fillImage);
+
         //Labels for sliders
         JLabel Plabel = new JLabel("1 over "+customProb,JLabel.CENTER);
         Plabel.setBackground(new Color(114, 159, 180));
@@ -55,8 +74,8 @@ public class CustomScreen implements ActionListener, ChangeListener {
         //Sliders for options
         JSlider sizeSlider = new JSlider(JSlider.HORIZONTAL, 2, 100, 20);
         sizeSlider.setBorder(BorderFactory.createTitledBorder("Board Size"));
-        sizeSlider.setMajorTickSpacing(20);
-        sizeSlider.setMinorTickSpacing(10);
+        sizeSlider.setMajorTickSpacing(98);
+        sizeSlider.setMinorTickSpacing(18);
         sizeSlider.setPaintLabels(true);
         sizeSlider.setPaintTicks(true);
         sizeSlider.setBackground(new Color(79, 137, 170));
@@ -127,11 +146,7 @@ public class CustomScreen implements ActionListener, ChangeListener {
             }
         });
         buttons.add(startButton);
-        //ImageIcon filler = new ImageIcon(new ImageLibrary().getImage(10));
-        //JLabel fillImage = new JLabel(filler);
-        //fillImage.setBackground(Color.LIGHT_GRAY);
-        //fillImage.setOpaque(true);
-        //buttons.add(fillImage);
+
 
         JButton returnButton = new JButton("Return to Menu");
         returnButton.addActionListener(this);
