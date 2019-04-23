@@ -62,7 +62,7 @@ public class GUI extends JFrame implements ActionListener {
         this.setLocationRelativeTo(null);
 
         guiBoard = new FBoard();
-        this.setContentPane(GUIboard);// sets content panel
+        this.setContentPane(guiBoard);// sets content panel
         this.setVisible(true); // makes window visible
 
         Move move = new Move();
@@ -154,7 +154,7 @@ public class GUI extends JFrame implements ActionListener {
         this.setLocationRelativeTo(null);
 
         guiBoard = new FBoard();
-        this.setContentPane(GUIboard);// sets content panel
+        this.setContentPane(guiBoard);// sets content panel
         this.setVisible(true); // makes window visible
 
         Move move = new Move();
@@ -249,6 +249,7 @@ public class GUI extends JFrame implements ActionListener {
         String mineNums;
         int fontsize = 48;
         ImageLibrary imageSet = new ImageLibrary();
+		Font mineFont = new Font("Courier", Font.PLAIN, fontsize);
 
         // sets background color
         public void paintComponent(Graphics graphics) {
@@ -364,7 +365,19 @@ public class GUI extends JFrame implements ActionListener {
                     graphics.fillRect(blockX, blockY, tileSize - spacing, tileSize - spacing);
                 } else if (gameMode == 0) {
                     int mineInt = mineBoard.getBoard().get((i * boardSize) + j).getNumMineNeighbors();
-                    graphics.drawImage(imageSet.getImage(mineInt), blockX, blockY, tileSize - spacing, tileSize - spacing, this);
+					if (mineInt > imageSet.getMaxMineNum())
+					{
+						graphics.setColor(Color.black);
+						graphics.setFont(mineFont.deriveFont((float)(440/boardSize)));
+						graphics.drawString(mineInt+"", blockX, blockY + tileSize - spacing );
+						graphics.setFont(mineFont);
+						graphics.setColor(Color.white);
+					}
+					else
+					{
+                    	graphics.drawImage(imageSet.getImage(mineInt), blockX, blockY, tileSize - spacing, tileSize - spacing, this);
+					}
+
                 }
             }
             // if the tile is a flag and the game is not over, the flag is displayed
@@ -416,25 +429,25 @@ public class GUI extends JFrame implements ActionListener {
 
             if ((r == 255) && (g == 255) && (b == 255))
             {
-                r = (int)(r/(8*num));
-                g = (int)(g/(8*num));
-                b = (int)(b/(8*num));
+                r = (int)(r/(rnum));
+                g = (int)(g/(gnum));
+                b = (int)(b/(bnum));
             }
             //Color thisColor = new Color(r, g, b);
             if (r == 255 && b == 0 && g == 0 && tileContext.getNumMineNeighbors() > 1)
             {
-                b = 32*(tileContext.getNumMineNeighbors() - 1);
-                g = 32*(tileContext.getNumMineNeighbors() - 1);
+                b = 256/((mineRad*2+1)*(mineRad*2+1) - 1)*(tileContext.getNumMineNeighbors() - 1);
+                g = 256/((mineRad*2+1)*(mineRad*2+1) - 1)*(tileContext.getNumMineNeighbors() - 1);
             }
             if (g == 255 && b == 0 && r == 0 && tileContext.getNumMineNeighbors() > 1)
             {
-                b = 32*(tileContext.getNumMineNeighbors() - 1);
-                r = 32*(tileContext.getNumMineNeighbors() - 1);
+                b = 256/((mineRad*2+1)*(mineRad*2+1) - 1)*(tileContext.getNumMineNeighbors() - 1);
+                r = 256/((mineRad*2+1)*(mineRad*2+1) - 1)*(tileContext.getNumMineNeighbors() - 1);
             }
             if (b == 255 && r == 0 && g == 0 && tileContext.getNumMineNeighbors() > 1)
             {
-                r = 32*(tileContext.getNumMineNeighbors() - 1);
-                g = 32*(tileContext.getNumMineNeighbors() - 1);
+                r = 256/((mineRad*2+1)*(mineRad*2+1) - 1)*(tileContext.getNumMineNeighbors() - 1);
+                g = 256/((mineRad*2+1)*(mineRad*2+1) - 1)*(tileContext.getNumMineNeighbors() - 1);
             }
 
             return new Color( 255 - r, 255 - g, 255 - b);

@@ -47,6 +47,10 @@ public class ImageLibrary{
                 System.out.println("Path Not Found");
         }
     }
+	public int getMaxMineNum ()
+	{
+		return maxMineNum;
+	}
     //Returns the Image from the ImageIcon array(Skips a step 4 u)
     public Image getImage(int numMines){
         //System.out.println(numMines + " gotten");
