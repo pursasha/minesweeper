@@ -21,9 +21,9 @@ public class GUI extends JFrame implements ActionListener {
     int topInset;
     int leftInset;
     int mineprob, mineRad;
-	FBoard guiBoard;
+    FBoard guiBoard;
 
-	boolean restart = false;
+    boolean restart = false;
 
     private int easySize = 10, mediumSize = 20, hardSize = 30, easyProbability = 5, mediumProbability = 4, hardProbability = 3;
 
@@ -62,7 +62,7 @@ public class GUI extends JFrame implements ActionListener {
         this.setLocationRelativeTo(null);
 
         guiBoard = new FBoard();
-        this.setContentPane(GUIboard);// sets content panel
+        this.setContentPane(guiBoard);// sets content panel
         this.setVisible(true); // makes window visible
 
         Move move = new Move();
@@ -154,7 +154,7 @@ public class GUI extends JFrame implements ActionListener {
         this.setLocationRelativeTo(null);
 
         guiBoard = new FBoard();
-        this.setContentPane(GUIboard);// sets content panel
+        this.setContentPane(guiBoard);// sets content panel
         this.setVisible(true); // makes window visible
 
         Move move = new Move();
@@ -198,11 +198,11 @@ public class GUI extends JFrame implements ActionListener {
 
     }
 
-	public GUI( GUI copyGUI) {
-		//copy cunstructor, note, does not copy over same board structure
-		this(copyGUI.boardSize, copyGUI.mineprob, copyGUI.gameMode, copyGUI.mineRad);
+    public GUI( GUI copyGUI) {
+        //copy cunstructor, note, does not copy over same board structure
+        this(copyGUI.boardSize, copyGUI.mineprob, copyGUI.gameMode, copyGUI.mineRad);
 
-	}
+    }
 
     // for buttons and menus
     public void actionPerformed(ActionEvent e) {
@@ -301,7 +301,7 @@ public class GUI extends JFrame implements ActionListener {
                 fontW = (int) (fontData.stringWidth("GAME OVER") / 2);
                 graphics.drawString("GAME OVER", width / 2 - fontW, 42);
 
-				restart = true;
+                restart = true;
 
 
             } else if (mineBoard.winner()) {
@@ -311,7 +311,7 @@ public class GUI extends JFrame implements ActionListener {
                 fontW = (int) (fontData.stringWidth("YOU WIN!") / 2);
                 graphics.drawString("YOU WIN!", width / 2 - fontW, 42);
 
-				restart = true;
+                restart = true;
             } else {
                 graphics.setColor(new Color(114, 159, 180));
                 graphics.fillRect(0, 0, width, height);
@@ -439,45 +439,45 @@ public class GUI extends JFrame implements ActionListener {
 
             return new Color( 255 - r, 255 - g, 255 - b);
         }
-		public void restart() {
+        public void restart() {
 
-			//private JFrame frame;
-			JFrame frame = new JFrame();
+            //private JFrame frame;
+            JFrame frame = new JFrame();
 
-			//loads panels
-			//JPanel myCredits = cred();
+            //loads panels
+            //JPanel myCredits = cred();
 
-			//sets frame size and title
-			frame.setBounds(200, 200, 470, 554);
-			frame.setTitle("Minesweeper");
+            //sets frame size and title
+            frame.setBounds(200, 200, 470, 554);
+            frame.setTitle("Minesweeper");
 
-			//sets properties of the frame
-			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			frame.setLocationRelativeTo(null);
-			frame.setResizable(false);
-			frame.setVisible(true);
-			JPanel credit = new JPanel();
+            //sets properties of the frame
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setLocationRelativeTo(null);
+            frame.setResizable(false);
+            frame.setVisible(true);
+            JPanel credit = new JPanel();
 
-			//sets background
-			credit.setBackground(new Color(255, 255, 255));
+            //sets background
+            credit.setBackground(new Color(255, 255, 255));
 
-			//adds elements to the panel
-			JLabel title = new JLabel("Minesweeper\n", JLabel.CENTER);
-			title.setFont(new Font("Courier", Font.BOLD, 35));
-			credit.add(title, BorderLayout.CENTER);
+            //adds elements to the panel
+            JLabel title = new JLabel("Minesweeper\n", JLabel.CENTER);
+            title.setFont(new Font("Courier", Font.BOLD, 35));
+            credit.add(title, BorderLayout.CENTER);
 
-			JTextArea text = new JTextArea("Button");
+            JTextArea text = new JTextArea("Button");
 
-			text.setFont(new Font("Courier", Font.BOLD, 16));
-			text.setEditable(false);
-			credit.add(text, BorderLayout.CENTER);
+            text.setFont(new Font("Courier", Font.BOLD, 16));
+            text.setEditable(false);
+            credit.add(text, BorderLayout.CENTER);
 
-			JButton returnButton = new JButton("Return to Menu");
-			//returnButton.addActionListener(this);
-			credit.add(returnButton);
+            JButton returnButton = new JButton("Return to Menu");
+            //returnButton.addActionListener(this);
+            credit.add(returnButton);
 
-			frame.add(credit);
-		}
+            frame.add(credit);
+        }
     }
 
     // sets display for mouse movement and coordinates
