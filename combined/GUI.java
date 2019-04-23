@@ -436,18 +436,18 @@ public class GUI extends JFrame implements ActionListener {
             //Color thisColor = new Color(r, g, b);
             if (r == 255 && b == 0 && g == 0 && tileContext.getNumMineNeighbors() > 1)
             {
-                b = 256/((mineRad*2+1)*(mineRad*2+1) - 1)*(tileContext.getNumMineNeighbors() - 1);
-                g = 256/((mineRad*2+1)*(mineRad*2+1) - 1)*(tileContext.getNumMineNeighbors() - 1);
+                b = (int)(256/((mineRad*2+1)*(mineRad*2+1) - 1)*(tileContext.getNumMineNeighbors() - 1));
+                g = (int)(256/((mineRad*2+1)*(mineRad*2+1) - 1)*(tileContext.getNumMineNeighbors() - 1));
             }
             if (g == 255 && b == 0 && r == 0 && tileContext.getNumMineNeighbors() > 1)
             {
-                b = 256/((mineRad*2+1)*(mineRad*2+1) - 1)*(tileContext.getNumMineNeighbors() - 1);
-                r = 256/((mineRad*2+1)*(mineRad*2+1) - 1)*(tileContext.getNumMineNeighbors() - 1);
+                b = (int)(256/((mineRad*2+1)*(mineRad*2+1) - 1)*(tileContext.getNumMineNeighbors() - 1));
+                r = (int)(256/((mineRad*2+1)*(mineRad*2+1) - 1)*(tileContext.getNumMineNeighbors() - 1));
             }
             if (b == 255 && r == 0 && g == 0 && tileContext.getNumMineNeighbors() > 1)
             {
-                r = 256/((mineRad*2+1)*(mineRad*2+1) - 1)*(tileContext.getNumMineNeighbors() - 1);
-                g = 256/((mineRad*2+1)*(mineRad*2+1) - 1)*(tileContext.getNumMineNeighbors() - 1);
+                r = (int)(256/((mineRad*2+1)*(mineRad*2+1) - 1)*(tileContext.getNumMineNeighbors() - 1));
+                g = (int)(256/((mineRad*2+1)*(mineRad*2+1) - 1)*(tileContext.getNumMineNeighbors() - 1));
             }
 
             return new Color( 255 - r, 255 - g, 255 - b);
