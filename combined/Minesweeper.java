@@ -44,6 +44,6 @@ public class Minesweeper implements Runnable {
 		catch (InterruptedException e)
 		{
 		}
-		gui.guiBoard.restart();
+		gui.restart();
     }
 }
