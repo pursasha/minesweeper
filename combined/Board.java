@@ -1,6 +1,9 @@
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Board {
+    
     private int board_row_length;
     //private int mine_probability=5; // Reciprocal of actual probability
     private boolean gameOver=false;
@@ -17,6 +20,7 @@ public class Board {
         //sets the board to an empty arraylist
         board = new ArrayList<>();
     }
+    
     public Board(int newBoardLength)
     {
         //sets the board to an empty arraylist
@@ -28,8 +32,7 @@ public class Board {
         return board;
     }
 
-    public void setSquareBoard(int board_row_length,int mine_probability,int mineRadius) {
-
+    public void setSquareBoard(int board_row_length, int mine_probability, int mineRadius) {
 
         for (int x = 0; x <= board_row_length-1; x++) {   // This for loops adds all tiles to the list for a square board.
             for (int y = 0; y <= board_row_length-1; y++) {
@@ -63,6 +66,7 @@ public class Board {
             Tile1.setNumMineNeighbors();
         }
     }
+    
     public int flaggedMines(){
         int count = 0;
         for(Tile x : board){
@@ -73,6 +77,7 @@ public class Board {
         }
         return numFlaggedMines=count;
     }
+    
     public int revealedTiles(){
         int count= 0;
         for(Tile x : board){
@@ -98,7 +103,6 @@ public class Board {
             first_click=false;
         }
 
-
         if (!(Tile1.isRevealed()))
         {
             if (Tile1.getMine()) {
@@ -115,6 +119,58 @@ public class Board {
         }
         return false;
     }
+    
+    public boolean memReveal(int tileID) {
+        Tile Tile1 = board.get(tileID);
+        Timer timer = new Timer();
+        
+        class Reminder extends TimerTask 
+        {
+            Tile til;
+            public Reminder(Tile tile)
+            {
+                til = tile;
+            }
+            
+            public void run()
+            {
+                til.setRevealed(false);
+                timer.cancel();
+            }
+        }
+        
+        if(first_click){
+            if(Tile1.getMine())
+            {
+                for(Tile Tile1Neighbor : Tile1.neighbors)
+                {
+                    if(Tile1Neighbor.getX_component()*board_row_length+Tile1Neighbor.getY_component()!=tileID){
+                        Tile1Neighbor.decrementNumMineNeighbors();
+                    }
+                }
+                Tile1.setMine(false);
+            }
+            first_click=false;
+        }
+
+        if (!(Tile1.isRevealed()))
+        {
+            if (Tile1.getMine()) {
+                return true;
+            }
+            else {
+                timer.schedule(new Reminder(Tile1), 5000);
+                Tile1.setRevealed(true);
+                if (Tile1.getNumMineNeighbors() == 0) {
+                    for (Tile Tile2 : Tile1.neighbors) {
+                        reveal(Tile2.getX_component()*board_row_length + Tile2.getY_component());
+                    }
+                }
+            }
+        }
+        return false;
+    }
+    
     public boolean winner(){
         if(flaggedMines()==(numBoardMines))
             return true;
@@ -122,6 +178,7 @@ public class Board {
             return true;
         return false;
     }
+    
     public int getNumBoardMines() {return numBoardMines;}
 
     public boolean getRemainingTiles() {return numCoveredTiles == numBoardMines;}

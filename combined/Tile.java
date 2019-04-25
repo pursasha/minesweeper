@@ -48,13 +48,15 @@ public class Tile implements Serializable {
         }
     }
 
-    public boolean setMine(int board_row_length) { // Sets mine to on or off with probability on of 1/n. It returns true
+    /*
+    // Old Set Mine based off of probability (unnecessarily complex)
+    public boolean setMine(int probability) { // Sets mine to on or off with probability on of 1/n. It returns true
         // for mine or false for no mine.
 
         int RandomMine, RandomMine2;
         boolean mine;
-        RandomMine = (int) (Math.random() * ((board_row_length - 1) + 1)) + 1;
-        RandomMine2 = (int) (Math.random() * ((board_row_length - 1) + 1)) + 1;
+        RandomMine = (int) (Math.random() * ((probability - 1) + 1)) + 1;
+        RandomMine2 = (int) (Math.random() * ((probability - 1) + 1)) + 1;
 
         if (RandomMine == RandomMine2) {
             mine = true;
@@ -80,7 +82,41 @@ public class Tile implements Serializable {
         isMine = mine;
         return mine;
     }
+    */
 
+
+        public boolean setMine(int probability) { // Sets mine to on or off with probability on of 1/n. It returns true
+        // for mine or false for no mine.
+
+        int RandomMine;
+        boolean mine = false;
+        RandomMine = (int) (Math.random() * probability + 1);
+
+        if (RandomMine == 1) {
+            mine = true;
+            //gives the mine a ramdom color of reg green or blue
+            switch ((int)(Math.random() * 3))
+            {
+                case 0:
+                    tileColor = new Color (0, 0, 255);
+                    break;
+                case 1:
+                    tileColor = new Color (0, 255, 0);
+                    break;
+                case 2:
+                    tileColor = new Color (255, 0, 0);
+                    break;
+            }
+        }
+        else {
+            mine = false;
+        }
+
+        isMine = mine;
+        return mine;
+    }
+
+    
     public boolean isRevealed() {
         return isRevealed;
     }

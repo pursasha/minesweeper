@@ -13,7 +13,7 @@ public class Minesweeper implements Runnable {
         this.boardSize = boardSize;
         gui = new GUI(boardSize, mine_probability, mineRadius, gameMode);
     }
-	public Minesweeper(int difficulty, int mineRadius,int gameMode) {
+	public Minesweeper(int difficulty, int mineRadius, int gameMode) {
 		switch (difficulty)
 		{
 			case 0:

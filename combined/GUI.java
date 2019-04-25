@@ -4,7 +4,6 @@ import java.awt.event.*;
 
 public class GUI extends JFrame implements ActionListener {
 
-
     int boardSize = 10;
 
     Board mineBoard;
@@ -25,8 +24,12 @@ public class GUI extends JFrame implements ActionListener {
 
     boolean restart = false;
 
-    private int easySize = 10, mediumSize = 20, hardSize = 30, easyProbability = 5, mediumProbability = 4, hardProbability = 3;
-
+    private int easySize = 10, 
+        mediumSize = 20, 
+        hardSize = 30, 
+        easyProbability = 5, 
+        mediumProbability = 4, 
+        hardProbability = 3;
 
     // Creating a window
     public GUI(int newSize, int mine_probability, int mineRadius, int gameMode) {
@@ -402,7 +405,9 @@ public class GUI extends JFrame implements ActionListener {
                 if (gameMode == 1) {
                     graphics.setColor(getTileColor(i, j));
                     graphics.fillRect(blockX, blockY, tileSize - spacing, tileSize - spacing);
-                } else if (gameMode == 0) {
+                } 
+                else 
+                {
                     int mineInt = mineBoard.getBoard().get((i * boardSize) + j).getNumMineNeighbors();
 					if (mineInt > imageSet.getMaxMineNum())
 					{
@@ -518,17 +523,31 @@ public class GUI extends JFrame implements ActionListener {
                 System.out.println("the mouse was clicked");
                 System.out.println("X: " + boardX + " Y: " + boardY);
                 System.out.println("x:" + mx + " y:" + my);
-                if (SwingUtilities.isRightMouseButton(a)) {
+                if (SwingUtilities.isRightMouseButton(a)) 
+                {
                     System.out.println("Right Click");
-                    if (mineBoard.getBoard().get(tileID).isFlag() && !mineBoard.getBoard().get(tileID).isRevealed()) {
+                    if (mineBoard.getBoard().get(tileID).isFlag() && !mineBoard.getBoard().get(tileID).isRevealed()) 
+                    {
                         mineBoard.getBoard().get(tileID).setFlag(false);
 
-                    } else if (!mineBoard.getBoard().get(tileID).isRevealed()) {
+                    } 
+                    else if (!mineBoard.getBoard().get(tileID).isRevealed()) 
+                    {
                         mineBoard.getBoard().get(tileID).setFlag(true);
                     }
-                } else {
-                    if (!(mineBoard.getBoard().get(tileID).isFlag() || mineBoard.getBoard().get(tileID).isRevealed())) {
-                        gameOver = mineBoard.reveal(tileID);
+                } 
+                else 
+                {
+                    if (!(mineBoard.getBoard().get(tileID).isFlag() || mineBoard.getBoard().get(tileID).isRevealed())) 
+                    {
+                        if (gameMode == 2)
+                        {
+                            gameOver = mineBoard.memReveal(tileID);
+                        }
+                        else 
+                        {
+                            gameOver = mineBoard.reveal(tileID);
+                        }
                     }
                 }
 

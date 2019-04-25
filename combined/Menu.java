@@ -8,7 +8,12 @@ import java.net.URL;
 public class Menu extends JFrame implements ActionListener, MouseListener, MouseMotionListener {
 
     private JFrame frame;
-    private int easySize = 10, mediumSize = 20, hardSize = 30, easyProbability = 5, mediumProbability = 4, hardProbability = 3;
+    private int easySize = 10, 
+        mediumSize = 20, 
+        hardSize = 30, 
+        easyProbability = 5, 
+        mediumProbability = 4, 
+        hardProbability = 3;
 
     public JPanel splash() {
 
@@ -65,18 +70,21 @@ public class Menu extends JFrame implements ActionListener, MouseListener, Mouse
         JButton button2 = new JButton("Medium");
         JButton button3 = new JButton("Hard");
         JButton button4 = new JButton("Color Mode");
-        JButton button5 = new JButton("Custom Game");
+        JButton button5 = new JButton("Memory Mode");
+        JButton button6 = new JButton("Custom Game");
         button1.addActionListener(this);
         button2.addActionListener(this);
         button3.addActionListener(this);
         button4.addActionListener(this);
         button5.addActionListener(this);
+        button6.addActionListener(this);
 
         buttons.add(button1);
         buttons.add(button2);
         buttons.add(button3);
         buttons.add(button4);
         buttons.add(button5);
+        buttons.add(button6);
 
         return buttons;
     }
@@ -113,7 +121,10 @@ public class Menu extends JFrame implements ActionListener, MouseListener, Mouse
             System.out.println("Button 4 pressed");
             frame.setVisible(false);
             new Thread(new Minesweeper(mediumSize, mediumProbability, 1, 1)).start();
-
+        } else if (cmd.equals("Memory Mode")) {
+            System.out.println("Button 5 pressed");
+            frame.setVisible(false);
+            new Thread(new Minesweeper(mediumSize, mediumProbability, 1, 2)).start();
         } else if (cmd.equals("Custom Game")) {
             frame.setVisible(false);
             CustomScreen cs = new CustomScreen();
