@@ -24,12 +24,12 @@ public class GUI extends JFrame implements ActionListener {
 
     boolean restart = false;
 
-    private int easySize = 10, 
-        mediumSize = 20, 
-        hardSize = 30, 
-        easyProbability = 5, 
-        mediumProbability = 4, 
-        hardProbability = 3;
+    private int easySize = 10,
+            mediumSize = 20,
+            hardSize = 30,
+            easyProbability = 5,
+            mediumProbability = 4,
+            hardProbability = 3;
 
     // Creating a window
     public GUI(int newSize, int mine_probability, int mineRadius, int gameMode) {
@@ -104,8 +104,8 @@ public class GUI extends JFrame implements ActionListener {
 
         leftInset = this.getInsets().left;
         topInset = this.getInsets().top;
-        topInset +=menuBar.getHeight();
-        topInset +=23;
+        topInset += menuBar.getHeight();
+        topInset += 23;
 
     }
 
@@ -113,8 +113,7 @@ public class GUI extends JFrame implements ActionListener {
         // constructor for passing in just difficulty, gamemode, and radius
 
         //private int easySize = 10, mediumSize = 20, hardSize = 30, easyProbability = 5, mediumProbability = 4, hardProbability = 3;
-        switch (difficulty)
-        {
+        switch (difficulty) {
             case 0:
                 boardSize = easySize;
                 mineprob = easyProbability;
@@ -196,12 +195,12 @@ public class GUI extends JFrame implements ActionListener {
 
         leftInset = this.getInsets().left;
         topInset = this.getInsets().top;
-        topInset +=menuBar.getHeight();
-        topInset +=23;
+        topInset += menuBar.getHeight();
+        topInset += 23;
 
     }
 
-    public GUI( GUI copyGUI) {
+    public GUI(GUI copyGUI) {
         //copy cunstructor, note, does not copy over same board structure
         this(copyGUI.boardSize, copyGUI.mineprob, copyGUI.gameMode, copyGUI.mineRad);
 
@@ -221,67 +220,81 @@ public class GUI extends JFrame implements ActionListener {
         } else if (cmd.equals("Restart")) {
             System.out.println("Game -> Restart");
             System.out.println(difficulty);
-            if(this.difficulty == 10){
+            if (this.difficulty == 10) {
                 this.setVisible(false);
                 new Thread(new Minesweeper(easySize, easyProbability, 1, 0)).start();
-            } else if(this.difficulty == 20){
+            } else if (this.difficulty == 20 && gameMode == 0) {
                 this.setVisible(false);
                 new Thread(new Minesweeper(mediumSize, mediumProbability, 1, 0)).start();
-            }else if(this.difficulty == 30){
+            } else if (this.difficulty == 30) {
                 this.setVisible(false);
                 new Thread(new Minesweeper(hardSize, hardProbability, 1, 0)).start();
+            } else if (this.difficulty == 20 && gameMode == 1) {
+                this.setVisible(false);
+                new Thread(new Minesweeper(mediumSize, mediumProbability, 1, 1)).start();
+            } else if (this.difficulty == 20 && gameMode == 2) {
+                this.setVisible(false);
+                new Thread(new Minesweeper(mediumSize, mediumProbability, 1, 2)).start();
+            }else if(this.difficulty != 20 || this.difficulty != 30 || this.difficulty != 40){
+                this.setVisible(false);
+                CustomScreen cs = new CustomScreen();
+                cs.showFrame();
+            } else if (cmd.equals("Instructions")) {
+                System.out.println("Help -> Instructions");
+                //instructions here
+
+            } else if (cmd.equals("Credits")) {
+                System.out.println("About -> Credits");
+                this.setVisible(false);
+                Credits credit = new Credits();
+                credit.showCredits();
             }
-        } else if (cmd.equals("Instructions")) {
-            System.out.println("Help -> Instructions");
-            //instructions here
-
-        } else if (cmd.equals("Credits")) {
-            System.out.println("About -> Credits");
-            this.setVisible(false);
-            Credits credit = new Credits();
-            credit.showCredits();
-
         }
     }
-	public void restart() {
 
-		//private JFrame frame;
-		JFrame frame = new JFrame();
+    public void restart() {
 
-		//loads panels
-		//JPanel myCredits = cred();
+        //adds elements to the panel
+        JDialog.setDefaultLookAndFeelDecorated(true);
+        int response = JOptionPane.showConfirmDialog(null, "Do you want to restart?", "Restart",
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (response == JOptionPane.NO_OPTION) {
+            System.out.println("No button clicked");
+        } else if (response == JOptionPane.YES_OPTION) {
+            System.out.println("Yes button clicked");
+        } else if (response == JOptionPane.CLOSED_OPTION) {
+            System.out.println("JOptionPane closed");
+        }
 
-		//sets frame size and title
-		frame.setBounds(200, 200, 470, 554);
-		frame.setTitle("Minesweeper");
 
-		//sets properties of the frame
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setLocationRelativeTo(null);
-		frame.setResizable(false);
-		frame.setVisible(true);
-		JPanel credit = new JPanel();
-
-		//sets background
-		credit.setBackground(new Color(255, 255, 255));
-
-		//adds elements to the panel
-		JLabel title = new JLabel("Minesweeper\n", JLabel.CENTER);
-		title.setFont(new Font("Courier", Font.BOLD, 35));
-		credit.add(title, BorderLayout.CENTER);
-
-		JTextArea text = new JTextArea("Button");
-
-		text.setFont(new Font("Courier", Font.BOLD, 16));
-		text.setEditable(false);
-		credit.add(text, BorderLayout.CENTER);
-
-		JButton returnButton = new JButton("Return to Menu");
-		//returnButton.addActionListener(this);
-		credit.add(returnButton);
-
-		frame.add(credit);
-	}
+        if (response == JOptionPane.YES_OPTION) {
+            if (this.difficulty == 10) {
+                this.setVisible(false);
+                new Thread(new Minesweeper(easySize, easyProbability, 1, 0)).start();
+            } else if (this.difficulty == 20 && gameMode == 0) {
+                this.setVisible(false);
+                new Thread(new Minesweeper(mediumSize, mediumProbability, 1, 0)).start();
+            } else if (this.difficulty == 30) {
+                this.setVisible(false);
+                new Thread(new Minesweeper(hardSize, hardProbability, 1, 0)).start();
+            } else if (this.difficulty == 20 && gameMode == 1) {
+                this.setVisible(false);
+                new Thread(new Minesweeper(mediumSize, mediumProbability, 1, 1)).start();
+            } else if (this.difficulty == 20 && gameMode == 2) {
+                this.setVisible(false);
+                new Thread(new Minesweeper(mediumSize, mediumProbability, 1, 2)).start();
+            }else if(this.difficulty != 20 || this.difficulty != 30 || this.difficulty != 40){
+                this.setVisible(false);
+                CustomScreen cs = new CustomScreen();
+                cs.showFrame();
+            }
+        }
+        if (response == JOptionPane.NO_OPTION) {
+            this.setVisible(false);
+            Menu menu = new Menu();
+            menu.showFrame();
+        }
+    }
 
     public class FBoard extends JPanel {
 
@@ -291,7 +304,7 @@ public class GUI extends JFrame implements ActionListener {
         String mineNums;
         int fontsize = 48;
         ImageLibrary imageSet = new ImageLibrary();
-		Font mineFont = new Font("Courier", Font.PLAIN, fontsize);
+        Font mineFont = new Font("Courier", Font.PLAIN, fontsize);
 
         // sets background color
         public void paintComponent(Graphics graphics) {
@@ -367,10 +380,10 @@ public class GUI extends JFrame implements ActionListener {
         private void isMouseHere(int i, int j, int spacing, Graphics graphics)
         // functionized version of the mouse location test
         {
-            if (mx >= (i * tileSize) + 2*spacing + leftInset &&
-                    mx <  ((i + 1) * tileSize) + 2*spacing + leftInset &&
-                    my >= ((j * tileSize) + 2*spacing + 52 + topInset ) &&
-                    my <  ((j + 1) * tileSize) + 2*spacing + 52 + topInset ) {
+            if (mx >= (i * tileSize) + 2 * spacing + leftInset &&
+                    mx < ((i + 1) * tileSize) + 2 * spacing + leftInset &&
+                    my >= ((j * tileSize) + 2 * spacing + 52 + topInset) &&
+                    my < ((j + 1) * tileSize) + 2 * spacing + 52 + topInset) {
                 // this gets the corresponding tile coordinates
                 boardX = i;
                 boardY = j;
@@ -405,22 +418,17 @@ public class GUI extends JFrame implements ActionListener {
                 if (gameMode == 1) {
                     graphics.setColor(getTileColor(i, j));
                     graphics.fillRect(blockX, blockY, tileSize - spacing, tileSize - spacing);
-                } 
-                else 
-                {
+                } else {
                     int mineInt = mineBoard.getBoard().get((i * boardSize) + j).getNumMineNeighbors();
-					if (mineInt > imageSet.getMaxMineNum())
-					{
-						graphics.setColor(Color.black);
-						graphics.setFont(mineFont.deriveFont((float)(440/boardSize)));
-						graphics.drawString(mineInt+"", blockX, blockY + tileSize - spacing );
-						graphics.setFont(mineFont);
-						graphics.setColor(Color.white);
-					}
-					else
-					{
-                    	graphics.drawImage(imageSet.getImage(mineInt), blockX, blockY, tileSize - spacing, tileSize - spacing, this);
-					}
+                    if (mineInt > imageSet.getMaxMineNum()) {
+                        graphics.setColor(Color.black);
+                        graphics.setFont(mineFont.deriveFont((float) (440 / boardSize)));
+                        graphics.drawString(mineInt + "", blockX, blockY + tileSize - spacing);
+                        graphics.setFont(mineFont);
+                        graphics.setColor(Color.white);
+                    } else {
+                        graphics.drawImage(imageSet.getImage(mineInt), blockX, blockY, tileSize - spacing, tileSize - spacing, this);
+                    }
 
                 }
             }
@@ -443,18 +451,15 @@ public class GUI extends JFrame implements ActionListener {
             // get the colors of the nearby mines
             for (Tile neighbor : tileContext.neighbors) {
                 if (neighbor.getMine()) {
-                    if (neighbor.getColor().getRed() > 0)
-                    {
+                    if (neighbor.getColor().getRed() > 0) {
                         r += neighbor.getColor().getRed();
                         rnum++;
                     }
-                    if (neighbor.getColor().getGreen() > 0)
-                    {
+                    if (neighbor.getColor().getGreen() > 0) {
                         g += neighbor.getColor().getGreen();
                         gnum++;
                     }
-                    if (neighbor.getColor().getBlue() > 0)
-                    {
+                    if (neighbor.getColor().getBlue() > 0) {
                         b += neighbor.getColor().getBlue();
                         bnum++;
                     }
@@ -463,38 +468,40 @@ public class GUI extends JFrame implements ActionListener {
             }
 
             //fixes issue of possibly dividing by zero
-            if (rnum == 0) {rnum = 1;}
-            if (gnum == 0) {gnum = 1;}
-            if (bnum == 0) {bnum = 1;}
+            if (rnum == 0) {
+                rnum = 1;
+            }
+            if (gnum == 0) {
+                gnum = 1;
+            }
+            if (bnum == 0) {
+                bnum = 1;
+            }
 
             r = ((int) (r / rnum));
             g = ((int) (g / gnum));
             b = ((int) (b / bnum));
 
-            if ((r == 255) && (g == 255) && (b == 255))
-            {
-                r = (int)(r/(rnum));
-                g = (int)(g/(gnum));
-                b = (int)(b/(bnum));
+            if ((r == 255) && (g == 255) && (b == 255)) {
+                r = (int) (r / (rnum));
+                g = (int) (g / (gnum));
+                b = (int) (b / (bnum));
             }
             //Color thisColor = new Color(r, g, b);
-            if (r == 255 && b == 0 && g == 0 && tileContext.getNumMineNeighbors() > 1)
-            {
-                b = (int)(256/((mineRad*2+1)*(mineRad*2+1) - 1)*(tileContext.getNumMineNeighbors() - 1));
-                g = (int)(256/((mineRad*2+1)*(mineRad*2+1) - 1)*(tileContext.getNumMineNeighbors() - 1));
+            if (r == 255 && b == 0 && g == 0 && tileContext.getNumMineNeighbors() > 1) {
+                b = (int) (256 / ((mineRad * 2 + 1) * (mineRad * 2 + 1) - 1) * (tileContext.getNumMineNeighbors() - 1));
+                g = (int) (256 / ((mineRad * 2 + 1) * (mineRad * 2 + 1) - 1) * (tileContext.getNumMineNeighbors() - 1));
             }
-            if (g == 255 && b == 0 && r == 0 && tileContext.getNumMineNeighbors() > 1)
-            {
-                b = (int)(256/((mineRad*2+1)*(mineRad*2+1) - 1)*(tileContext.getNumMineNeighbors() - 1));
-                r = (int)(256/((mineRad*2+1)*(mineRad*2+1) - 1)*(tileContext.getNumMineNeighbors() - 1));
+            if (g == 255 && b == 0 && r == 0 && tileContext.getNumMineNeighbors() > 1) {
+                b = (int) (256 / ((mineRad * 2 + 1) * (mineRad * 2 + 1) - 1) * (tileContext.getNumMineNeighbors() - 1));
+                r = (int) (256 / ((mineRad * 2 + 1) * (mineRad * 2 + 1) - 1) * (tileContext.getNumMineNeighbors() - 1));
             }
-            if (b == 255 && r == 0 && g == 0 && tileContext.getNumMineNeighbors() > 1)
-            {
-                r = (int)(256/((mineRad*2+1)*(mineRad*2+1) - 1)*(tileContext.getNumMineNeighbors() - 1));
-                g = (int)(256/((mineRad*2+1)*(mineRad*2+1) - 1)*(tileContext.getNumMineNeighbors() - 1));
+            if (b == 255 && r == 0 && g == 0 && tileContext.getNumMineNeighbors() > 1) {
+                r = (int) (256 / ((mineRad * 2 + 1) * (mineRad * 2 + 1) - 1) * (tileContext.getNumMineNeighbors() - 1));
+                g = (int) (256 / ((mineRad * 2 + 1) * (mineRad * 2 + 1) - 1) * (tileContext.getNumMineNeighbors() - 1));
             }
 
-            return new Color( 255 - r, 255 - g, 255 - b);
+            return new Color(255 - r, 255 - g, 255 - b);
         }
     }
 
@@ -523,29 +530,19 @@ public class GUI extends JFrame implements ActionListener {
                 System.out.println("the mouse was clicked");
                 System.out.println("X: " + boardX + " Y: " + boardY);
                 System.out.println("x:" + mx + " y:" + my);
-                if (SwingUtilities.isRightMouseButton(a)) 
-                {
+                if (SwingUtilities.isRightMouseButton(a)) {
                     System.out.println("Right Click");
-                    if (mineBoard.getBoard().get(tileID).isFlag() && !mineBoard.getBoard().get(tileID).isRevealed()) 
-                    {
+                    if (mineBoard.getBoard().get(tileID).isFlag() && !mineBoard.getBoard().get(tileID).isRevealed()) {
                         mineBoard.getBoard().get(tileID).setFlag(false);
 
-                    } 
-                    else if (!mineBoard.getBoard().get(tileID).isRevealed()) 
-                    {
+                    } else if (!mineBoard.getBoard().get(tileID).isRevealed()) {
                         mineBoard.getBoard().get(tileID).setFlag(true);
                     }
-                } 
-                else 
-                {
-                    if (!(mineBoard.getBoard().get(tileID).isFlag() || mineBoard.getBoard().get(tileID).isRevealed())) 
-                    {
-                        if (gameMode == 2)
-                        {
+                } else {
+                    if (!(mineBoard.getBoard().get(tileID).isFlag() || mineBoard.getBoard().get(tileID).isRevealed())) {
+                        if (gameMode == 2) {
                             gameOver = mineBoard.memReveal(tileID);
-                        }
-                        else 
-                        {
+                        } else {
                             gameOver = mineBoard.reveal(tileID);
                         }
                     }
