@@ -12,8 +12,8 @@ public class Menu extends JFrame implements ActionListener, MouseListener, Mouse
         mediumSize = 20, 
         hardSize = 30, 
         easyProbability = 5, 
-        mediumProbability = 4, 
-        hardProbability = 3;
+        mediumProbability = 6, 
+        hardProbability = 6;
 
     public JPanel splash() {
 

@@ -159,7 +159,7 @@ public class Board {
                 return true;
             }
             else {
-                timer.schedule(new Reminder(Tile1), 5000);
+                timer.schedule(new Reminder(Tile1), 10000);
                 Tile1.setRevealed(true);
                 if (Tile1.getNumMineNeighbors() == 0) {
                     for (Tile Tile2 : Tile1.neighbors) {
