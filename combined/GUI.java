@@ -45,7 +45,7 @@ public class GUI extends JFrame implements ActionListener {
 
         mineRad = mineRadius;
 
-        tileSize = (int) ((30.0 / boardSize * 20.0));
+        tileSize = (int) ((25.0 / boardSize * 20.0));
         spacer = (int) (2 * (20 / boardSize));
         if (spacer < 1) {
             spacer = 1;
@@ -114,15 +114,15 @@ public class GUI extends JFrame implements ActionListener {
 
         //private int easySize = 10, mediumSize = 20, hardSize = 30, easyProbability = 5, mediumProbability = 4, hardProbability = 3;
         switch (difficulty) {
-            case 0:
+            case 10:
                 boardSize = easySize;
                 mineprob = easyProbability;
                 break;
-            case 1:
+            case 20:
                 boardSize = mediumSize;
                 mineprob = mediumProbability;
                 break;
-            case 2:
+            case 30:
                 boardSize = hardSize;
                 mineprob = hardProbability;
                 break;
@@ -136,7 +136,7 @@ public class GUI extends JFrame implements ActionListener {
         mineRad = mineRadius;
 
 
-        tileSize = (int) ((30.0 / boardSize * 20.0));
+        tileSize = (int) ((25.0 / boardSize * 20.0));
         spacer = (int) (2 * (20 / boardSize));
         if (spacer < 1) {
             spacer = 1;
