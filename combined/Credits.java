@@ -23,13 +23,12 @@ public class Credits extends JFrame implements ActionListener {
         String info = "'Minesweeper' was created by Alexandra" +
                 "\n Gostev, Christopher Bouchard, Dylan Wright, " +
                 "\n Ethan Schneider, Richard Makarchuk, and " +
-                "\n Thais Vacaflores it was created as a project " +
-                "\n for our CS 370 'Software Engeering' class " +
-                "\n it was coded using Java Swing and it is based " +
-                "\n the original Windows Minesweeper game released " +
-                "\n in 1990. It was however adapted and expanded " +
-                "\n by us. We added new versions to the game such " +
-                "\n as 'Color Mode' and 'Memory Mode.'";
+                "\n Thais Vacaflores. It was created as a project " +
+                "\n for our CS 370 'Software Engineering' class. " +
+                "\n It was coded using Java Swing and it is based on " +
+                "\n the original Windows Minesweeper game." +
+                "\n We added new versions to the game such " +
+                "\n as 'Color Mode', 'Custom Mode', and 'Memory Mode.'";
         JTextArea text = new JTextArea(info);
 
         text.setFont(new Font("Courier", Font.BOLD, 16));
