@@ -53,7 +53,7 @@ public class GUI extends JFrame implements ActionListener {
         System.out.println("tileSize: " + tileSize + " - spacer: " + spacer);
         mineBoard = new Board(boardSize);
         height = (tileSize) * boardSize + 2 * spacer + 120;
-        width = (tileSize) * boardSize + 2 * spacer + 3;
+        width = (tileSize) * (boardSize+1) + 2 * spacer + 2;
         System.out.println("height: " + height + " - Width: " + width);
 
 
@@ -142,9 +142,9 @@ public class GUI extends JFrame implements ActionListener {
             spacer = 1;
         }
         System.out.println("tileSize: " + tileSize + " - spacer: " + spacer);
-        mineBoard = new Board(boardSize);
+		mineBoard = new Board(boardSize);
         height = (tileSize) * boardSize + 2 * spacer + 120;
-        width = (tileSize) * boardSize + 2 * spacer + 3;
+        width = (tileSize) * (boardSize+1) + 2 * spacer + 2;
         System.out.println("height: " + height + " - Width: " + width);
 
 

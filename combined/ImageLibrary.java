@@ -20,7 +20,7 @@ public class ImageLibrary{
             System.out.println("image " + i + " loading");
             try
             {
-                images[i] = ImageIO.read(new File(path+"Number"+i+".png"));
+                images[i] = ImageIO.read(this.getClass().getResource(path+"Number"+i+".png"));
                 //images[i]= ImageIO.read(dummy);
             }
             catch (IOException e)
