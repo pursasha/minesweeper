@@ -108,7 +108,16 @@ public class Credits extends JFrame implements ActionListener {
             //restart function here
         } else if (cmd.equals("Instructions")) {
             System.out.println("Help -> Instructions");
-            //instructions here
+            try
+                {
+                    Desktop gamePlay=Desktop.getDesktop();
+                    gamePlay.browse(new URI("https://web.cs.sunyit.edu/~schneieh/images/Game%20play%20instructions.pdf"));
+
+                }
+                catch(Exception ex)
+                {
+                    ex.printStackTrace();
+                }
 
         } else if (cmd.equals("Credits")) {
             System.out.println("About -> Credits");
