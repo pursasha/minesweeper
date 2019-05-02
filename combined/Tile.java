@@ -85,7 +85,7 @@ public class Tile implements Serializable {
     */
 
 
-        public boolean setMine(int probability) { // Sets mine to on or off with probability on of 1/n. It returns true
+    public boolean setMine(int probability) { // Sets mine to on or off with probability on of 1/n. It returns true
         // for mine or false for no mine.
 
         int RandomMine;

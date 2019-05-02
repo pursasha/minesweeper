@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.net.URL;
+import java.net.URI;
 
 public class Menu extends JFrame implements ActionListener, MouseListener, MouseMotionListener {
 

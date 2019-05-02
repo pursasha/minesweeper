@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.net.URI;
 
 public class GUI extends JFrame implements ActionListener {
 
@@ -261,49 +262,7 @@ public class GUI extends JFrame implements ActionListener {
         }
     }
 
-    public void restart() {
 
-        //adds elements to the panel
-        JDialog.setDefaultLookAndFeelDecorated(true);
-        int response = JOptionPane.showConfirmDialog(null, "Do you want to restart?", "Restart",
-                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-        if (response == JOptionPane.NO_OPTION) {
-            System.out.println("No button clicked");
-        } else if (response == JOptionPane.YES_OPTION) {
-            System.out.println("Yes button clicked");
-        } else if (response == JOptionPane.CLOSED_OPTION) {
-            System.out.println("JOptionPane closed");
-        }
-
-
-        if (response == JOptionPane.YES_OPTION) {
-            if (this.difficulty == 10) {
-                this.setVisible(false);
-                new Thread(new Minesweeper(easySize, easyProbability, 1, 0)).start();
-            } else if (this.difficulty == 20 && gameMode == 0) {
-                this.setVisible(false);
-                new Thread(new Minesweeper(mediumSize, mediumProbability, 1, 0)).start();
-            } else if (this.difficulty == 30) {
-                this.setVisible(false);
-                new Thread(new Minesweeper(hardSize, hardProbability, 1, 0)).start();
-            } else if (this.difficulty == 20 && gameMode == 1) {
-                this.setVisible(false);
-                new Thread(new Minesweeper(mediumSize, mediumProbability, 1, 1)).start();
-            } else if (this.difficulty == 20 && gameMode == 2) {
-                this.setVisible(false);
-                new Thread(new Minesweeper(mediumSize, mediumProbability, 1, 2)).start();
-            }else if(this.difficulty != 20 || this.difficulty != 30 || this.difficulty != 40){
-                this.setVisible(false);
-                CustomScreen cs = new CustomScreen();
-                cs.showFrame();
-            }
-        }
-        if (response == JOptionPane.NO_OPTION) {
-            this.setVisible(false);
-            Menu menu = new Menu();
-            menu.showFrame();
-        }
-    }
 
     public class FBoard extends JPanel {
 
